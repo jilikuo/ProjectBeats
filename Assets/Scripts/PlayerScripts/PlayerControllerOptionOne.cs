@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerControllerOptionOne : MonoBehaviour
 {
     public float baseSpeed = 0.5f;
     public float playerAcc = 0.01f;
-    public float playerDcc = 0.5f; //
+    public float playerDcc = 0.5f;
     public float maxSpeed  = 1.0f;
 
     private float horizontalSpeed;
     private float verticalSpeed;
-    private Vector3 inputTracker = new Vector3(0,0,0);
-    private Vector3 trackerOperator = new Vector3(0.25f, 0.25f, 0);
+    private Vector3 inputTracker = new(0,0,0);
+    public Vector3 trackerVolatility = new(0.0025f, 0.0025f, 0);
 
     private bool volatileTrackerX;
     private bool volatileTrackerY;
@@ -33,14 +33,14 @@ public class PlayerController : MonoBehaviour
     {
         TranslatePlayer(ReadInputs());
         UpdateInputTracker(ReadInputs());
-        UpdatePlayerSpeed(ReadInputs());
+        UpdatePlayerSpeed();
     }
 
     Vector3 ReadInputs()
     {
         float inputX   = Input.GetAxis("Horizontal");
         float inputY   = Input.GetAxis("Vertical");
-        Vector3 result = new Vector3(inputX, inputY, 0);
+        Vector3 result = new(inputX, inputY, 0);
         
         return result;
     }
@@ -52,30 +52,41 @@ public class PlayerController : MonoBehaviour
         transform.Translate(xSpeed, ySpeed, 0);
     }
 
-    void UpdatePlayerSpeed(Vector3 xyz)
+    void UpdatePlayerSpeed()
     {
-        if (xyz == inputTracker)
+        if (!volatileTrackerX)
         {
-            if (horizontalSpeed <= maxSpeed)
+            if (horizontalSpeed < maxSpeed)
             {
-                horizontalSpeed = horizontalSpeed + playerAcc;
-            }
-            if (verticalSpeed <= maxSpeed)
-            {
-                verticalSpeed = verticalSpeed + playerAcc;
+                horizontalSpeed += playerAcc;
             }
         }
-
-        else
+        if (!volatileTrackerY)
         {
-            if (xyz.x > inputTracker.x) { }
-
+            if (verticalSpeed < maxSpeed)
+            {
+                verticalSpeed += playerAcc;
+            }
+        }
+        if (volatileTrackerX)
+        {
+            if (horizontalSpeed > baseSpeed)
+            {
+                horizontalSpeed -= playerDcc;
+            }
+        }
+        if (volatileTrackerY)
+        {
+            if (verticalSpeed > baseSpeed)
+            {
+                verticalSpeed -= playerDcc;
+            }
         }
     }
 
     void UpdateInputTracker(Vector3 xyz)
     {
-        Vector3 restingInput = new Vector3(0,0,0);
+        Vector3 restingInput = new(0,0,0);
         
         if (inputTracker == xyz)
         {
@@ -87,14 +98,24 @@ public class PlayerController : MonoBehaviour
             inputTracker = xyz;
         }
 
-        if (inputTracker.x != xyz.x)
+        if (((inputTracker.x > 0) && (xyz.x < 0))
+            || ((inputTracker.x < 0) && (xyz.x > 0)))
         {
             volatileTrackerX = true;
         }
+        else
+        {
+            volatileTrackerX = false;
+        }
 
-        if (inputTracker.y != xyz.y)
+        if (((inputTracker.y > 0) && (xyz.y < 0))
+            || ((inputTracker.y < 0) && (xyz.y > 0)))
         {
             volatileTrackerY = true;
+        }
+        else
+        {
+            volatileTrackerY = false;
         }
 
         if (volatileTrackerX)
@@ -103,26 +124,26 @@ public class PlayerController : MonoBehaviour
             if (diffX > 0)
             {
                 volatileTrackerX = true;
-                if (diffX > trackerOperator.x)
+                if (diffX > trackerVolatility.x)
                 {
-                    inputTracker.x = inputTracker.x - trackerOperator.x;
+                    inputTracker.x -= trackerVolatility.x;
                 }
                 else
                 {
-                    inputTracker.x = inputTracker.x - diffX;
+                    inputTracker.x -= diffX;
                     volatileTrackerX = false;
                 }
             }
             else if (diffX < 0)
             {
                 volatileTrackerX = true;
-                if (diffX < trackerOperator.x)
+                if (diffX < trackerVolatility.x)
                 {
-                    inputTracker.x = inputTracker.x + trackerOperator.x;
+                    inputTracker.x += trackerVolatility.x;
                 }
                 else
                 {
-                    inputTracker.x = inputTracker.x + diffX;
+                    inputTracker.x += diffX;
                     volatileTrackerX = false;
                 }
             }
@@ -138,26 +159,26 @@ public class PlayerController : MonoBehaviour
             if (diffY > 0)
             {
                 volatileTrackerY = true;
-                if (diffY > trackerOperator.y)
+                if (diffY > trackerVolatility.y)
                 {
-                    inputTracker.y = inputTracker.y - trackerOperator.y;
+                    inputTracker.y -= trackerVolatility.y;
                 }
                 else
                 {
-                    inputTracker.y = inputTracker.y - diffY;
+                    inputTracker.y -= diffY;
                     volatileTrackerY = false;
                 }
             }
             else if (diffY < 0)
             {
                 volatileTrackerY = true;
-                if (diffY < trackerOperator.y)
+                if (diffY < trackerVolatility.y)
                 {
-                    inputTracker.y = inputTracker.y + trackerOperator.y;
+                    inputTracker.y += trackerVolatility.y;
                 }
                 else
                 {
-                    inputTracker.y = inputTracker.y + diffY;
+                    inputTracker.y += diffY;
                     volatileTrackerY = false;
                 }
             }
