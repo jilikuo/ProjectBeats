@@ -183,7 +183,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -224,10 +224,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1752880109}
   - component: {fileID: 1752880108}
-  - component: {fileID: 1752880107}
+  - component: {fileID: 1752880110}
   - component: {fileID: 1752880106}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -260,22 +260,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1752880107
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1752880105}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91752c1e24fe9ac4fb8dbf4354e3d6fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseSpeed: 0.05
-  playerAcc: 0.05
-  playerDcc: 0.5
-  maxSpeed: 2.5
 --- !u!212 &1752880108
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -343,6 +327,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1752880110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1752880105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20af4d92424f7314f85adb3e8ecb3ebe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseSpeed: 1
+  playerAcc: 0.5
+  playerDcc: 0.05
+  maxSpeed: 3
+  horizontalSpeed: 0
+  verticalSpeed: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

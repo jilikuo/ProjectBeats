@@ -7,11 +7,14 @@ public class PlayerControllerOptionTwo : MonoBehaviour
 {
     public float baseSpeed = 0.5f;
     public float playerAcc = 0.01f;
-    public float playerDcc = 0.5f;
+    public float playerDcc = 0.5f; // Atualmente não efetivo, apesar de estar no código. O problema é que só é acionada quando o jogador solta o botão, mas o Axis é zerado imediatamente quando isso acontece, zerando imediatamente a velocidade do jogador no próximo fixedupdate.
     public float maxSpeed  = 1.0f;
 
-    private float horizontalSpeed;
-    private float verticalSpeed;
+    public float horizontalSpeed;
+    public float verticalSpeed;
+
+    private float negativeSpeed;
+    private float negativeMaxSpeed;
 
     private bool movingLeft  = false;
     private bool movingRight = false;
@@ -21,6 +24,9 @@ public class PlayerControllerOptionTwo : MonoBehaviour
 
     void Start()
     {
+        negativeSpeed = baseSpeed * -1;
+        negativeMaxSpeed = maxSpeed * -1;
+
         horizontalSpeed = 0;
         verticalSpeed = 0;
     }
@@ -33,7 +39,7 @@ public class PlayerControllerOptionTwo : MonoBehaviour
 
     void FixedUpdate()
     {
-        MovePlayer();
+        TranslatePlayer(MovePlayer());
     }
 
     Vector3 MovePlayer()
@@ -43,45 +49,97 @@ public class PlayerControllerOptionTwo : MonoBehaviour
 
         if (movingLeft)
         {
-            horizontalSpeed -= playerAcc;
+            if ((horizontalSpeed - playerAcc) > negativeMaxSpeed)
+            {
+                horizontalSpeed -= playerAcc;
+            }
+            else
+            {
+                horizontalSpeed = negativeMaxSpeed;
+            }
         }
         if (movingRight)
         {
-            horizontalSpeed += playerAcc;
+            if ((horizontalSpeed + playerAcc) < maxSpeed)
+            {
+                horizontalSpeed += playerAcc;
+            }
+            else
+            {
+                horizontalSpeed = maxSpeed;
+            }
         }
         if (movingUp)
         {
-            verticalSpeed += playerAcc;
+            if ((verticalSpeed + playerAcc) < maxSpeed)
+            {
+                verticalSpeed += playerAcc;
+            }
+            else
+            {
+                verticalSpeed = maxSpeed;
+            }
         }
         if (movingDown)
         {
-            verticalSpeed -= playerAcc;
+            if ((verticalSpeed - playerAcc) > negativeMaxSpeed)
+            {
+                verticalSpeed -= playerAcc;
+            }
+            else
+            {
+                verticalSpeed = negativeMaxSpeed;
+            }
         }
 
-        if (inputX < 0)
+        if (inputX < 0 && !movingLeft)
         {
-            horizontalSpeed = -baseSpeed;
+            horizontalSpeed = negativeSpeed; 
             movingLeft = true;
             movingRight = false;
         }
-        if (inputX > 0)
+        if (inputX > 0 && !movingRight)
         {
             horizontalSpeed = baseSpeed;
             movingRight = true;
             movingLeft = false;
         }
+
         if (inputX == 0)
         {
-            movingLeft = false;
-            movingRight = false;
+            if (movingLeft)
+            {
+                if ((horizontalSpeed + playerDcc) > negativeSpeed)
+                {
+                    horizontalSpeed = 0;
+                    movingLeft = false;
+                }
+                else
+                {
+                    horizontalSpeed += playerDcc;
+                }
+            }
+            if (movingRight)
+            {
+                if ((horizontalSpeed - playerDcc) < baseSpeed)
+                {
+                    horizontalSpeed = 0;
+                    movingRight = false;
+                }
+                else
+                {
+                    horizontalSpeed -= playerDcc;
+                }
+            }
         }
-        if (inputY < 0)
+
+        if (inputY < 0 && !movingDown)
         {
             verticalSpeed = -baseSpeed;
             movingDown = true;
             movingUp = false;
         }
-        if (inputY > 0)
+        if (inputY > 0 && !movingUp)
         {
             verticalSpeed = baseSpeed;
             movingUp = true;
@@ -89,13 +147,35 @@ public class PlayerControllerOptionTwo : MonoBehaviour
         }
         if (inputY == 0)
         {
-            movingDown = false;
-            movingUp = false;
+            if (movingDown)
+            {
+                if ((verticalSpeed + playerDcc) > negativeSpeed)
+                {
+                    verticalSpeed = 0;
+                    movingDown = false;
+                }
+                else
+                {
+                    verticalSpeed += playerDcc;
+                }
+ 
+            }
+            if (movingUp)
+            {
+                if ((verticalSpeed - playerDcc) < baseSpeed)
+                {
+                    verticalSpeed = 0;
+                    movingUp = false;
+                }
+                else
+                {
+                    verticalSpeed -= playerDcc;
+                }
+            }
         }
 
         inputX = MathF.Abs(inputX);
         inputY = MathF.Abs(inputY);
-
 
         Vector3 result = new(inputX, inputY, 0);
         
@@ -104,9 +184,12 @@ public class PlayerControllerOptionTwo : MonoBehaviour
 
     void TranslatePlayer(Vector3 xyz)
     {
-        float xSpeed = xyz.x * horizontalSpeed;
-        float ySpeed = xyz.y * verticalSpeed;
-        transform.Translate(xSpeed, ySpeed, 0);
+        if (xyz != new Vector3(0,0,0))
+        {
+            float xSpeed = xyz.x * horizontalSpeed;
+            float ySpeed = xyz.y * verticalSpeed;
+            transform.Translate(xSpeed, ySpeed, 0);
+        }
     }
 
     void UpdatePlayerSpeed()
