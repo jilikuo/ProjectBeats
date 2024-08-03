@@ -224,8 +224,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1752880109}
   - component: {fileID: 1752880108}
-  - component: {fileID: 1752880110}
   - component: {fileID: 1752880111}
+  - component: {fileID: 1752880110}
   - component: {fileID: 1752880106}
   m_Layer: 0
   m_Name: Player
@@ -343,6 +343,7 @@ MonoBehaviour:
   baseSpeed: 0.1
   playerAcc: 0.01
   playerDcc: 0.8
+  maxSpeed: 0
   horizontalSpeed: 0
   verticalSpeed: 0
 --- !u!114 &1752880111

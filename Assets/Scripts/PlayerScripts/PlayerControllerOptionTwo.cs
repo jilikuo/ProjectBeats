@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerControllerOptionTwo : MonoBehaviour
 {
     public float baseSpeed = 0.5f;
-    public float playerAcc = 0.01f;
+    public Vector3 playerAcc = new Vector3(0, 0, 0.01f);
     public float playerDcc = 0.5f; // Atualmente não efetivo, apesar de estar no código. O problema é que só é acionada quando o jogador solta o botão, mas o Axis é zerado imediatamente quando isso acontece, zerando imediatamente a velocidade do jogador no próximo fixedupdate.
     public float maxSpeed;
 
@@ -21,7 +21,8 @@ public class PlayerControllerOptionTwo : MonoBehaviour
     private bool movingUp    = false;
     private bool movingDown  = false;
 
-    private Vector3 movementVector = new(0, 0, 0);
+    private Vector3 movementAmplitude = new(0, 0, 0);
+    private Vector3 movementVector   = new(0, 0, 0);
 
     void Start()
     {
@@ -33,29 +34,44 @@ public class PlayerControllerOptionTwo : MonoBehaviour
 
     void FixedUpdate()
     {
-        movementVector = MovePlayer();
-        TranslatePlayer(movementVector);
+        movementVector = ReadInputs();
+        HandleDirectionChange(movementVector);
+
+
+        movementAmplitude = ReadAmplitude(movementVector);
+        AcceleratePlayer(CalculateAccelerations(movementAmplitude));
+        NormalizeMaxSpeed();
+        MovePlayer(movementAmplitude);
     }
 
-    Vector3 MovePlayer()
+    Vector3 ReadInputs()
     {
-        float inputX   = Input.GetAxis("Horizontal");
-        float inputY   = Input.GetAxis("Vertical");
+        Vector3 input = new(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
+        return input;
+    }
 
-        if (inputX < 0 && !movingLeft)
+    Vector3 ReadAmplitude(Vector3 input)
+    {
+        input = new(MathF.Abs(input.x), MathF.Abs(input.y));
+        return input;
+    }
+
+    void HandleDirectionChange(Vector3 input)
+    {
+        if (input.x < 0 && !movingLeft)
         {
-            horizontalSpeed = negativeSpeed; 
+            horizontalSpeed = negativeSpeed;
             movingLeft = true;
             movingRight = false;
         }
-        if (inputX > 0 && !movingRight)
+        if (input.x > 0 && !movingRight)
         {
             horizontalSpeed = baseSpeed;
             movingRight = true;
             movingLeft = false;
         }
 
-        if (inputX == 0)
+        if (input.x == 0)
         {
             if (movingLeft)
             {
@@ -83,19 +99,19 @@ public class PlayerControllerOptionTwo : MonoBehaviour
             }
         }
 
-        if (inputY < 0 && !movingDown)
+        if (input.y < 0 && !movingDown)
         {
             verticalSpeed = -baseSpeed;
             movingDown = true;
             movingUp = false;
         }
-        if (inputY > 0 && !movingUp)
+        if (input.y > 0 && !movingUp)
         {
             verticalSpeed = baseSpeed;
             movingUp = true;
             movingDown = false;
         }
-        if (inputY == 0)
+        if (input.y == 0)
         {
             if (movingDown)
             {
@@ -108,7 +124,7 @@ public class PlayerControllerOptionTwo : MonoBehaviour
                 {
                     verticalSpeed += playerDcc;
                 }
- 
+
             }
             if (movingUp)
             {
@@ -123,99 +139,45 @@ public class PlayerControllerOptionTwo : MonoBehaviour
                 }
             }
         }
-
-        inputX = MathF.Abs(inputX);
-        inputY = MathF.Abs(inputY);
-
-
-        //aqui cai na armadilha de que a aceleração não pode ser ajustada facilmente para a horizontal. A tentativa de corrigir apenas distribui a aceleração igualmente (com um pequeno bug) entre os dois eixos.
-        if (movingLeft && horizontalSpeed > negativeMaxSpeed)
-        {
-            if (movingDown && verticalSpeed > negativeMaxSpeed)
-            {
-                float totalInput = inputX + inputY;
-                float correctAccX = playerAcc * (inputX / totalInput);
-                float correctAccY = playerAcc * (inputY / totalInput);
-
-                horizontalSpeed -= correctAccX;
-                verticalSpeed   -= correctAccY;
-            }
-            else if (movingUp && verticalSpeed < maxSpeed)
-            {
-                float totalInput = inputX + inputY;
-                float correctAccX = playerAcc * (inputX / totalInput);
-                float correctAccY = playerAcc * (inputY / totalInput);
-
-                horizontalSpeed -= correctAccX;
-                verticalSpeed   += correctAccY;
-            }
-            else if ((horizontalSpeed - playerAcc) > negativeMaxSpeed)
-            {
-                horizontalSpeed -= playerAcc;
-            }
-            else
-            {
-                horizontalSpeed = negativeMaxSpeed;
-            }
-        }
-        else if (movingRight && horizontalSpeed < maxSpeed)
-        {
-            if (movingDown && verticalSpeed > negativeMaxSpeed)
-            {
-                float totalInput = inputX + inputY;
-                float correctAccX = playerAcc * (inputX / totalInput);
-                float correctAccY = playerAcc * (inputY / totalInput);
-
-                horizontalSpeed += correctAccX;
-                verticalSpeed -= correctAccY;
-            }
-            else if (movingUp && verticalSpeed < maxSpeed)
-            {
-                float totalInput = inputX + inputY;
-                float correctAccX = playerAcc * (inputX / totalInput);
-                float correctAccY = playerAcc * (inputY / totalInput);
-
-                horizontalSpeed += correctAccX;
-                verticalSpeed += correctAccY;
-            }
-            else if ((horizontalSpeed + playerAcc) < maxSpeed)
-            {
-                horizontalSpeed += playerAcc;
-            }
-            else
-            {
-                horizontalSpeed = maxSpeed;
-            }
-        }
-        else if (movingUp && verticalSpeed < maxSpeed)
-        {
-            if ((verticalSpeed + playerAcc) < maxSpeed)
-            {
-                verticalSpeed += playerAcc;
-            }
-            else
-            {
-                verticalSpeed = maxSpeed;
-            }
-        }
-        else if (movingDown && verticalSpeed > negativeMaxSpeed)
-        {
-            if ((verticalSpeed - playerAcc) > negativeMaxSpeed)
-            {
-                verticalSpeed -= playerAcc;
-            }
-            else
-            {
-                verticalSpeed = negativeMaxSpeed;
-            }
-        }
-
-        Vector3 result = new(inputX, inputY, 0);
-        
-        return result;
     }
 
-    void TranslatePlayer(Vector3 xyz)
+    Vector3 CalculateAccelerations(Vector3 input)
+    {
+        float totalInput = input.x + input.y;
+        playerAcc = new Vector3(input.x, input.y, playerAcc.z);
+
+        //racionalizar baseado nos valores de input
+        playerAcc.x = playerAcc.z * (input.x/totalInput);
+        playerAcc.y = playerAcc.z * (input.y/totalInput);
+
+        //multiplicar por time.fixeddeltatime para evitar acelerar demais em pouco tempo
+        playerAcc.x *= Time.fixedDeltaTime;
+        playerAcc.y *= Time.fixedDeltaTime;
+
+        return playerAcc;
+    }
+
+    void AcceleratePlayer(Vector3 acceleration)
+    {
+        if (movingLeft)
+        {
+            horizontalSpeed -= acceleration.x;
+        }
+        if (movingRight)
+        {
+            horizontalSpeed += acceleration.x;
+        }
+        if (movingUp)
+        {
+            verticalSpeed += acceleration.y;
+        }
+        if (movingDown)
+        {
+            verticalSpeed -= acceleration.y;
+        }
+    }
+
+    void MovePlayer(Vector3 xyz)
     {
         if (xyz != new Vector3(0,0,0))
         {
@@ -225,6 +187,16 @@ public class PlayerControllerOptionTwo : MonoBehaviour
         }
     }
 
-    
+    void NormalizeMaxSpeed()
+    {
+        if (horizontalSpeed > maxSpeed)
+            horizontalSpeed = maxSpeed;
+        if (verticalSpeed > maxSpeed)
+            verticalSpeed = maxSpeed;
+        if (horizontalSpeed < negativeMaxSpeed)
+            horizontalSpeed = negativeMaxSpeed;
+        if (verticalSpeed < negativeMaxSpeed)
+            verticalSpeed = negativeMaxSpeed;
+    }
 
 }

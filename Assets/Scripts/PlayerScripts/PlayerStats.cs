@@ -91,6 +91,7 @@ public class PlayerStats : MonoBehaviour
             return maxSpeed;
         }
 
-        return 0;
+        maxSpeed = (10 + agility) / 100;
+        return maxSpeed;
     }
 }
