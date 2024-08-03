@@ -8,10 +8,10 @@ public class PlayerControllerOptionTwo : MonoBehaviour
     public float baseSpeed = 0.5f;
     public float playerAcc = 0.01f;
     public float playerDcc = 0.5f; // Atualmente não efetivo, apesar de estar no código. O problema é que só é acionada quando o jogador solta o botão, mas o Axis é zerado imediatamente quando isso acontece, zerando imediatamente a velocidade do jogador no próximo fixedupdate.
-    public float maxSpeed  = 1.0f;
+    public float maxSpeed;
 
-    public float horizontalSpeed;
-    public float verticalSpeed;
+    public float horizontalSpeed = 0;
+    public float verticalSpeed   = 0;
 
     private float negativeSpeed;
     private float negativeMaxSpeed;
@@ -21,76 +21,26 @@ public class PlayerControllerOptionTwo : MonoBehaviour
     private bool movingUp    = false;
     private bool movingDown  = false;
 
+    private Vector3 movementVector = new(0, 0, 0);
 
     void Start()
     {
+        maxSpeed = this.gameObject.GetComponent<PlayerStats>().CalculateMaxSpeed();
+
         negativeSpeed = baseSpeed * -1;
         negativeMaxSpeed = maxSpeed * -1;
-
-        horizontalSpeed = 0;
-        verticalSpeed = 0;
-    }
-
-
-    void Update()
-    {
-        
     }
 
     void FixedUpdate()
     {
-        TranslatePlayer(MovePlayer());
+        movementVector = MovePlayer();
+        TranslatePlayer(movementVector);
     }
 
     Vector3 MovePlayer()
     {
         float inputX   = Input.GetAxis("Horizontal");
         float inputY   = Input.GetAxis("Vertical");
-
-        if (movingLeft)
-        {
-            if ((horizontalSpeed - playerAcc) > negativeMaxSpeed)
-            {
-                horizontalSpeed -= playerAcc;
-            }
-            else
-            {
-                horizontalSpeed = negativeMaxSpeed;
-            }
-        }
-        if (movingRight)
-        {
-            if ((horizontalSpeed + playerAcc) < maxSpeed)
-            {
-                horizontalSpeed += playerAcc;
-            }
-            else
-            {
-                horizontalSpeed = maxSpeed;
-            }
-        }
-        if (movingUp)
-        {
-            if ((verticalSpeed + playerAcc) < maxSpeed)
-            {
-                verticalSpeed += playerAcc;
-            }
-            else
-            {
-                verticalSpeed = maxSpeed;
-            }
-        }
-        if (movingDown)
-        {
-            if ((verticalSpeed - playerAcc) > negativeMaxSpeed)
-            {
-                verticalSpeed -= playerAcc;
-            }
-            else
-            {
-                verticalSpeed = negativeMaxSpeed;
-            }
-        }
 
         if (inputX < 0 && !movingLeft)
         {
@@ -177,6 +127,89 @@ public class PlayerControllerOptionTwo : MonoBehaviour
         inputX = MathF.Abs(inputX);
         inputY = MathF.Abs(inputY);
 
+
+        //aqui cai na armadilha de que a aceleração não pode ser ajustada facilmente para a horizontal. A tentativa de corrigir apenas distribui a aceleração igualmente (com um pequeno bug) entre os dois eixos.
+        if (movingLeft && horizontalSpeed > negativeMaxSpeed)
+        {
+            if (movingDown && verticalSpeed > negativeMaxSpeed)
+            {
+                float totalInput = inputX + inputY;
+                float correctAccX = playerAcc * (inputX / totalInput);
+                float correctAccY = playerAcc * (inputY / totalInput);
+
+                horizontalSpeed -= correctAccX;
+                verticalSpeed   -= correctAccY;
+            }
+            else if (movingUp && verticalSpeed < maxSpeed)
+            {
+                float totalInput = inputX + inputY;
+                float correctAccX = playerAcc * (inputX / totalInput);
+                float correctAccY = playerAcc * (inputY / totalInput);
+
+                horizontalSpeed -= correctAccX;
+                verticalSpeed   += correctAccY;
+            }
+            else if ((horizontalSpeed - playerAcc) > negativeMaxSpeed)
+            {
+                horizontalSpeed -= playerAcc;
+            }
+            else
+            {
+                horizontalSpeed = negativeMaxSpeed;
+            }
+        }
+        else if (movingRight && horizontalSpeed < maxSpeed)
+        {
+            if (movingDown && verticalSpeed > negativeMaxSpeed)
+            {
+                float totalInput = inputX + inputY;
+                float correctAccX = playerAcc * (inputX / totalInput);
+                float correctAccY = playerAcc * (inputY / totalInput);
+
+                horizontalSpeed += correctAccX;
+                verticalSpeed -= correctAccY;
+            }
+            else if (movingUp && verticalSpeed < maxSpeed)
+            {
+                float totalInput = inputX + inputY;
+                float correctAccX = playerAcc * (inputX / totalInput);
+                float correctAccY = playerAcc * (inputY / totalInput);
+
+                horizontalSpeed += correctAccX;
+                verticalSpeed += correctAccY;
+            }
+            else if ((horizontalSpeed + playerAcc) < maxSpeed)
+            {
+                horizontalSpeed += playerAcc;
+            }
+            else
+            {
+                horizontalSpeed = maxSpeed;
+            }
+        }
+        else if (movingUp && verticalSpeed < maxSpeed)
+        {
+            if ((verticalSpeed + playerAcc) < maxSpeed)
+            {
+                verticalSpeed += playerAcc;
+            }
+            else
+            {
+                verticalSpeed = maxSpeed;
+            }
+        }
+        else if (movingDown && verticalSpeed > negativeMaxSpeed)
+        {
+            if ((verticalSpeed - playerAcc) > negativeMaxSpeed)
+            {
+                verticalSpeed -= playerAcc;
+            }
+            else
+            {
+                verticalSpeed = negativeMaxSpeed;
+            }
+        }
+
         Vector3 result = new(inputX, inputY, 0);
         
         return result;
@@ -192,11 +225,6 @@ public class PlayerControllerOptionTwo : MonoBehaviour
         }
     }
 
-    void UpdatePlayerSpeed()
-    {
     
-    }
-   
 
-    
 }
