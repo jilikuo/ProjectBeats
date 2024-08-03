@@ -65,20 +65,16 @@ public class PlayerStats : MonoBehaviour
 
     void Start()
     {
-        CalculateMaxStats();
         InitiateStats();
-    }
-
-    void CalculateMaxStats()
-    {
-        maxHealth  = 100   + constitution * 25;
-        maxStamina = 100   + vigor * 10;
-        maxMana    = 100   + spirit * 50;
-        maxSpeed   = (10   + agility) / 100;
     }
 
     void InitiateStats()
     {
+        maxHealth  = 100   + constitution * 25;
+        maxStamina = 100   + vigor * 10;
+        maxMana    = 100   + spirit * 50;
+        CalculateMaxSpeed(true);
+        CalculateAcceleration(true);
         health = maxHealth;
         stamina = maxStamina;
         mana = maxMana;
@@ -93,5 +89,16 @@ public class PlayerStats : MonoBehaviour
 
         maxSpeed = (10 + agility) / 100;
         return maxSpeed;
+    }
+
+    public float CalculateAcceleration(bool update = false)
+    {
+        if (!update)
+        {
+            return acceleration;
+        }
+
+        acceleration = (1 + dextery) / 100;
+        return acceleration;
     }
 }

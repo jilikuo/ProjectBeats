@@ -22,11 +22,12 @@ public class PlayerControllerOptionTwo : MonoBehaviour
     private bool movingDown  = false;
 
     private Vector3 movementAmplitude = new(0, 0, 0);
-    private Vector3 movementVector   = new(0, 0, 0);
+    private Vector3 movementVector    = new(0, 0, 0);
 
     void Start()
     {
         maxSpeed = this.gameObject.GetComponent<PlayerStats>().CalculateMaxSpeed();
+        playerAcc.z = this.gameObject.GetComponent<PlayerStats>().CalculateAcceleration();
 
         negativeSpeed = baseSpeed * -1;
         negativeMaxSpeed = maxSpeed * -1;
@@ -146,6 +147,7 @@ public class PlayerControllerOptionTwo : MonoBehaviour
         float totalInput = input.x + input.y;
         playerAcc = new Vector3(input.x, input.y, playerAcc.z);
 
+
         //racionalizar baseado nos valores de input
         playerAcc.x = playerAcc.z * (input.x/totalInput);
         playerAcc.y = playerAcc.z * (input.y/totalInput);
@@ -179,7 +181,7 @@ public class PlayerControllerOptionTwo : MonoBehaviour
 
     void MovePlayer(Vector3 xyz)
     {
-        if (xyz != new Vector3(0,0,0))
+        if (xyz != new Vector3(0,0,0) || float.IsNaN(xyz.x) || float.IsNaN(xyz.y))
         {
             float xSpeed = xyz.x * horizontalSpeed;
             float ySpeed = xyz.y * verticalSpeed;
