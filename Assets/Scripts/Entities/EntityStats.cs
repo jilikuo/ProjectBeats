@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStats : MonoBehaviour
-{    
+public class EntityStats : MonoBehaviour
+{
     //attributes
     //physical
     public float strenght;
@@ -17,7 +17,7 @@ public class PlayerStats : MonoBehaviour
     public float finesse;
     //mágico
     public float intelligence;
-    public float willpower; 
+    public float willpower;
     public float wisdom;
     public float spirit;
     //social
@@ -70,9 +70,9 @@ public class PlayerStats : MonoBehaviour
 
     void InitiateStats()
     {
-        maxHealth  = 100   + constitution * 25;
-        maxStamina = 100   + vigor * 10;
-        maxMana    = 100   + spirit * 50;
+        maxHealth = 100 + constitution * 25;
+        maxStamina = 100 + vigor * 10;
+        maxMana = 100 + spirit * 50;
         CalculateMaxSpeed(true);
         CalculateAcceleration(true);
         health = maxHealth;
@@ -87,7 +87,7 @@ public class PlayerStats : MonoBehaviour
             return maxSpeed;
         }
 
-        maxSpeed = (10 + agility) / 100;
+        maxSpeed = (10 + agility);
         return maxSpeed;
     }
 
@@ -98,7 +98,7 @@ public class PlayerStats : MonoBehaviour
             return acceleration;
         }
 
-        acceleration = (1 + dextery) / 100;
+        acceleration = (1 + dextery);
         return acceleration;
     }
 }

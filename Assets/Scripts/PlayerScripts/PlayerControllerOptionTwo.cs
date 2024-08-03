@@ -1,13 +1,11 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerControllerOptionTwo : MonoBehaviour
 {
     public float baseSpeed = 0.5f;
     public Vector3 playerAcc = new Vector3(0, 0, 0.01f);
-    public float playerDcc = 0.5f; // Atualmente não efetivo, apesar de estar no código. O problema é que só é acionada quando o jogador solta o botão, mas o Axis é zerado imediatamente quando isso acontece, zerando imediatamente a velocidade do jogador no próximo fixedupdate.
+    public float decelerationRate = 0.8f; // Taxa de desaceleração suave
     public float maxSpeed;
 
     public float horizontalSpeed = 0;
@@ -24,18 +22,35 @@ public class PlayerControllerOptionTwo : MonoBehaviour
     private Vector3 movementAmplitude = new(0, 0, 0);
     private Vector3 movementVector    = new(0, 0, 0);
 
+    private Rigidbody2D playerRb;
+    private EntityStats entityStats;
+
     void Start()
     {
-        maxSpeed = this.gameObject.GetComponent<PlayerStats>().CalculateMaxSpeed();
-        playerAcc.z = this.gameObject.GetComponent<PlayerStats>().CalculateAcceleration();
+        playerRb = GetComponent<Rigidbody2D>();
+        entityStats = GetComponent<EntityStats>();
+
+        // Certifique-se de que o Rigidbody não é cinemático e a gravidade está desativada para movimento controlado manualmente
+        playerRb.isKinematic = false;
+        playerRb.gravityScale = 0;
+
+
+        maxSpeed = entityStats.CalculateMaxSpeed();
+        baseSpeed = maxSpeed/10;
+        playerAcc.z = entityStats.CalculateAcceleration();
 
         negativeSpeed = baseSpeed * -1;
         negativeMaxSpeed = maxSpeed * -1;
     }
 
-    void FixedUpdate()
+    private void Update()
     {
         movementVector = ReadInputs();
+    }
+
+    void FixedUpdate()
+    {
+
         HandleDirectionChange(movementVector);
 
 
@@ -74,30 +89,9 @@ public class PlayerControllerOptionTwo : MonoBehaviour
 
         if (input.x == 0)
         {
-            if (movingLeft)
-            {
-                if ((horizontalSpeed + playerDcc) > negativeSpeed)
-                {
-                    horizontalSpeed = 0;
-                    movingLeft = false;
-                }
-                else
-                {
-                    horizontalSpeed += playerDcc;
-                }
-            }
-            if (movingRight)
-            {
-                if ((horizontalSpeed - playerDcc) < baseSpeed)
-                {
-                    horizontalSpeed = 0;
-                    movingRight = false;
-                }
-                else
-                {
-                    horizontalSpeed -= playerDcc;
-                }
-            }
+            movingLeft = movingRight = false;
+            horizontalSpeed *= decelerationRate;
+            if (Mathf.Abs(horizontalSpeed) < 0.01f) horizontalSpeed = 0;
         }
 
         if (input.y < 0 && !movingDown)
@@ -114,39 +108,21 @@ public class PlayerControllerOptionTwo : MonoBehaviour
         }
         if (input.y == 0)
         {
-            if (movingDown)
-            {
-                if ((verticalSpeed + playerDcc) > negativeSpeed)
-                {
-                    verticalSpeed = 0;
-                    movingDown = false;
-                }
-                else
-                {
-                    verticalSpeed += playerDcc;
-                }
-
-            }
-            if (movingUp)
-            {
-                if ((verticalSpeed - playerDcc) < baseSpeed)
-                {
-                    verticalSpeed = 0;
-                    movingUp = false;
-                }
-                else
-                {
-                    verticalSpeed -= playerDcc;
-                }
-            }
+            movingUp = movingDown = false;
+            verticalSpeed *= decelerationRate;
+            if (Mathf.Abs(verticalSpeed) < 0.01f) verticalSpeed = 0;
         }
     }
 
     Vector3 CalculateAccelerations(Vector3 input)
     {
         float totalInput = input.x + input.y;
-        playerAcc = new Vector3(input.x, input.y, playerAcc.z);
-
+        if (totalInput == 0)
+        {
+            playerAcc.x = 0;
+            playerAcc.y = 0;
+            return playerAcc;
+        }
 
         //racionalizar baseado nos valores de input
         playerAcc.x = playerAcc.z * (input.x/totalInput);
@@ -181,12 +157,9 @@ public class PlayerControllerOptionTwo : MonoBehaviour
 
     void MovePlayer(Vector3 xyz)
     {
-        if (xyz != new Vector3(0,0,0) || float.IsNaN(xyz.x) || float.IsNaN(xyz.y))
-        {
-            float xSpeed = xyz.x * horizontalSpeed;
-            float ySpeed = xyz.y * verticalSpeed;
-            transform.Translate(xSpeed, ySpeed, 0);
-        }
+        float xSpeed = horizontalSpeed;
+        float ySpeed = verticalSpeed;
+        playerRb.velocity = new Vector2(xSpeed, ySpeed);
     }
 
     void NormalizeMaxSpeed()
@@ -200,5 +173,4 @@ public class PlayerControllerOptionTwo : MonoBehaviour
         if (verticalSpeed < negativeMaxSpeed)
             verticalSpeed = negativeMaxSpeed;
     }
-
 }

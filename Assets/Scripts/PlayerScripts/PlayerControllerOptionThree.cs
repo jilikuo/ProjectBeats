@@ -8,7 +8,7 @@ public class PlayerControllerOptionThree : MonoBehaviour
 
     void Start()
     {
-        maxSpeed = this.gameObject.GetComponent<PlayerStats>().CalculateMaxSpeed();
+        maxSpeed = this.gameObject.GetComponent<EntityStats>().CalculateMaxSpeed();
     }
 
     void FixedUpdate()

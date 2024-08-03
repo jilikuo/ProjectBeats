@@ -46,7 +46,6 @@ public class CameraMovement : MonoBehaviour
             moveY = playerPos.y - (cameraPos.y - verticalBoundary);
         }
 
-
         cameraPos.x += moveX;
         cameraPos.y += moveY;
         mainCamera.position = cameraPos;
