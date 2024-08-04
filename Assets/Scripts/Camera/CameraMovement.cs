@@ -15,6 +15,11 @@ public class CameraMovement : MonoBehaviour
 
     private void Start()
     {
+        if (target == null)
+        {
+            target = GameObject.FindGameObjectWithTag("Player").transform;
+        }
+
         playerPos = target.transform.position;
         cameraPos = mainCamera.transform.position;
         mainCamera.transform.position = new Vector3(playerPos.x, playerPos.y, cameraPos.z);
