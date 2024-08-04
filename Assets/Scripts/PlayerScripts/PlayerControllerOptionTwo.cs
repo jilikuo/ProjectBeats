@@ -26,19 +26,19 @@ public class PlayerControllerOptionTwo : MonoBehaviour
 
     void Start()
     {
-        playerRb = GetComponent<Rigidbody2D>();
+        playerRb    = GetComponent<Rigidbody2D>();
         entityStats = GetComponent<EntityStats>();
 
         // Ensure the Rigidbody is not kinematic and gravity is disabled for manual control
-        playerRb.isKinematic = false;
+        playerRb.isKinematic  = false;
         playerRb.gravityScale = 0;
 
         playerAcc.z = entityStats.CalculateAcceleration();
-        maxSpeed = entityStats.CalculateMaxSpeed();
-        baseSpeed = maxSpeed * 70 / 10;
+        maxSpeed    = entityStats.CalculateMaxSpeed();
+        baseSpeed   = maxSpeed * 70 / 100;
 
-        negativeSpeed = baseSpeed * -1;
-        negativeMaxSpeed = maxSpeed * -1;
+        negativeSpeed    = -baseSpeed;
+        negativeMaxSpeed = -maxSpeed;
     }
 
     private void Update()
@@ -50,13 +50,13 @@ public class PlayerControllerOptionTwo : MonoBehaviour
     {
         HandleDirectionChange(movementVector);
         AcceleratePlayer(movementVector);
-        NormalizeMaxSpeed();
         MovePlayer();
     }
 
     Vector3 ReadInputs()
     {
-        return new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
+        Vector3 input = new(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
+        return input;
     }
 
     void HandleDirectionChange(Vector3 input)
@@ -122,14 +122,11 @@ public class PlayerControllerOptionTwo : MonoBehaviour
 
     void MovePlayer()
     {
-        playerRb.velocity = new Vector2(horizontalSpeed, verticalSpeed);
-    }
-
-    void NormalizeMaxSpeed()
-    {
-        if (horizontalSpeed > maxSpeed) horizontalSpeed = maxSpeed;
-        if (verticalSpeed > maxSpeed) verticalSpeed = maxSpeed;
-        if (horizontalSpeed < negativeMaxSpeed) horizontalSpeed = negativeMaxSpeed;
-        if (verticalSpeed < negativeMaxSpeed) verticalSpeed = negativeMaxSpeed;
+        Vector2 velocity = new Vector2(horizontalSpeed, verticalSpeed);
+        if (velocity.magnitude > maxSpeed)
+        {
+            velocity = velocity.normalized * maxSpeed;
+        }
+        playerRb.velocity = velocity;
     }
 }
