@@ -68,6 +68,12 @@ public class EntityStats : MonoBehaviour
         InitiateStats();
     }
 
+    private void FixedUpdate()
+    {
+        CalculateMaxSpeed(true);
+        CalculateAcceleration(true);
+    }
+
     void InitiateStats()
     {
         maxHealth = 100 + constitution * 25;
@@ -84,10 +90,18 @@ public class EntityStats : MonoBehaviour
     {
         if (!update)
         {
+            if (maxSpeed == 0)
+            {
+                CalculateMaxSpeed(true);
+            }
             return maxSpeed;
         }
 
-        maxSpeed = (10 + agility);
+        maxSpeed = (10 + (agility * 5))/10;
+        if (maxSpeed == 0)
+        {
+            maxSpeed = 0.001f;
+        }
         return maxSpeed;
     }
 
@@ -98,7 +112,7 @@ public class EntityStats : MonoBehaviour
             return acceleration;
         }
 
-        acceleration = (1 + dextery);
+        acceleration = (10f + dextery)/10f;
         return acceleration;
     }
 }
