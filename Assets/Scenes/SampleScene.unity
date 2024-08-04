@@ -231,79 +231,11 @@ MonoBehaviour:
   mainCamera: {fileID: 519420032}
   horizontalBoundary: 8
   verticalBoundary: 4
---- !u!1 &736408352 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2148291375696681789, guid: 76c000115db797b4e964e2555d871da5, type: 3}
-  m_PrefabInstance: {fileID: 4568146181077720725}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &736408355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 736408352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4276ff782273f1a418519d42d778e16e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  strenght: 0
-  resistance: 0
-  constitution: 0
-  vigor: 0
-  agility: 5
-  dextery: 0
-  accuracy: 0
-  finesse: 0
-  intelligence: 0
-  willpower: 0
-  wisdom: 0
-  spirit: 0
-  charisma: 0
-  influence: 0
-  leadership: 0
-  presence: 0
-  luck: 0
---- !u!1 &1752880105 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1414725975483600876, guid: 33d1fed4a774e7045ad7f6bbed762fac, type: 3}
-  m_PrefabInstance: {fileID: 2854231350178192192}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1752880109 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3624389812555553734, guid: 33d1fed4a774e7045ad7f6bbed762fac, type: 3}
   m_PrefabInstance: {fileID: 2854231350178192192}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1752880111
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1752880105}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4276ff782273f1a418519d42d778e16e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  strenght: 5
-  resistance: 5
-  constitution: 5
-  vigor: 5
-  agility: 5
-  dextery: 5
-  accuracy: 5
-  finesse: 5
-  intelligence: 5
-  willpower: 5
-  wisdom: 5
-  spirit: 5
-  charisma: 5
-  influence: 5
-  leadership: 5
-  presence: 5
-  luck: 5
 --- !u!1001 &2854231350178192192
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -368,22 +300,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8350321137940909124, guid: 33d1fed4a774e7045ad7f6bbed762fac, type: 3}
-      propertyPath: agility
-      value: 5
+    - target: {fileID: 7247478981441114630, guid: 33d1fed4a774e7045ad7f6bbed762fac, type: 3}
+      propertyPath: m_Constraints
+      value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 8350321137940909124, guid: 33d1fed4a774e7045ad7f6bbed762fac, type: 3}
-      propertyPath: dextery
-      value: 5
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8350321137940909124, guid: 33d1fed4a774e7045ad7f6bbed762fac, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1414725975483600876, guid: 33d1fed4a774e7045ad7f6bbed762fac, type: 3}
-      insertIndex: 2
-      addedObject: {fileID: 1752880111}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33d1fed4a774e7045ad7f6bbed762fac, type: 3}
 --- !u!1001 &4568146181077720725
 PrefabInstance:
@@ -448,10 +372,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2148291375696681789, guid: 76c000115db797b4e964e2555d871da5, type: 3}
-      insertIndex: 1
-      addedObject: {fileID: 736408355}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 76c000115db797b4e964e2555d871da5, type: 3}
 --- !u!1001 &6003138937933232600
 PrefabInstance:
