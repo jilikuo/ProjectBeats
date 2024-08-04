@@ -68,11 +68,19 @@ public class EntityStats : MonoBehaviour
         InitiateStats();
     }
 
-    private void FixedUpdate()
+    private void Update()
+    {
+        CheckHealth();
+    }
+
+    void FixedUpdate()
     {
         CalculateMaxSpeed(true);
         CalculateAcceleration(true);
+        CalculatePhysicalDamage(true);
     }
+
+
 
     void InitiateStats()
     {
@@ -81,9 +89,21 @@ public class EntityStats : MonoBehaviour
         maxMana = 100 + spirit * 50;
         CalculateMaxSpeed(true);
         CalculateAcceleration(true);
+        CalculatePhysicalDamage(true);
         health = maxHealth;
         stamina = maxStamina;
         mana = maxMana;
+    }
+
+    public float CalculatePhysicalDamage(bool update = false)
+    {
+        if (!update)
+        {
+            return physicalDamage;
+        }
+
+        physicalDamage = (10 * strenght);
+        return physicalDamage;
     }
 
     public float CalculateMaxSpeed(bool update = false)
@@ -114,5 +134,23 @@ public class EntityStats : MonoBehaviour
 
         acceleration = (10f + dextery)/10f;
         return acceleration;
+    }
+
+    public void Suicide()
+    {
+        health = 0;
+    }
+
+    void CheckHealth()
+    {
+        if (health <= 0)
+        {
+            Destroy(this.gameObject);
+        } 
+    }
+
+    public void TakeDamage(float incomingDamage)
+    {
+        health -= incomingDamage;
     }
 }

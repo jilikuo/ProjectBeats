@@ -231,24 +231,6 @@ MonoBehaviour:
   mainCamera: {fileID: 519420032}
   horizontalBoundary: 8
   verticalBoundary: 4
---- !u!1 &736408352 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2148291375696681789, guid: 76c000115db797b4e964e2555d871da5, type: 3}
-  m_PrefabInstance: {fileID: 4568146181077720725}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &736408359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 736408352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eecc4f2b07ec57441af373b687c49205, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 1752880105}
 --- !u!1 &1752880105 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1414725975483600876, guid: 33d1fed4a774e7045ad7f6bbed762fac, type: 3}
@@ -328,10 +310,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BasicEnemy
       objectReference: {fileID: 0}
-    - target: {fileID: 2928059252166322463, guid: 76c000115db797b4e964e2555d871da5, type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
+    - target: {fileID: 4214049461289315763, guid: 76c000115db797b4e964e2555d871da5, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 1752880105}
     - target: {fileID: 6312581475190727287, guid: 76c000115db797b4e964e2555d871da5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.79
@@ -375,10 +357,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2148291375696681789, guid: 76c000115db797b4e964e2555d871da5, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 736408359}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 76c000115db797b4e964e2555d871da5, type: 3}
 --- !u!1001 &6003138937933232600
 PrefabInstance:

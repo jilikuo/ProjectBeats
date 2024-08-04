@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7180720076741399527}
   - component: {fileID: 4702493850935919736}
   - component: {fileID: 2928059252166322463}
+  - component: {fileID: 4214049461289315763}
   m_Layer: 0
   m_Name: BasicEnemy
   m_TagString: Untagged
@@ -48,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4276ff782273f1a418519d42d778e16e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  strenght: 0
+  strenght: 2.5
   resistance: 0
   constitution: 0
   vigor: 0
@@ -185,7 +186,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -201,3 +202,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &4214049461289315763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2148291375696681789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eecc4f2b07ec57441af373b687c49205, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
