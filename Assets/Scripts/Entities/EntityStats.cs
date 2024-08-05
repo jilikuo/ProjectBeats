@@ -129,10 +129,18 @@ public class EntityStats : MonoBehaviour
     {
         if (!update)
         {
-            return acceleration;
+            if (acceleration == 0)
+            {
+                CalculateMaxSpeed(true);
+            }
+            return maxSpeed;
         }
 
         acceleration = (10f + dextery)/10f;
+        if (acceleration == 0)
+        {
+            acceleration = 0.001f;
+        }
         return acceleration;
     }
 

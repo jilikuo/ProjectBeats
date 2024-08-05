@@ -7,12 +7,9 @@ public class PlayerControllerOptionTwo : MonoBehaviour
     public float decelerationRate = 0.8f; //taxa de desaceleração de 80% da velocidade atual a cada fixed update
     public float maxSpeed;
 
-    public Vector3 playerAcc     =  Vector3.zero;
+    public float playerAcc       = 0;
     public float horizontalSpeed = 0;
     public float verticalSpeed   = 0;
-
-    private float negativeSpeed;
-    private float negativeMaxSpeed;
 
     private bool movingLeft  = false;
     private bool movingRight = false;
@@ -23,6 +20,7 @@ public class PlayerControllerOptionTwo : MonoBehaviour
 
     private Rigidbody2D playerRb;
     private EntityStats entityStats;
+    bool inputRead = false;
 
     void Start()
     {
@@ -33,12 +31,9 @@ public class PlayerControllerOptionTwo : MonoBehaviour
         playerRb.isKinematic  = false;
         playerRb.gravityScale = 0;
 
-        playerAcc.z = entityStats.CalculateAcceleration();
-        maxSpeed    = entityStats.CalculateMaxSpeed();
-        baseSpeed   = maxSpeed * 70 / 100;
-
-        negativeSpeed    = -baseSpeed;
-        negativeMaxSpeed = -maxSpeed;
+        playerAcc = entityStats.CalculateAcceleration();
+        maxSpeed  = entityStats.CalculateMaxSpeed();
+        baseSpeed = maxSpeed * 0.6f;
     }
 
     private void Update()
@@ -48,14 +43,24 @@ public class PlayerControllerOptionTwo : MonoBehaviour
 
     void FixedUpdate()
     {
-        HandleDirectionChange(movementVector);
-        AcceleratePlayer(movementVector);
+        if (inputRead)
+        {
+            HandleDirectionChange(movementVector);
+            inputRead = false;
+        }
+        AcceleratePlayer();
         MovePlayer();
     }
 
     Vector3 ReadInputs()
     {
         Vector3 input = new(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
+        if (input.magnitude > 1)
+        {
+            input.Normalize();
+        }
+        inputRead = true;
+
         return input;
     }
 
@@ -63,17 +68,17 @@ public class PlayerControllerOptionTwo : MonoBehaviour
     {
         if (input.x < 0 && !movingLeft)
         {
-            horizontalSpeed = negativeSpeed;
+            horizontalSpeed = -baseSpeed;
             movingLeft = true;
             movingRight = false;
         }
-        if (input.x > 0 && !movingRight)
+        else if (input.x > 0 && !movingRight)
         {
             horizontalSpeed = baseSpeed;
             movingRight = true;
             movingLeft = false;
         }
-        if (input.x == 0)
+        else if (input.x == 0)
         {
             movingLeft = movingRight = false;
             horizontalSpeed *= decelerationRate;
@@ -82,17 +87,17 @@ public class PlayerControllerOptionTwo : MonoBehaviour
 
         if (input.y < 0 && !movingDown)
         {
-            verticalSpeed = negativeSpeed;
+            verticalSpeed = -baseSpeed;
             movingDown = true;
             movingUp = false;
         }
-        if (input.y > 0 && !movingUp)
+        else if (input.y > 0 && !movingUp)
         {
             verticalSpeed = baseSpeed;
             movingUp = true;
             movingDown = false;
         }
-        if (input.y == 0)
+        else if (input.y == 0)
         {
             movingUp = movingDown = false;
             verticalSpeed *= decelerationRate;
@@ -100,24 +105,27 @@ public class PlayerControllerOptionTwo : MonoBehaviour
         }
     }
 
-    void AcceleratePlayer(Vector3 input)
+    void AcceleratePlayer()
     {
         if (movingLeft)
         {
-            horizontalSpeed = Mathf.Max(horizontalSpeed - playerAcc.z * Time.fixedDeltaTime, negativeMaxSpeed);
+            horizontalSpeed = Mathf.Min(horizontalSpeed - (playerAcc * Time.fixedDeltaTime), -baseSpeed + (playerAcc * Time.fixedDeltaTime));
         }
         if (movingRight)
         {
-            horizontalSpeed = Mathf.Min(horizontalSpeed + playerAcc.z * Time.fixedDeltaTime, maxSpeed);
+            horizontalSpeed = Mathf.Max(horizontalSpeed + (playerAcc * Time.fixedDeltaTime), baseSpeed - (playerAcc * Time.fixedDeltaTime));
         }
         if (movingUp)
         {
-            verticalSpeed = Mathf.Min(verticalSpeed + playerAcc.z * Time.fixedDeltaTime, maxSpeed);
+            verticalSpeed = Mathf.Max(verticalSpeed + (playerAcc * Time.fixedDeltaTime), baseSpeed - (playerAcc * Time.fixedDeltaTime));
         }
         if (movingDown)
         {
-            verticalSpeed = Mathf.Max(verticalSpeed - playerAcc.z * Time.fixedDeltaTime, negativeMaxSpeed);
+            verticalSpeed = Mathf.Min(verticalSpeed - (playerAcc * Time.fixedDeltaTime), -baseSpeed + (playerAcc * Time.fixedDeltaTime));
         }
+
+        horizontalSpeed = Mathf.Clamp(horizontalSpeed, -maxSpeed, maxSpeed);
+        verticalSpeed = Mathf.Clamp(verticalSpeed, -maxSpeed, maxSpeed);
     }
 
     void MovePlayer()

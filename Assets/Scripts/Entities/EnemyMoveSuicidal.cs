@@ -10,6 +10,7 @@ public class EnemyMoveSuicidal : MonoBehaviour
 
     private EntityStats stats;
     private float speed;
+    private Rigidbody2D enemyRb;
 
     void Start()
     {
@@ -19,18 +20,17 @@ public class EnemyMoveSuicidal : MonoBehaviour
         }
 
         stats = GetComponent<EntityStats>();
+        enemyRb = GetComponent<Rigidbody2D>();
 
         playerPos = target.transform;
 
-        speed = stats.CalculateMaxSpeed();
+        speed = (stats.CalculateMaxSpeed()) * 80/100;
     }
 
     void FixedUpdate()
     {
+        Vector3 direction = (playerPos.position - transform.position).normalized;
 
-        Vector3 direction = playerPos.position - transform.position;
-        direction.Normalize();
-
-        transform.position += direction * speed * Time.fixedDeltaTime;
+        enemyRb.velocity = direction * speed;
     }
 }
