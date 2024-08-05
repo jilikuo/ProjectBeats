@@ -50,22 +50,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   strenght: 1
-  resistance: 0
-  constitution: 0
-  vigor: 0
+  resistance: 1
+  constitution: 1
+  vigor: 1
   agility: 5
-  dextery: 0
-  accuracy: 0
-  finesse: 0
-  intelligence: 0
-  willpower: 0
-  wisdom: 0
-  spirit: 0
-  charisma: 0
-  influence: 0
-  leadership: 0
-  presence: 0
-  luck: 0
+  dextery: 1
+  accuracy: 1
+  finesse: 1
+  intelligence: 1
+  willpower: 1
+  wisdom: 1
+  spirit: 1
+  charisma: 1
+  influence: 1
+  leadership: 1
+  presence: 1
+  luck: 1
 --- !u!114 &2128013851519800085
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -30,45 +30,45 @@ public class EntityStats : MonoBehaviour
 
     //stats
     //physical
-    private float physicalDamage;    // strenght (95%) resistance (5%)
-    private float physicalDefense;   // resistance
-    private float health;            // constitution
-    private float maxHealth;         // constitution
-    private float healthRegen;       // constitution (50%) resistance (50%)
-    private float stamina;           // vigor
-    private float maxStamina;        // vigor
-    private float staminaRegen;      // vigor (50%) constitution (25%) strenght (20%) resistance (5%)
+    [HideInInspector] public float physicalDamage;    // strenght (95%) resistance (5%)
+    [HideInInspector] public float physicalDefense;   // resistance
+    [HideInInspector] public float health;            // constitution
+    [HideInInspector] public float maxHealth;         // constitution
+    [HideInInspector] public float healthRegen;       // constitution (50%) resistance (50%)
+    [HideInInspector] public float stamina;           // vigor
+    [HideInInspector] public float maxStamina;        // vigor
+    [HideInInspector] public float staminaRegen;      // vigor (50%) constitution (25%) strenght (20%) resistance (5%)
     //coordenação motora
-    private float maxSpeed;          // agility
-    private float acceleration;      // dextery
-    private float decceleration;     // dextery?
-    private float attackPerSecond;   // dextery 50% agility 40% finesse 10%
-    private float precision;         // accuracy
-    private float criticalDamage;    // finesse (80%) accuracy (15%) luck (5%)
+    [HideInInspector] public float maxSpeed;          // agility
+    [HideInInspector] public float acceleration;      // dextery
+    [HideInInspector] public float decceleration;     // dextery?
+    [HideInInspector] public float attackPerSecond;   // dextery 50% agility 40% finesse 10%
+    [HideInInspector] public float precision;         // accuracy
+    [HideInInspector] public float criticalDamage;    // finesse (80%) accuracy (15%) luck (5%)
     //mágico
-    private float magicDamage;       // intelligence
-    private float magicDefense;      // willpower (60%) spirit (15%) intelligence (15%)
-    private float cooldownReduction; // wisdom
-    private float mana;              // spirit
-    private float maxMana;           // spirit
-    private float manaRegen;         // intelligence (10%) spirit (35%) wisdom (20%) willpower (20%) vigor (5%) constitution (5%) resistance (5%)
+    [HideInInspector] public float magicDamage;       // intelligence
+    [HideInInspector] public float magicDefense;      // willpower (60%) spirit (15%) intelligence (15%)
+    [HideInInspector] public float cooldownReduction; // wisdom
+    [HideInInspector] public float mana;              // spirit
+    [HideInInspector] public float maxMana;           // spirit
+    [HideInInspector] public float manaRegen;         // intelligence (10%) spirit (35%) wisdom (20%) willpower (20%) vigor (5%) constitution (5%) resistance (5%)
     //social
-    private float dropRate;          // charisma luck
-    private float spawnRate;         // influence
-    private float treasonRate;       // leadership luck 
-    private float treasonDuration;   // leadership influence
-    private float summonRate;        // leadership (80%) charisma (20%) 
-    private float summonDuration;    // presence
-    private float summonMorale;      // presence
+    [HideInInspector] public float dropRate;          // charisma luck
+    [HideInInspector] public float spawnRate;         // influence
+    [HideInInspector] public float treasonRate;       // leadership luck 
+    [HideInInspector] public float treasonDuration;   // leadership influence
+    [HideInInspector] public float summonRate;        // leadership (80%) charisma (20%) 
+    [HideInInspector] public float summonDuration;    // presence
+    [HideInInspector] public float summonMorale;      // presence
     //special
-    private float criticalChance;    //luck
+    [HideInInspector] public float criticalChance;    //luck
 
     void Start()
     {
         InitiateStats();
     }
 
-    private void Update()
+    void Update()
     {
         CheckHealth();
     }
@@ -99,10 +99,18 @@ public class EntityStats : MonoBehaviour
     {
         if (!update)
         {
+            if (physicalDamage == 0)
+            {
+                CalculatePhysicalDamage(true);
+            }
             return physicalDamage;
         }
 
         physicalDamage = (10 * strenght);
+        if (physicalDamage <= 0)
+        {
+            physicalDamage = 1f;
+        }
         return physicalDamage;
     }
 
@@ -118,7 +126,7 @@ public class EntityStats : MonoBehaviour
         }
 
         maxSpeed = (10 + (agility * 5))/10;
-        if (maxSpeed == 0)
+        if (maxSpeed <= 0)
         {
             maxSpeed = 0.001f;
         }
@@ -137,7 +145,7 @@ public class EntityStats : MonoBehaviour
         }
 
         acceleration = (10f + dextery)/10f;
-        if (acceleration == 0)
+        if (acceleration <= 0)
         {
             acceleration = 0.001f;
         }
