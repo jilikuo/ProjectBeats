@@ -181,7 +181,10 @@ MonoBehaviour:
   currentCD: 0
   projectileDuration: 10
   offset: 0.5
-  projectileSpeed: 1
+  projectileSpeed: 5
+  range: 2
+  projectiles: 5
+  triggerSpeed: 0.1
 --- !u!1 &2113337877
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,16 +6,48 @@ public class Projectile : MonoBehaviour
 {
     public GameObject parent;
     public GameObject target;
-    public readonly string playerTag = "Player"; 
+    public readonly string playerTag = "Player";
+    private Vector3 startingPoint; 
     private float damage;
+    private float range;
 
     void Start()
     {
-        damage = parent.GetComponent<EntityStats>().CalculatePhysicalDamage();
+        damage = parent.GetComponent<EntityStats>().CalculatePhysicalDamage() * 0.50f;
+        range = parent.GetComponent<PistolShoot>().range;
+        startingPoint = parent.transform.position;
+    }
+
+    void FixedUpdate()
+    {
+        VerifyOutOfRange();
+    }
+
+    void VerifyOutOfRange()
+    {
+        float distanceTravelled = Vector3.Distance(startingPoint, transform.position);
+        if (distanceTravelled > range)
+        {
+            Destroy(gameObject);
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.CompareTag("Projectile"))
+        {
+            if (collision.gameObject.GetComponent<Projectile>().parent == parent)
+            {
+                Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>());
+                return;
+            }
+            else
+            {
+                DestroyImmediate(collision.gameObject);
+                DestroyImmediate(gameObject);
+                return;
+            }
+        }
         if (collision.gameObject.CompareTag(parent.tag))
         {
             Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>());

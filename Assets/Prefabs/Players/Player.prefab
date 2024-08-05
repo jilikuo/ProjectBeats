@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7756446749415544078}
   - component: {fileID: 7525052422028069963}
   - component: {fileID: 824790635414374195}
+  - component: {fileID: 5780503460781239371}
   - component: {fileID: 7247478981441114630}
   - component: {fileID: 8195692806555110770}
   m_Layer: 0
@@ -117,6 +118,34 @@ MonoBehaviour:
   leadership: 5
   presence: 5
   luck: 5
+  physicalDamage: 0
+  physicalDefense: 0
+  health: 0
+  maxHealth: 0
+  healthRegen: 0
+  stamina: 0
+  maxStamina: 0
+  staminaRegen: 0
+  maxSpeed: 0
+  acceleration: 0
+  decceleration: 0
+  attackPerSecond: 0
+  precision: 0
+  criticalDamage: 0
+  magicDamage: 0
+  magicDefense: 0
+  cooldownReduction: 0
+  mana: 0
+  maxMana: 0
+  manaRegen: 0
+  dropRate: 0
+  spawnRate: 0
+  treasonRate: 0
+  treasonDuration: 0
+  summonRate: 0
+  summonDuration: 0
+  summonMorale: 0
+  criticalChance: 0
 --- !u!114 &824790635414374195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,9 +161,31 @@ MonoBehaviour:
   baseSpeed: 0.1
   decelerationRate: 0.8
   maxSpeed: 0
-  playerAcc: {x: 0, y: 0, z: 0.05}
+  playerAcc: 0
   horizontalSpeed: 0
   verticalSpeed: 0
+--- !u!114 &5780503460781239371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414725975483600876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98109e7c12f5f4744ab31f6b4c376ba2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectilePrefab: {fileID: 2829091763142108361, guid: 7a14867b178ecd049ba36adf315a1ab6, type: 3}
+  playerPos: {fileID: 3624389812555553734}
+  cooldown: 2
+  currentCD: 0
+  projectileDuration: 10
+  offset: 0.08
+  projectileSpeed: 10
+  range: 3
+  projectiles: 4
+  triggerSpeed: 0.07
 --- !u!50 &7247478981441114630
 Rigidbody2D:
   serializedVersion: 4

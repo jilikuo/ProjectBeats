@@ -63,15 +63,37 @@ public class EntityStats : MonoBehaviour
     //special
     [HideInInspector] public float criticalChance;    //luck
 
+    private SpriteRenderer spriteRenderer;
+    private Color originalColor;
+    private Color darknedColor;
+
     void Start()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        originalColor = spriteRenderer.color;
+        darknedColor = originalColor * 0.25f;
         InitiateStats();
     }
 
     void Update()
     {
         CheckHealth();
+        VisualizeDamage();
     }
+
+    void VisualizeDamage()
+    {
+        if (gameObject.CompareTag("Enemy"))
+        {
+            float healthPercentage = health / maxHealth;
+
+            // Update opacity
+            Color newColor = Color.Lerp(darknedColor, originalColor, healthPercentage);
+            newColor.a = 1;
+            spriteRenderer.color = newColor;
+        }
+    }
+
 
     void FixedUpdate()
     {
@@ -125,7 +147,7 @@ public class EntityStats : MonoBehaviour
             return maxSpeed;
         }
 
-        maxSpeed = (10 + (agility * 5))/10;
+        maxSpeed = (10 + (agility * 5)) / 10;
         if (maxSpeed <= 0)
         {
             maxSpeed = 0.001f;
@@ -144,7 +166,7 @@ public class EntityStats : MonoBehaviour
             return maxSpeed;
         }
 
-        acceleration = (10f + dextery)/10f;
+        acceleration = (10f + dextery) / 10f;
         if (acceleration <= 0)
         {
             acceleration = 0.001f;
@@ -161,12 +183,18 @@ public class EntityStats : MonoBehaviour
     {
         if (health <= 0)
         {
+            StartDeathRoutine();
             Destroy(this.gameObject);
-        } 
+        }
     }
 
     public void TakeDamage(float incomingDamage)
     {
         health -= incomingDamage;
+    }
+
+    void StartDeathRoutine()
+    {
+        
     }
 }

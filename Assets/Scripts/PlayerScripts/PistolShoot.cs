@@ -6,26 +6,31 @@ public class PistolShoot : MonoBehaviour
 {
     public GameObject projectilePrefab;
     public Transform playerPos;
+    private Vector3 shootPos;
     public float cooldown = 2f;
     public float currentCD = 0f;
     public float projectileDuration = 10f;
-    public float offset = 0.5f;
-    public float projectileSpeed = 2f;
+    public float offset = 0.05f;
+    public float projectileSpeed = 20f;
+    public float range = 2f;
+    public float projectiles = 5;
+    public float triggerSpeed;
 
     void Start()
     {
-        playerPos = GameObject.FindGameObjectWithTag("Player").transform;    
+        playerPos = GameObject.FindGameObjectWithTag("Player").transform;
+        triggerSpeed = (cooldown * 0.25f) / projectiles;
     }
 
     void FixedUpdate()
     {
-        if (CanShoot())
+        if (CoolDownManager())
         {
-            Shoot();
-        }    
+            StartCoroutine(ShootProjectiles());
+        }
     }
 
-    bool CanShoot()
+    bool CoolDownManager()
     {
         currentCD -= Time.fixedDeltaTime;
         if (currentCD < 0)
@@ -41,13 +46,29 @@ public class PistolShoot : MonoBehaviour
         return false;
     }
 
-    void Shoot()
+    IEnumerator ShootProjectiles()
     {
+        shootPos = playerPos.position;
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePosition.z = 0f;
-        Vector2 direction = (mousePosition - playerPos.position).normalized;
+        Vector2 direction = (mousePosition - shootPos).normalized;
 
-        GameObject projectile = Instantiate(projectilePrefab, playerPos.position, Quaternion.identity);
+        for (int i = 0; i < projectiles; i++)
+        {
+            shootPos = playerPos.position;
+            Shoot(direction);
+            yield return new WaitForSeconds(triggerSpeed);
+        }
+    }
+
+    void Shoot(Vector2 direction)
+    {
+        // Generate random offset
+        float offsetX = Random.Range(-offset, offset);
+        float offsetY = Random.Range(-offset, offset);
+        Vector3 spawnPosition = shootPos + new Vector3(offsetX, offsetY, 0);
+
+        GameObject projectile = Instantiate(projectilePrefab, spawnPosition, Quaternion.identity);
         Projectile script = projectile.GetComponent<Projectile>();
         if (script != null)
         {
