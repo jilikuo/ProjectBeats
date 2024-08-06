@@ -44,11 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0ba283c41e39134caf07d9760570ccb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 0}
+  enemyPrefab: {fileID: 2148291375696681789, guid: 76c000115db797b4e964e2555d871da5, type: 3}
   playerPos: {fileID: 0}
-  spawnInterval: 2
-  radius: 20
-  enemyMax: 20
+  spawnInterval: 5
+  radius: 30
+  enemyMax: 200
   enemyMin: 0
-  maxPerSpawn: 10
+  maxPerSpawn: 50
   enemyCount: 0

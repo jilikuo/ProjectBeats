@@ -34,6 +34,11 @@ public class Projectile : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.CompareTag("Consumable"))
+        {
+            Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>());
+            return;
+        }
         if (collision.gameObject.CompareTag("Projectile"))
         {
             if (collision.gameObject.GetComponent<Projectile>().parent == parent)
