@@ -924,6 +924,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelUpMenu
       objectReference: {fileID: 0}
+    - target: {fileID: 7556154887368997007, guid: 148d55405e44d514891d7a27ab1d4539, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7746224104533839762, guid: 148d55405e44d514891d7a27ab1d4539, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -949,7 +953,8 @@ PrefabInstance:
       value: 25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7004694830857877689, guid: 148d55405e44d514891d7a27ab1d4539, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 148d55405e44d514891d7a27ab1d4539, type: 3}
