@@ -27,6 +27,8 @@ public class EntityStats : MonoBehaviour
     public float presence;
     //special
     public float luck; //afeta todos os stats, exceto quando explicito
+    public float experience = 0;
+    public float gold;
 
     //stats
     //physical
@@ -62,6 +64,8 @@ public class EntityStats : MonoBehaviour
     [HideInInspector] public float summonMorale;      // presence
     //special
     [HideInInspector] public float criticalChance;    //luck
+    [HideInInspector] public float level;             //exp
+    [HideInInspector] public float nextLevelExp = 100;      //exp
 
     private SpriteRenderer spriteRenderer;
     private Color originalColor;
@@ -115,6 +119,8 @@ public class EntityStats : MonoBehaviour
         health = maxHealth;
         stamina = maxStamina;
         mana = maxMana;
+        experience = 0;
+        nextLevelExp = 100;
     }
 
     public float CalculatePhysicalDamage(bool update = false)
@@ -195,6 +201,9 @@ public class EntityStats : MonoBehaviour
 
     void StartDeathRoutine()
     {
-        
+        if (gameObject.CompareTag("Enemy"))
+        {
+            gameObject.GetComponent<EnemyDrop>().CheckDrop();
+        }
     }
 }
