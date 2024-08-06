@@ -1,34 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public class EntityStats : MonoBehaviour
 {
     //attributes
     //physical
-    public float strenght;
-    public float resistance;
-    public float constitution;
-    public float vigor;
+    [SerializeField] public EntityAttribute strenght;
+    [SerializeField] public EntityAttribute resistance;
+    [SerializeField] public EntityAttribute constitution;
+    [SerializeField] public EntityAttribute vigor;
     //coordenação motora
-    public float agility;
-    public float dextery;
-    public float accuracy;
-    public float finesse;
+    [SerializeField] public EntityAttribute agility;
+    [SerializeField] public EntityAttribute dextery;
+    [SerializeField] public EntityAttribute accuracy;
+    [SerializeField] public EntityAttribute finesse;
     //mágico
-    public float intelligence;
-    public float willpower;
-    public float wisdom;
-    public float spirit;
+    [SerializeField] public EntityAttribute intelligence;
+    [SerializeField] public EntityAttribute willpower;
+    [SerializeField] public EntityAttribute wisdom;
+    [SerializeField] public EntityAttribute spirit;
     //social
-    public float charisma;
-    public float influence;
-    public float leadership;
-    public float presence;
+    [SerializeField] public EntityAttribute charisma;
+    [SerializeField] public EntityAttribute influence;
+    [SerializeField] public EntityAttribute leadership;
+    [SerializeField] public EntityAttribute presence;
     //special
-    public float luck; //afeta todos os stats, exceto quando explicito
-    public float level;
-    public float gold;
+    [SerializeField] public EntityAttribute luck; //afeta todos os stats, exceto quando explicito
+    [SerializeField] public EntityAttribute level;
+    [SerializeField] public EntityAttribute gold;
 
     //stats
     //physical
@@ -71,11 +73,15 @@ public class EntityStats : MonoBehaviour
     private Color originalColor;
     private Color darknedColor;
 
+    public string[] attNames;
+    public float[] attValues;
+
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         originalColor = spriteRenderer.color;
         darknedColor = originalColor * 0.25f;
+        InitializeAttributes();
         InitiateStats();
     }
 
@@ -107,13 +113,45 @@ public class EntityStats : MonoBehaviour
         CheckLevelUp();
     }
 
+    void InitializeAttributes()
+    {
+        List<string> namesList = new List<string>();
+        List<float> valuesList = new List<float>();
+
+        // Find all fields of type EntityAttribute
+        FieldInfo[] fields = typeof(EntityStats).GetFields(BindingFlags.Public | BindingFlags.Instance);
+        foreach (FieldInfo field in fields)
+        {
+            if (field.FieldType == typeof(EntityAttribute))
+            {
+                EntityAttribute attribute = (EntityAttribute)field.GetValue(this);
+                if (attribute == null)
+                {
+                    attribute = new EntityAttribute(); // Ensure the attribute is not null
+                    field.SetValue(this, attribute);
+                }
+                // Capitalize the first letter of the field name
+                string fieldName = field.Name.Substring(0, 1).ToUpper() + field.Name.Substring(1);
+                attribute.Initialize(fieldName, 5); // Initialize with default value of 5
+
+                // Add to lists
+                namesList.Add(attribute.Name);
+                valuesList.Add(attribute.value);
+            }
+        }
+
+        // Convert lists to arrays
+        attNames = namesList.ToArray();
+        attValues = valuesList.ToArray();
+    }
 
 
     void InitiateStats()
     {
-        maxHealth = 100 + constitution * 25;
-        maxStamina = 100 + vigor * 10;
-        maxMana = 100 + spirit * 50;
+
+        maxHealth = 100 + constitution.value * 25;
+        maxStamina = 100 + vigor.value * 10;
+        maxMana = 100 + spirit.value * 50;
         CalculateMaxSpeed(true);
         CalculateAcceleration(true);
         CalculatePhysicalDamage(true);
@@ -122,7 +160,7 @@ public class EntityStats : MonoBehaviour
         mana = maxMana;
         experience = 0;
         nextLevelExp = 100;
-        level = 0;
+        level.value = 0;
         IncreaseLevel();
     }
 
@@ -137,7 +175,7 @@ public class EntityStats : MonoBehaviour
             return physicalDamage;
         }
 
-        physicalDamage = (10 * strenght);
+        physicalDamage = (10 * strenght.value);
         if (physicalDamage <= 0)
         {
             physicalDamage = 1f;
@@ -156,7 +194,7 @@ public class EntityStats : MonoBehaviour
             return maxSpeed;
         }
 
-        maxSpeed = (10 + (agility * 5)) / 10;
+        maxSpeed = (10 + (agility.value * 5)) / 10;
         if (maxSpeed <= 0)
         {
             maxSpeed = 0.001f;
@@ -175,7 +213,7 @@ public class EntityStats : MonoBehaviour
             return maxSpeed;
         }
 
-        acceleration = (10f + dextery) / 10f;
+        acceleration = (10f + dextery.value) / 10f;
         if (acceleration <= 0)
         {
             acceleration = 0.001f;
@@ -237,19 +275,32 @@ public class EntityStats : MonoBehaviour
 
     void IncreaseLevel()
     {
-        level += 1;
-        if (level == 1 || level == 0)
+        level.value += 1;
+        if (level.value == 1 || level.value == 0)
         {
             nextLevelExp = 100;
             return;
         }
 
-        nextLevelExp = Mathf.Ceil(100 * (1 +  (1.03f * level / 10)));
-        nextLevelExp *= Mathf.Max(1, Mathf.Floor(level / 10));
-        if (level%2 != 0)
+        nextLevelExp = Mathf.Ceil(100 * (1 +  (1.03f * level.value / 10)));
+        nextLevelExp *= Mathf.Max(1, Mathf.Floor(level.value / 10));
+        if (level.value % 2 != 0)
         {
-            nextLevelExp += level;
+            nextLevelExp += level.value;
         }
     }
 
+}
+
+[System.Serializable]   
+public class EntityAttribute
+{
+    [SerializeField] public string Name;
+    [SerializeField] public float value;
+
+    public void Initialize(string name, float initialvalue)
+    {
+        Name = name;
+        value = initialvalue;
+    }
 }
