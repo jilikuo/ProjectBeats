@@ -19,7 +19,7 @@ public class PistolShoot : MonoBehaviour
     void Start()
     {
         playerPos = GameObject.FindGameObjectWithTag("Player").transform;
-        triggerSpeed = (cooldown * 0.25f) / projectiles;
+        triggerSpeed = (cooldown * 0.20f) / projectiles;
     }
 
     void FixedUpdate()

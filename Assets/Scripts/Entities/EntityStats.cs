@@ -27,7 +27,7 @@ public class EntityStats : MonoBehaviour
     public float presence;
     //special
     public float luck; //afeta todos os stats, exceto quando explicito
-    public float experience = 0;
+    public float level;
     public float gold;
 
     //stats
@@ -64,8 +64,8 @@ public class EntityStats : MonoBehaviour
     [HideInInspector] public float summonMorale;      // presence
     //special
     [HideInInspector] public float criticalChance;    //luck
-    [HideInInspector] public float level;             //exp
-    [HideInInspector] public float nextLevelExp = 100;      //exp
+    [HideInInspector] public float experience = 0;    //exp
+    [HideInInspector] public float nextLevelExp = 100;//exp
 
     private SpriteRenderer spriteRenderer;
     private Color originalColor;
@@ -104,6 +104,7 @@ public class EntityStats : MonoBehaviour
         CalculateMaxSpeed(true);
         CalculateAcceleration(true);
         CalculatePhysicalDamage(true);
+        CheckLevelUp();
     }
 
 
@@ -121,6 +122,8 @@ public class EntityStats : MonoBehaviour
         mana = maxMana;
         experience = 0;
         nextLevelExp = 100;
+        level = 0;
+        IncreaseLevel();
     }
 
     public float CalculatePhysicalDamage(bool update = false)
@@ -206,4 +209,47 @@ public class EntityStats : MonoBehaviour
             gameObject.GetComponent<EnemyDrop>().CheckDrop();
         }
     }
+
+    public void GainExperience(float incomingExperience)
+    {
+        experience += incomingExperience;
+        if (experience >= nextLevelExp)
+        {
+            CheckLevelUp();
+        }
+    }
+
+    void CheckLevelUp()
+    {
+        float tempExp = experience - nextLevelExp;
+        if (experience > nextLevelExp)
+        {
+            experience = 0;
+            IncreaseLevel();
+            GainExperience(tempExp);
+        }
+        if (experience == nextLevelExp)
+        {
+            experience = 0;
+            IncreaseLevel();
+        }
+    }
+
+    void IncreaseLevel()
+    {
+        level += 1;
+        if (level == 1 || level == 0)
+        {
+            nextLevelExp = 100;
+            return;
+        }
+
+        nextLevelExp = Mathf.Ceil(100 * (1 +  (1.03f * level / 10)));
+        nextLevelExp *= Mathf.Max(1, Mathf.Floor(level / 10));
+        if (level%2 != 0)
+        {
+            nextLevelExp += level;
+        }
+    }
+
 }

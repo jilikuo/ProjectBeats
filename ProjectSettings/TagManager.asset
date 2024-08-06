@@ -6,7 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Projectile
-  - Experience
+  - Consumable
   layers:
   - Default
   - TransparentFX
@@ -16,8 +16,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - Consumable
+  - Projectile
   - 
   - 
   - 

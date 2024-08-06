@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 763523529731237997}
   - component: {fileID: 7685105467064842371}
   - component: {fileID: 4645798440199770130}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: EXP Orb P
   m_TagString: Consumable
   m_Icon: {fileID: 0}
@@ -29,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 8692053273733767436}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0717, y: -1.9177, z: 0}
-  m_LocalScale: {x: 0.15, y: 0.15, z: 1}
+  m_LocalPosition: {x: 0.08832, y: -1.9177, z: 0}
+  m_LocalScale: {x: 0.0825, y: 0.15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
