@@ -132,7 +132,8 @@ public class EntityStats : MonoBehaviour
                 }
                 // Capitalize the first letter of the field name
                 string fieldName = field.Name.Substring(0, 1).ToUpper() + field.Name.Substring(1);
-                attribute.Initialize(fieldName, 5); // Initialize with default value of 5
+                float initialValue = attribute.value != 0 ? attribute.value : 5;
+                attribute.Initialize(fieldName, initialValue); // Initialize with default value of 5
 
                 // Add to lists
                 namesList.Add(attribute.Name);
@@ -273,16 +274,22 @@ public class EntityStats : MonoBehaviour
         }
     }
 
-    void IncreaseLevel()
+    async void IncreaseLevel()
     {
         level.value += 1;
+
+        CalculateNextLevelExp();
+    }
+
+    void CalculateNextLevelExp()
+    {
         if (level.value == 1 || level.value == 0)
         {
             nextLevelExp = 100;
             return;
         }
 
-        nextLevelExp = Mathf.Ceil(100 * (1 +  (1.03f * level.value / 10)));
+        nextLevelExp = Mathf.Ceil(100 * (1 + (1.03f * level.value / 10)));
         nextLevelExp *= Mathf.Max(1, Mathf.Floor(level.value / 10));
         if (level.value % 2 != 0)
         {
@@ -290,12 +297,17 @@ public class EntityStats : MonoBehaviour
         }
     }
 
+    public int ReadLevel()
+    {
+        return Mathf.FloorToInt(level.value);
+    }
+
 }
 
 [System.Serializable]   
 public class EntityAttribute
 {
-    [SerializeField] public string Name;
+    [SerializeField, HideInInspector] public string Name;
     [SerializeField] public float value;
 
     public void Initialize(string name, float initialvalue)

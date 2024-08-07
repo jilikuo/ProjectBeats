@@ -50,23 +50,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4276ff782273f1a418519d42d778e16e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  strenght: 1
-  resistance: 1
-  constitution: 1
-  vigor: 1
-  agility: 5
-  dextery: 1
-  accuracy: 1
-  finesse: 1
-  intelligence: 1
-  willpower: 1
-  wisdom: 1
-  spirit: 1
-  charisma: 1
-  influence: 1
-  leadership: 1
-  presence: 1
-  luck: 1
+  strenght:
+    Name: 
+    value: 1
+  resistance:
+    Name: 
+    value: 0
+  constitution:
+    Name: 
+    value: 0
+  vigor:
+    Name: 
+    value: 0
+  agility:
+    Name: 
+    value: 5
+  dextery:
+    Name: 
+    value: 0
+  accuracy:
+    Name: 
+    value: 0
+  finesse:
+    Name: 
+    value: 0
+  intelligence:
+    Name: 
+    value: 0
+  willpower:
+    Name: 
+    value: 0
+  wisdom:
+    Name: 
+    value: 0
+  spirit:
+    Name: 
+    value: 0
+  charisma:
+    Name: 
+    value: 0
+  influence:
+    Name: 
+    value: 0
+  leadership:
+    Name: 
+    value: 0
+  presence:
+    Name: 
+    value: 0
+  luck:
+    Name: 
+    value: 0
+  level:
+    Name: 
+    value: 0
+  gold:
+    Name: 
+    value: 0
   physicalDamage: 0
   physicalDefense: 0
   health: 0
@@ -95,6 +135,10 @@ MonoBehaviour:
   summonDuration: 0
   summonMorale: 0
   criticalChance: 0
+  experience: 0
+  nextLevelExp: 100
+  attNames: []
+  attValues: []
 --- !u!114 &2128013851519800085
 MonoBehaviour:
   m_ObjectHideFlags: 0

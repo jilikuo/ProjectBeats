@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class LevelUpMenu : MonoBehaviour
 {
@@ -20,5 +19,5 @@ public class LevelUpMenu : MonoBehaviour
             StatItemUI itemUI = newItem.GetComponent<StatItemUI>();
             itemUI.SetStat(statsData.attNames[i], Mathf.FloorToInt(statsData.attValues[i]));
         }
-    } 
+    }
 }

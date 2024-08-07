@@ -19,13 +19,13 @@ public class LevelViewer : MonoBehaviour
         {
             playerStats = GameObject.FindGameObjectWithTag(playerTag).gameObject.GetComponent<EntityStats>();
         }
-        text = ("Level: " + playerStats.level);
+        text = ("Level: " + playerStats.ReadLevel());
         levelText.text = text;
     }
 
     private void Update()
     {
-        text = ("Level: " + playerStats.level);
+        text = ("Level: " + playerStats.ReadLevel());
         levelText.text = text;
     }
 }
