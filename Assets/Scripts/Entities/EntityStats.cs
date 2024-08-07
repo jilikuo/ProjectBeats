@@ -71,9 +71,9 @@ public class EntityStats : MonoBehaviour
     [HideInInspector] public float criticalChance;    // luck
     [HideInInspector] public float experience = 0;    // exp
     [HideInInspector] public float nextLevelExp = 100;// exp
-    [HideInInspector] public float totalAttPoints = 0;// level
-    [HideInInspector] public float spentAttPoints = 0;// level
-    [HideInInspector] public float freeAttPoints = 0; // level
+    [HideInInspector] public int totalAttPoints = 0;// level
+    [HideInInspector] public int spentAttPoints = 0;// level
+    [HideInInspector] public int freeAttPoints = 0; // level
 
     private SpriteRenderer spriteRenderer;
     private Color originalColor;
@@ -289,7 +289,7 @@ public class EntityStats : MonoBehaviour
     void IncreaseLevel()
     {
         level.value += 1;
-        totalAttPoints = level.value * 3;
+        totalAttPoints = Mathf.FloorToInt(level.value * 3);
         freeAttPoints = totalAttPoints - spentAttPoints;
 
         CalculateNextLevelExp();
@@ -298,10 +298,10 @@ public class EntityStats : MonoBehaviour
         {
             return;
         }
-        else
+        else if (level.value != 1 || level.value != 0)
         {
             ShowLevelUpMenu();
-        } */
+        }*/
     }
 
     void CalculateNextLevelExp()
@@ -323,6 +323,25 @@ public class EntityStats : MonoBehaviour
     public int ReadLevel()
     {
         return Mathf.FloorToInt(level.value);
+    }
+
+    public void IncreaseAttByName(string name, int value)
+    {
+
+        FieldInfo field = typeof(EntityStats).GetField(name, BindingFlags.Public | BindingFlags.Instance);
+        if (field != null && field.FieldType == typeof(EntityAttribute))
+        {
+            EntityAttribute attribute = (EntityAttribute)field.GetValue(this);
+            if (attribute != null)
+            {
+                attribute.value += value;
+                spentAttPoints += value;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Attribute with the name " + name + " not found or is not of type EntityAttribute.");
+        }
     }
 
 }

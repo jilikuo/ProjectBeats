@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Threading.Tasks;
+using UnityEngine.UI;
+using System.Collections.Generic;
 public class LevelUpMenu : MonoBehaviour
 {
     public GameObject levelUpMenu;
@@ -7,9 +9,14 @@ public class LevelUpMenu : MonoBehaviour
     public GameObject statItemPrefab;
     public Transform contentPanel;
     private bool isLeveling = false;
+    private int heldAttPoints;
+    public int tempAttPoints;
+    private List<StatItemUI> statItems = new List<StatItemUI>();
 
     private void Awake()
     {
+        heldAttPoints = 0;
+        tempAttPoints = 0;
         if (levelUpMenu != null)
         {
             levelUpMenu.SetActive(false);
@@ -28,6 +35,7 @@ public class LevelUpMenu : MonoBehaviour
 
     private void Update()
     {
+        CheckForAttributePoints();
         if ((Input.GetKeyDown(KeyCode.L) || Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.I)) && isLeveling == false)
         {
             ShowLevelUpMenu();
@@ -35,6 +43,22 @@ public class LevelUpMenu : MonoBehaviour
         else if ((Input.GetKeyDown(KeyCode.L) || Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.I)) && isLeveling == true)
         {
             CloseLevelUpMenu();
+        }
+    }
+
+    void CheckForAttributePoints()
+    {
+        if ((heldAttPoints + tempAttPoints) == statsData.freeAttPoints)
+        {
+            return;
+        }
+        if ((heldAttPoints + tempAttPoints) < statsData.freeAttPoints)
+        {
+            tempAttPoints = statsData.freeAttPoints - heldAttPoints;
+        }
+        if ((heldAttPoints + tempAttPoints) > statsData.freeAttPoints)
+        {
+            tempAttPoints = statsData.freeAttPoints - heldAttPoints;
         }
     }
 
@@ -71,14 +95,58 @@ public class LevelUpMenu : MonoBehaviour
         levelUpMenu.SetActive(false);
     }
 
+    public void UndoButton()
+    {
+        int tempReset = 0;
+        foreach (var statItem in statItems)
+        {
+            tempReset += statItem.CheckTempValue();
+            statItem.ResetTempValue();
+            statItem.UpdateValueView();
+        }
+
+        tempAttPoints += tempReset;
+    }
+
+    public void ConfirmButton()
+    {
+        int tempConsume = 0;
+        foreach (var statItem in statItems)
+        {
+            statsData.IncreaseAttByName((statItem.statNameText.text), statItem.CheckTempValue());
+            tempConsume += statItem.CheckTempValue();
+            statItem.ResetTempValue();
+            statItem.UpdateValueView();
+        }
+
+        heldAttPoints -= tempConsume;
+    }
 
     void PopulateStats()
     {
         for (int i = 0; i < statsData.attNames.Length; i++)
         {
+            if (statsData.attNames[i] == "Level" || statsData.attNames[i] == "Gold")
+            {
+                continue;
+            }
+
             GameObject newItem = Instantiate(statItemPrefab, contentPanel);
             StatItemUI itemUI = newItem.GetComponent<StatItemUI>();
             itemUI.SetStat(statsData.attNames[i], Mathf.FloorToInt(statsData.attValues[i]));
+            statItems.Add(itemUI); // Add the created item to the list
         }
+    }
+
+    public void TempUseSinglePoint()
+    {
+        tempAttPoints--;
+        heldAttPoints++;
+    }
+
+    public void TempUndoSinglePoint()
+    {
+        tempAttPoints++;
+        heldAttPoints--;
     }
 }
