@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class EntityStats : MonoBehaviour
@@ -31,6 +33,7 @@ public class EntityStats : MonoBehaviour
     [SerializeField] public EntityAttribute luck; //afeta todos os stats, exceto quando explicito
     [SerializeField] public EntityAttribute level;
     [SerializeField] public EntityAttribute gold;
+
 
     //stats
     //physical
@@ -65,9 +68,12 @@ public class EntityStats : MonoBehaviour
     [HideInInspector] public float summonDuration;    // presence
     [HideInInspector] public float summonMorale;      // presence
     //special
-    [HideInInspector] public float criticalChance;    //luck
-    [HideInInspector] public float experience = 0;    //exp
-    [HideInInspector] public float nextLevelExp = 100;//exp
+    [HideInInspector] public float criticalChance;    // luck
+    [HideInInspector] public float experience = 0;    // exp
+    [HideInInspector] public float nextLevelExp = 100;// exp
+    [HideInInspector] public float totalAttPoints = 0;// level
+    [HideInInspector] public float spentAttPoints = 0;// level
+    [HideInInspector] public float freeAttPoints = 0; // level
 
     private SpriteRenderer spriteRenderer;
     private Color originalColor;
@@ -76,8 +82,14 @@ public class EntityStats : MonoBehaviour
     public string[] attNames;
     public float[] attValues;
 
+    void Awake()
+    {
+
+    }
+
     void Start()
     {
+
         spriteRenderer = GetComponent<SpriteRenderer>();
         originalColor = spriteRenderer.color;
         darknedColor = originalColor * 0.25f;
@@ -274,11 +286,22 @@ public class EntityStats : MonoBehaviour
         }
     }
 
-    async void IncreaseLevel()
+    void IncreaseLevel()
     {
         level.value += 1;
+        totalAttPoints = level.value * 3;
+        freeAttPoints = totalAttPoints - spentAttPoints;
 
         CalculateNextLevelExp();
+
+        /* if (experience > nextLevelExp)
+        {
+            return;
+        }
+        else
+        {
+            ShowLevelUpMenu();
+        } */
     }
 
     void CalculateNextLevelExp()
