@@ -3,6 +3,12 @@ using UnityEngine;
 
 public class ConsumableUse : MonoBehaviour
 {
+    private readonly int ExpP = 8;
+    private readonly int ExpM = 24;
+    private readonly int ExpG = 80;
+    private readonly int ExpS = 264;
+    private readonly int ExpL = 872;
+
     private ConsumableType consumableType;
     private string playerTag = "Player";
     private GameObject player;
@@ -74,31 +80,31 @@ public class ConsumableUse : MonoBehaviour
         switch (consumableType.size)
         {
             case ConsumableType.Size.Small:
-                stats.GainExperience(3);
+                stats.GainExperience(ExpP);
 
                 Debug.Log("Size: Small");
                 break;
 
             case ConsumableType.Size.Medium:
-                stats.GainExperience(15);
+                stats.GainExperience(ExpM);
 
                 Debug.Log("Size: Medium");
                 break;
 
             case ConsumableType.Size.Big:
-                stats.GainExperience(50);
+                stats.GainExperience(ExpG);
 
                 Debug.Log("Size: Big");
                 break;
 
             case ConsumableType.Size.Super:
-                stats.GainExperience(250);
+                stats.GainExperience(ExpS);
 
                 Debug.Log("Size: Super");
                 break;
 
             case ConsumableType.Size.Legendary:
-                stats.GainExperience(1000);
+                stats.GainExperience(ExpL);
 
                 Debug.Log("Size: Legendary");
                 break;

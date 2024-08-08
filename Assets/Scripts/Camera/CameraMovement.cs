@@ -10,8 +10,8 @@ public class CameraMovement : MonoBehaviour
     private Vector3 playerPos;
     private Vector3 cameraPos;
 
-    public float horizontalBoundary = 5;
-    public float verticalBoundary = 3;
+    public float horizontalBoundary = 3;
+    public float verticalBoundary = 2;
 
     private void Start()
     {

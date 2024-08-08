@@ -303,10 +303,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9ee756709ab5f848b860c617b0fdd39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  expRateP: 1
-  expRateM: 1
-  expRateG: 0.01
-  expRateS: 0.0001
+  expRateP: 0.2
+  expRateM: 0.02
+  expRateG: 0.001
+  expRateS: 0
   expRateL: 0
   expOrbP: {fileID: 8692053273733767436, guid: 0a19b1f5e41937249b89131ed60a177b, type: 3}
   expOrbM: {fileID: 8692053273733767436, guid: 07daac066a116b845871ccc79cc43d90, type: 3}
