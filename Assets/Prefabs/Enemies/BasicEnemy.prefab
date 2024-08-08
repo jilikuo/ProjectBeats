@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2928059252166322463}
   - component: {fileID: 4214049461289315763}
   - component: {fileID: 1421333374148987262}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BasicEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -137,6 +137,9 @@ MonoBehaviour:
   criticalChance: 0
   experience: 0
   nextLevelExp: 100
+  totalAttPoints: 0
+  spentAttPoints: 0
+  freeAttPoints: 0
   attNames: []
   attValues: []
 --- !u!114 &2128013851519800085
@@ -300,5 +303,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9ee756709ab5f848b860c617b0fdd39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropRate: 0
-  expOrb: {fileID: 8692053273733767436, guid: 0a19b1f5e41937249b89131ed60a177b, type: 3}
+  expRateP: 1
+  expRateM: 1
+  expRateG: 0.01
+  expRateS: 0.0001
+  expRateL: 0
+  expOrbP: {fileID: 8692053273733767436, guid: 0a19b1f5e41937249b89131ed60a177b, type: 3}
+  expOrbM: {fileID: 8692053273733767436, guid: 07daac066a116b845871ccc79cc43d90, type: 3}
+  expOrbG: {fileID: 8692053273733767436, guid: 113386c9278b00a4b97e8abf8196e71e, type: 3}
+  expOrbS: {fileID: 8692053273733767436, guid: 59fee2b465b473b4aaef1efd78535107, type: 3}
+  expOrbL: {fileID: 8692053273733767436, guid: 640b8bac0ffbdc34f9930e9966647bde, type: 3}

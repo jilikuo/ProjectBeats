@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ConsumableUse : MonoBehaviour
@@ -21,6 +19,7 @@ public class ConsumableUse : MonoBehaviour
     {
         if (collision.gameObject != player)
         {
+
             Collider2D notPlayer = collision.gameObject.GetComponent<Collider2D>();
             Collider2D consumable = gameObject.GetComponent<Collider2D>();
             Physics2D.IgnoreCollision(notPlayer, consumable);
@@ -75,25 +74,25 @@ public class ConsumableUse : MonoBehaviour
         switch (consumableType.size)
         {
             case ConsumableType.Size.Small:
-                stats.GainExperience(1);
+                stats.GainExperience(3);
 
                 Debug.Log("Size: Small");
                 break;
 
             case ConsumableType.Size.Medium:
-                stats.GainExperience(5);
+                stats.GainExperience(15);
 
                 Debug.Log("Size: Medium");
                 break;
 
             case ConsumableType.Size.Big:
-                stats.GainExperience(25);
+                stats.GainExperience(50);
 
                 Debug.Log("Size: Big");
                 break;
 
             case ConsumableType.Size.Super:
-                stats.GainExperience(150);
+                stats.GainExperience(250);
 
                 Debug.Log("Size: Super");
                 break;
@@ -101,7 +100,7 @@ public class ConsumableUse : MonoBehaviour
             case ConsumableType.Size.Legendary:
                 stats.GainExperience(1000);
 
-                Debug.Log("Size: Super");
+                Debug.Log("Size: Legendary");
                 break;
 
             default:

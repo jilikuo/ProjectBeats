@@ -105,7 +105,7 @@ public class LevelUpMenu : MonoBehaviour
             statItem.UpdateValueView();
         }
 
-        tempAttPoints += tempReset;
+        heldAttPoints -= tempReset;
     }
 
     public void ConfirmButton()

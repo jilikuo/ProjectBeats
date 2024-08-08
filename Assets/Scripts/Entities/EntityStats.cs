@@ -327,7 +327,7 @@ public class EntityStats : MonoBehaviour
 
     public void IncreaseAttByName(string name, int value)
     {
-
+        name = name.ToLower();
         FieldInfo field = typeof(EntityStats).GetField(name, BindingFlags.Public | BindingFlags.Instance);
         if (field != null && field.FieldType == typeof(EntityAttribute))
         {
@@ -336,6 +336,7 @@ public class EntityStats : MonoBehaviour
             {
                 attribute.value += value;
                 spentAttPoints += value;
+                UpdateAttPoints();
             }
         }
         else
@@ -343,6 +344,32 @@ public class EntityStats : MonoBehaviour
             Debug.LogWarning("Attribute with the name " + name + " not found or is not of type EntityAttribute.");
         }
     }
+
+    void UpdateAttPoints()
+    {
+        freeAttPoints = totalAttPoints - spentAttPoints;
+    }
+
+    public int? ReadAttByName(string name)
+    {
+        name = name.ToLower();
+        FieldInfo field = typeof(EntityStats).GetField(name, BindingFlags.Public | BindingFlags.Instance);
+        if (field != null && field.FieldType == typeof(EntityAttribute))
+        {
+            EntityAttribute attribute = (EntityAttribute)field.GetValue(this);
+            if (attribute != null)
+            {
+                return Mathf.FloorToInt(attribute.value);
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Attribute with the name " + name + " not found or is not of type EntityAttribute.");
+            return null;
+        }
+        return null;
+    }
+
 
 }
 
