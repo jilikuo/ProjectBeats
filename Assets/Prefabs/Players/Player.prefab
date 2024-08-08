@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 7756446749415544078}
   - component: {fileID: 7525052422028069963}
   - component: {fileID: 824790635414374195}
+  - component: {fileID: 460704871525767378}
+  - component: {fileID: 7566981477020700378}
   - component: {fileID: 5780503460781239371}
   - component: {fileID: 7247478981441114630}
   - component: {fileID: 8195692806555110770}
@@ -101,23 +103,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4276ff782273f1a418519d42d778e16e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  strenght: 5
-  resistance: 5
-  constitution: 5
-  vigor: 5
-  agility: 5
-  dextery: 5
-  accuracy: 5
-  finesse: 5
-  intelligence: 5
-  willpower: 5
-  wisdom: 5
-  spirit: 5
-  charisma: 5
-  influence: 5
-  leadership: 5
-  presence: 5
-  luck: 5
+  strenght:
+    Name: 
+    value: 0
+  resistance:
+    Name: 
+    value: 0
+  constitution:
+    Name: 
+    value: 0
+  vigor:
+    Name: 
+    value: 0
+  agility:
+    Name: 
+    value: 0
+  dextery:
+    Name: 
+    value: 0
+  accuracy:
+    Name: 
+    value: 0
+  finesse:
+    Name: 
+    value: 0
+  intelligence:
+    Name: 
+    value: 0
+  willpower:
+    Name: 
+    value: 0
+  wisdom:
+    Name: 
+    value: 0
+  spirit:
+    Name: 
+    value: 0
+  charisma:
+    Name: 
+    value: 0
+  influence:
+    Name: 
+    value: 0
+  leadership:
+    Name: 
+    value: 0
+  presence:
+    Name: 
+    value: 0
+  luck:
+    Name: 
+    value: 0
+  level:
+    Name: 
+    value: 0
+  gold:
+    Name: 
+    value: 0
   physicalDamage: 0
   physicalDefense: 0
   health: 0
@@ -146,6 +188,13 @@ MonoBehaviour:
   summonDuration: 0
   summonMorale: 0
   criticalChance: 0
+  experience: 0
+  nextLevelExp: 100
+  totalAttPoints: 0
+  spentAttPoints: 0
+  freeAttPoints: 0
+  attNames: []
+  attValues: []
 --- !u!114 &824790635414374195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,11 +204,36 @@ MonoBehaviour:
   m_GameObject: {fileID: 1414725975483600876}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20af4d92424f7314f85adb3e8ecb3ebe, type: 3}
+  m_Script: {fileID: 11500000, guid: b9fa6b6468f5a5d40bf4033f5b7f987e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseSpeed: 0.1
-  decelerationRate: 0.8
+  playerInput: {fileID: 460704871525767378}
+  playerMovement: {fileID: 7566981477020700378}
+--- !u!114 &460704871525767378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414725975483600876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5a8a0a1b6033264aabf797012af4c90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7566981477020700378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414725975483600876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0192bb0fa5fcf504c9d38aaac2d940d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseSpeed: 0.5
   maxSpeed: 0
   playerAcc: 0
   horizontalSpeed: 0
@@ -178,13 +252,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 2829091763142108361, guid: 7a14867b178ecd049ba36adf315a1ab6, type: 3}
   playerPos: {fileID: 3624389812555553734}
-  cooldown: 2
+  cooldown: 3
   currentCD: 0
   projectileDuration: 10
   offset: 0.08
-  projectileSpeed: 10
-  range: 3
-  projectiles: 4
+  projectileSpeed: 6
+  range: 4
+  projectiles: 5
   triggerSpeed: 0.07
 --- !u!50 &7247478981441114630
 Rigidbody2D:

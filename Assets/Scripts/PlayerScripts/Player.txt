@@ -1,0 +1,15 @@
+using System;
+using UnityEngine;
+
+[RequireComponent(typeof(PlayerInput), typeof(PlayerMovement))]
+public class Player : MonoBehaviour
+{
+    [SerializeField] private PlayerInput playerInput;
+    [SerializeField] private PlayerMovement playerMovement;
+
+    private void Start()
+    {
+        playerInput = GetComponent<PlayerInput>();
+        playerMovement = GetComponent<PlayerMovement>();
+    }
+}
