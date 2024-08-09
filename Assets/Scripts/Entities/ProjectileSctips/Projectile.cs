@@ -60,7 +60,7 @@ public class Projectile : MonoBehaviour
         }
         if (parent.CompareTag(playerTag))
         {
-            collision.gameObject.GetComponent<EntityStats>().TakeDamage(damage);
+            collision.gameObject.GetComponent<EnemyBasicBomb>().TakeDamage(damage);
             Destroy(this.gameObject);
             return;
         }

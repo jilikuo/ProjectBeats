@@ -25,16 +25,16 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovement
     private bool movingDown = false;
 
     private Rigidbody2D playerRb;
-    private EntityStats entityStats;
+    private PlayerEntity playerEntity;
 
 
     void Start()
     {
         playerRb = GetComponent<Rigidbody2D>();
-        entityStats = GetComponent<EntityStats>();
+        playerEntity = GetComponent<PlayerEntity>();
 
-        playerAcc = entityStats.CalculateAcceleration();
-        maxSpeed = entityStats.CalculateMaxSpeed();
+        playerAcc = playerEntity.acceleration.CalculateStat();
+        maxSpeed = playerEntity.maxSpeed.CalculateStat();
         baseSpeed = maxSpeed * SpeedFactor;
     }
 
