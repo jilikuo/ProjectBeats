@@ -1,6 +1,7 @@
-using System.Collections;
+/* using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Jili.StatSystem;
 
 public class CollisionSuicidalEnemy : MonoBehaviour
 {
@@ -18,8 +19,9 @@ public class CollisionSuicidalEnemy : MonoBehaviour
         if (collision.gameObject == target)
         {
             EntityStats targetStats = collision.gameObject.GetComponent<EntityStats>();
-            targetStats.TakeDamage(stats.CalculatePhysicalDamage());
-            stats.Suicide();
+           /* targetStats.TakeDamage(stats.CalculatePhysicalDamage());
+            stats.Suicide(); 
         }
     }
 }
+*/

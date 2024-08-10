@@ -1,4 +1,5 @@
 using UnityEngine;
+using Jili.StatSystem;
 
 public interface IPlayerMovement
 {
@@ -7,6 +8,7 @@ public interface IPlayerMovement
     void MovePlayer();
 }
 
+[RequireComponent(typeof(PlayerInput)), RequireComponent(typeof(PlayerIdentity))]
 public class PlayerMovement : MonoBehaviour, IPlayerMovement
 {
     private readonly float        SpeedFactor = 0.6f;
@@ -25,16 +27,16 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovement
     private bool movingDown = false;
 
     private Rigidbody2D playerRb;
-    private EntityStats entityStats;
+    private PlayerIdentity playerStats;
 
 
     void Start()
     {
         playerRb = GetComponent<Rigidbody2D>();
-        entityStats = GetComponent<EntityStats>();
+        playerStats = GetComponent<PlayerIdentity>();
 
-        playerAcc = entityStats.CalculateAcceleration();
-        maxSpeed = entityStats.CalculateMaxSpeed();
+        playerAcc = playerStats.Agility.Value / 20;
+        maxSpeed = playerStats.Agility.Value;
         baseSpeed = maxSpeed * SpeedFactor;
     }
 

@@ -1,4 +1,4 @@
-using TMPro;
+/* using TMPro;
 using UnityEngine;
 
 public class LevelViewer : MonoBehaviour
@@ -28,4 +28,4 @@ public class LevelViewer : MonoBehaviour
         text = ("Level: " + playerStats.ReadLevel());
         levelText.text = text;
     }
-}
+} */

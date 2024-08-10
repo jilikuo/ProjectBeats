@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3624389812555553734}
   - component: {fileID: 7756446749415544078}
-  - component: {fileID: 7525052422028069963}
+  - component: {fileID: 7270911395783619085}
   - component: {fileID: 824790635414374195}
   - component: {fileID: 460704871525767378}
   - component: {fileID: 7566981477020700378}
@@ -91,7 +91,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7525052422028069963
+--- !u!114 &7270911395783619085
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -100,101 +100,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1414725975483600876}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4276ff782273f1a418519d42d778e16e, type: 3}
+  m_Script: {fileID: 11500000, guid: 97b6b9212315da24bb8dbd00864eaaae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  strenght:
-    Name: 
-    value: 0
-  resistance:
-    Name: 
-    value: 0
-  constitution:
-    Name: 
-    value: 0
-  vigor:
-    Name: 
-    value: 0
-  agility:
-    Name: 
-    value: 0
-  dextery:
-    Name: 
-    value: 0
-  accuracy:
-    Name: 
-    value: 0
-  finesse:
-    Name: 
-    value: 0
-  intelligence:
-    Name: 
-    value: 0
-  willpower:
-    Name: 
-    value: 0
-  wisdom:
-    Name: 
-    value: 0
-  spirit:
-    Name: 
-    value: 0
-  charisma:
-    Name: 
-    value: 0
-  influence:
-    Name: 
-    value: 0
-  leadership:
-    Name: 
-    value: 0
-  presence:
-    Name: 
-    value: 0
-  luck:
-    Name: 
-    value: 0
-  level:
-    Name: 
-    value: 0
-  gold:
-    Name: 
-    value: 0
-  physicalDamage: 0
-  physicalDefense: 0
-  health: 0
-  maxHealth: 0
-  healthRegen: 0
-  stamina: 0
-  maxStamina: 0
-  staminaRegen: 0
-  maxSpeed: 0
-  acceleration: 0
-  decceleration: 0
-  attackPerSecond: 0
-  precision: 0
-  criticalDamage: 0
-  magicDamage: 0
-  magicDefense: 0
-  cooldownReduction: 0
-  mana: 0
-  maxMana: 0
-  manaRegen: 0
-  dropRate: 0
-  spawnRate: 0
-  treasonRate: 0
-  treasonDuration: 0
-  summonRate: 0
-  summonDuration: 0
-  summonMorale: 0
-  criticalChance: 0
-  experience: 0
-  nextLevelExp: 100
-  totalAttPoints: 0
-  spentAttPoints: 0
-  freeAttPoints: 0
-  attNames: []
-  attValues: []
+  Strenght:
+    BaseValue: 0
+  Constitution:
+    BaseValue: 0
+  Agility:
+    BaseValue: 0
 --- !u!114 &824790635414374195
 MonoBehaviour:
   m_ObjectHideFlags: 0

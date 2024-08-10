@@ -1,5 +1,6 @@
-using System.Collections;
+/*using System.Collections;
 using UnityEngine;
+
 
 public class ConsumableUse : MonoBehaviour
 {
@@ -117,3 +118,4 @@ public class ConsumableUse : MonoBehaviour
         }
     }
 }
+*/

@@ -174,6 +174,7 @@ MonoBehaviour:
   playerStats: {fileID: 0}
   labelName: LevelLabel
   playerTag: Player
+  text: 
 --- !u!114 &382351189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,7 +188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelUpMenu: {fileID: 1865724176}
-  statsData: {fileID: 1752880114}
+  playerStats: {fileID: 0}
   statItemPrefab: {fileID: 5431045911343738038, guid: a7b56d2d0e73a534dbc9953967f41332, type: 3}
   contentPanel: {fileID: 1144094643}
   tempAttPoints: 5
@@ -287,17 +288,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3624389812555553734, guid: 33d1fed4a774e7045ad7f6bbed762fac, type: 3}
   m_PrefabInstance: {fileID: 2854231350178192192}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1752880114 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7525052422028069963, guid: 33d1fed4a774e7045ad7f6bbed762fac, type: 3}
-  m_PrefabInstance: {fileID: 2854231350178192192}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4276ff782273f1a418519d42d778e16e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1865724176 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7556154887368997007, guid: 148d55405e44d514891d7a27ab1d4539, type: 3}
@@ -454,6 +444,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7270911395783619085, guid: 33d1fed4a774e7045ad7f6bbed762fac, type: 3}
+      propertyPath: Agility.BaseValue
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7270911395783619085, guid: 33d1fed4a774e7045ad7f6bbed762fac, type: 3}
+      propertyPath: Strenght.BaseValue
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7270911395783619085, guid: 33d1fed4a774e7045ad7f6bbed762fac, type: 3}
+      propertyPath: Constitution.BaseValue
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -587,6 +589,10 @@ PrefabInstance:
     - target: {fileID: 7361491177284412903, guid: 106caa64117f9e24e8e4387be13c324e, type: 3}
       propertyPath: enemyMax
       value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 7361491177284412903, guid: 106caa64117f9e24e8e4387be13c324e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7361491177284412903, guid: 106caa64117f9e24e8e4387be13c324e, type: 3}
       propertyPath: playerPos

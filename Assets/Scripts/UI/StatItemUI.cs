@@ -11,13 +11,13 @@ public class StatItemUI : MonoBehaviour
     private int temporaryAdd;
     private LevelUpMenu levelUpMenu;
     private int availablePoints;
-    private EntityStats playerStats;
+    private PlayerIdentity playerStats;
 
     private void Start()
     {
         levelUpMenu = GameObject.Find("UI Manager").GetComponent<LevelUpMenu>();
         availablePoints = levelUpMenu.tempAttPoints;
-        playerStats = GameObject.FindWithTag("Player").gameObject.GetComponent<EntityStats>();
+        playerStats = GameObject.FindWithTag("Player").gameObject.GetComponent<PlayerIdentity>();
     }
 
     private void Update()
@@ -36,7 +36,7 @@ public class StatItemUI : MonoBehaviour
 
     public void UpdateStatValue()
     {
-        statValue = playerStats.ReadAttByName(statNameText.text).Value;
+        statValue = Mathf.FloorToInt(playerStats.Strenght.Value);
     }
 
     public void TempIncrease()
@@ -88,4 +88,4 @@ public class StatItemUI : MonoBehaviour
             statValueText.color = increaseColor;
         }
     }
-}
+} 

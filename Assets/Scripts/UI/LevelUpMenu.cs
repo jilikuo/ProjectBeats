@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class LevelUpMenu : MonoBehaviour
 {
     public GameObject levelUpMenu;
-    public EntityStats statsData;
+    public PlayerIdentity playerStats;
     public GameObject statItemPrefab;
     public Transform contentPanel;
     private bool isLeveling = false;
@@ -30,12 +30,12 @@ public class LevelUpMenu : MonoBehaviour
 
     void Start()
     {
-        PopulateStats();
+       // PopulateStats();
     }
 
     private void Update()
     {
-        CheckForAttributePoints();
+        //CheckForAttributePoints();
         if ((Input.GetKeyDown(KeyCode.L) || Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.I)) && isLeveling == false)
         {
             ShowLevelUpMenu();
@@ -46,7 +46,7 @@ public class LevelUpMenu : MonoBehaviour
         }
     }
 
-    void CheckForAttributePoints()
+     /* void CheckForAttributePoints()
     {
         if ((heldAttPoints + tempAttPoints) == statsData.freeAttPoints)
         {
@@ -60,7 +60,7 @@ public class LevelUpMenu : MonoBehaviour
         {
             tempAttPoints = statsData.freeAttPoints - heldAttPoints;
         }
-    }
+    } */
 
     public async void ShowLevelUpMenu()
     {
@@ -113,7 +113,7 @@ public class LevelUpMenu : MonoBehaviour
         int tempConsume = 0;
         foreach (var statItem in statItems)
         {
-            statsData.IncreaseAttByName((statItem.statNameText.text), statItem.CheckTempValue());
+            //statsData.IncreaseAttByName((statItem.statNameText.text), statItem.CheckTempValue());
             tempConsume += statItem.CheckTempValue();
             statItem.ResetTempValue();
             statItem.UpdateValueView();
@@ -122,7 +122,7 @@ public class LevelUpMenu : MonoBehaviour
         heldAttPoints -= tempConsume;
     }
 
-    void PopulateStats()
+    /* void PopulateStats()
     {
         for (int i = 0; i < statsData.attNames.Length; i++)
         {
@@ -136,7 +136,7 @@ public class LevelUpMenu : MonoBehaviour
             itemUI.SetStat(statsData.attNames[i], Mathf.FloorToInt(statsData.attValues[i]));
             statItems.Add(itemUI); // Add the created item to the list
         }
-    }
+    } */
 
     public void TempUseSinglePoint()
     {

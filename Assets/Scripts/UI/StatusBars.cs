@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -10,7 +10,7 @@ public class StatusBars : MonoBehaviour
     public Slider mpbar;
     public Slider stbar;
     public Slider expbar;
-    private EntityStats stats;
+    private PlayerIdentity stats;
     private TextMeshProUGUI hplabel;
     private TextMeshProUGUI mplabel;
     private TextMeshProUGUI stlabel;
@@ -55,3 +55,4 @@ public class StatusBars : MonoBehaviour
 
     }
 }
+*/
