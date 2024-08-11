@@ -8,7 +8,7 @@ public class EnemyMoveSuicidal : MonoBehaviour
     private GameObject target;
     private Transform playerPos;
 
-    private EntityStats stats;
+    private Attribute stats;
     private float speed;
     private Rigidbody2D enemyRb;
 
@@ -19,7 +19,7 @@ public class EnemyMoveSuicidal : MonoBehaviour
             target = GameObject.FindGameObjectWithTag("Player");
         }
 
-        stats = GetComponent<EntityStats>();
+        stats = GetComponent<Attribute>();
         enemyRb = GetComponent<Rigidbody2D>();
 
         playerPos = target.transform;

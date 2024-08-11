@@ -19,7 +19,7 @@ public class StatusBars : MonoBehaviour
 
     private void Start()
     {
-        stats = GameObject.FindGameObjectWithTag("Player").gameObject.GetComponent<EntityStats>();
+        stats = GameObject.FindGameObjectWithTag("Player").gameObject.GetComponent<Attribute>();
         hpbar.maxValue = stats.maxHealth;
         hpbar.value = stats.health;
         mpbar.maxValue = stats.maxMana;

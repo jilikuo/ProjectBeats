@@ -13,7 +13,7 @@ public class Projectile : MonoBehaviour
 
     void Start()
     {
-        // damage = parent.GetComponent<EntityStats>().CalculatePhysicalDamage() * 0.50f;
+        // damage = parent.GetComponent<Attribute>().CalculatePhysicalDamage() * 0.50f;
         range = parent.GetComponent<PistolShoot>().range;
         startingPoint = parent.transform.position;
     }
@@ -60,7 +60,7 @@ public class Projectile : MonoBehaviour
         }
         if (parent.CompareTag(playerTag))
         {
-            // collision.gameObject.GetComponent<EntityStats>().TakeDamage(damage);
+            // collision.gameObject.GetComponent<Attribute>().TakeDamage(damage);
             Destroy(this.gameObject);
             return;
         }

@@ -4,8 +4,8 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerInput), typeof(PlayerMovement))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private PlayerInput playerInput;
-    [SerializeField] private PlayerMovement playerMovement;
+    private PlayerInput playerInput;
+    private PlayerMovement playerMovement;
 
     private void Start()
     {

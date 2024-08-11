@@ -4,7 +4,7 @@ using UnityEngine;
 public class LevelViewer : MonoBehaviour
 {
     public TextMeshProUGUI levelText;
-    public EntityStats playerStats;
+    public Attribute playerStats;
     public string labelName = "LevelLabel";
     public string playerTag = "Player";
     private string text = string.Empty;
@@ -17,7 +17,7 @@ public class LevelViewer : MonoBehaviour
         }
         if (playerStats == null)
         {
-            playerStats = GameObject.FindGameObjectWithTag(playerTag).gameObject.GetComponent<EntityStats>();
+            playerStats = GameObject.FindGameObjectWithTag(playerTag).gameObject.GetComponent<Attribute>();
         }
         text = ("Level: " + playerStats.ReadLevel());
         levelText.text = text;

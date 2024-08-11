@@ -36,7 +36,7 @@ public class StatItemUI : MonoBehaviour
 
     public void UpdateStatValue()
     {
-        statValue = Mathf.FloorToInt(playerStats.Strenght.Value);
+        statValue = Mathf.FloorToInt(playerStats.Strength.Value);
     }
 
     public void TempIncrease()

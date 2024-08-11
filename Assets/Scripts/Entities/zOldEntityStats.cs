@@ -1,51 +1,12 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using UnityEngine;
-
-
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using UnityEngine;
+    using static ConsumableType;
+    
 namespace Jili.OldStatSystem
-{
-    public interface IOffensive
-    {
-        float CalculatePhysicalDamage();
-    }
-
-    public interface IMovable
-    {
-        float CalculateMaxSpeed();
-    }
-
-    public interface IAccerable
-    {
-        float CalculateAcceleration();
-    }
-
-    public interface IDamageable
-    {
-        void TakeDamage(float incomingDamage);
-        void VisualizeDamage();
-    }
-
-    public interface IExperience
-    {
-        void GainExperience(float incomingExperience);
-        void CheckLevelUp();
-        void IncreaseLevel();
-        int ReadLevel();
-    }
-
-    public interface IDestructible
-    {
-        void CheckHealth();
-        void StartDeathRoutine();
-        void Suicide();
-    }
-
+{ 
     public interface IStat
     {
         float CalculateStat(); // Método para calcular o valor do stat
@@ -56,238 +17,6 @@ namespace Jili.OldStatSystem
         IStat MainStat { get; } // Propriedade que referencia o stat principal
         float CurrentValue { get; set; } // O valor atual do substat, que pode mudar durante o jogo
     }
-
-    public abstract class AttributeCategory
-    {
-        public string Name { get; private set; }
-        public List<EntityAttribute> Attributes { get; private set; }
-
-        protected AttributeCategory(string name)
-        {
-            Name = name;
-            Attributes = new List<EntityAttribute>();
-        }
-
-        public void AddAttribute(EntityAttribute attribute)
-        {
-            Attributes.Add(attribute);
-            attribute.Category = this;
-        }
-
-        public virtual float CalculateTotalPoints()
-        {
-            float totalPoints = 0;
-            foreach (var attribute in Attributes)
-            {
-                totalPoints += attribute.Value;
-            }
-            return totalPoints;
-        }
-    }
-
-    public class PhysicalAttributes : AttributeCategory
-    {
-        public PhysicalAttributes() : base("Physical")
-        {
-            AddAttribute(new Strength(this));
-            AddAttribute(new Resistance(this));
-            AddAttribute(new Constitution(this));
-            AddAttribute(new Vigor(this));
-        }
-    }
-
-    public class MobilityAttributes : AttributeCategory
-    {
-        public MobilityAttributes() : base("Mobility")
-        {
-            AddAttribute(new Agility(this));
-            AddAttribute(new Dextery(this));
-            AddAttribute(new Accuracy(this));
-            AddAttribute(new Finesse(this));
-        }
-    }
-
-    public class MagicalAttributes : AttributeCategory
-    {
-        public MagicalAttributes() : base("Magical")
-        {
-            AddAttribute(new Intelligence(this));
-            AddAttribute(new Willpower(this));
-            AddAttribute(new Wisdom(this));
-            AddAttribute(new Spirit(this));
-        }
-    }
-
-    public class SocialAttributes : AttributeCategory
-    {
-        public SocialAttributes() : base("Social")
-        {
-            AddAttribute(new Charisma(this));
-            AddAttribute(new Influence(this));
-            AddAttribute(new Leadership(this));
-            AddAttribute(new Presence(this));
-        }
-    }
-
-    public class SpecialAttributes : AttributeCategory
-    {
-        public SpecialAttributes() : base("Special")
-        {
-            AddAttribute(new Luck(this));
-            AddAttribute(new Level(this));
-            AddAttribute(new Gold(this));
-        }
-
-        public override float CalculateTotalPoints()
-        {
-            float totalPoints = 0;
-
-            foreach (var Luck in Attributes)
-            {
-                totalPoints += Luck.Value;
-            }
-            foreach(var Level in Attributes)
-            {
-                totalPoints += Level.Value;
-            }
-            return totalPoints;
-        }
-    }
-
-    [System.Serializable]
-    public abstract class EntityAttribute
-    {
-        public event Action<float> OnValueChanged;
-        private float storedvalue;
-
-        [SerializeField, HideInInspector] public string Name { get; private set; }
-        [SerializeField] public float tempvalue { get; set; }
-
-        public AttributeCategory Category { get; set; }
-
-        public float Value
-        {
-            get => storedvalue;
-            set
-            {
-                if (storedvalue != tempvalue)
-                {
-                    storedvalue = tempvalue;
-                    OnValueChanged?.Invoke(storedvalue); // Emit the value change signal
-                }
-            }
-        }
-
-        protected EntityAttribute(string name, float initialValue, AttributeCategory category)
-        {
-            Name = name;
-            tempvalue = initialValue;
-            Category = category;
-        }
-    }
-
-
-    ///* PHYSICAL ATTRIBUTES *///
-    public class Strength : EntityAttribute
-    {
-        public Strength(AttributeCategory category) : base("Strength", 5, category) { }
-    }
-
-    public class Resistance : EntityAttribute
-    {
-        public Resistance(AttributeCategory category) : base("Resistance", 5, category) { }
-    }
-
-    public class Constitution : EntityAttribute
-    {
-        public Constitution(AttributeCategory category) : base("Constitution", 5, category) { }
-    }
-
-    public class Vigor : EntityAttribute
-    {
-        public Vigor(AttributeCategory category) : base("Vigor", 5, category) { }
-    }
-
-
-    ///* COORDINATION (MOBILITY) ATTRIBUTES *///
-    public class Agility : EntityAttribute
-    {
-        public Agility(AttributeCategory category) : base("Agility", 5, category) { }
-    }
-
-    public class Dextery : EntityAttribute
-    {
-        public Dextery(AttributeCategory category) : base("Dextery", 5, category) { }
-    }
-
-    public class Accuracy : EntityAttribute
-    {
-        public Accuracy(AttributeCategory category) : base("Accuracy", 5, category) { }
-    }
-
-    public class Finesse : EntityAttribute
-    {
-        public Finesse(AttributeCategory category) : base("Finesse", 5, category) { }
-    }   
-
-
-    ///* MAGICAL ATTRIBUTES *///
-    public class Intelligence : EntityAttribute
-    {
-        public Intelligence(AttributeCategory category) : base("Intelligence", 5, category) { }
-    }   
-
-    public class Willpower : EntityAttribute
-    {
-        public Willpower(AttributeCategory category) : base("Willpower", 5, category) { }
-    }   
-
-    public class Wisdom : EntityAttribute
-    {
-        public Wisdom(AttributeCategory category) : base("Wisdom", 5, category) { }
-    }   
-
-    public class Spirit : EntityAttribute
-    {
-        public Spirit(AttributeCategory category) : base("Spirit", 5, category) { }
-    }   
-
-    ///* SOCIAL ATTRIBUTES *///
-    public class Charisma : EntityAttribute
-    {
-        public Charisma(AttributeCategory category) : base("Charisma", 5, category) { }
-    }   
-
-    public class Influence : EntityAttribute
-    {
-        public Influence(AttributeCategory category) : base("Influence", 5, category) { }
-    }   
-
-    public class Leadership : EntityAttribute
-    {
-        public Leadership(AttributeCategory category) : base("Leadership", 5, category) { }
-    }   
-
-    public class Presence : EntityAttribute
-    {
-        public Presence(AttributeCategory category) : base("Presence", 5, category) { }
-    }   
-
-    ///* SPECIAL ATTRIBUTES *///
-    public class Luck : EntityAttribute
-    {
-        public Luck(AttributeCategory category) : base("Luck", 5, category) { }
-    }   
-
-    public class Level : EntityAttribute
-    {
-        public Level(AttributeCategory category) : base("Level", 0, category) { }
-    }   
-
-    public class Gold : EntityAttribute
-    {
-        public Gold(AttributeCategory category) : base("Gold", 0, category) { }
-    }   
 
     public abstract class EntityStat : IStat
     {
@@ -481,7 +210,7 @@ namespace Jili.OldStatSystem
             float resistance = _attributes.FirstOrDefault(attr => attr.Name == "Resistance")?.Value ?? 0;
             return 10 - (vigor * 2 + constitution + strength * 0.75f + resistance * 0.1f / 73);
         }
-    }   
+    }
 
     public class MaxSpeed : EntityStat
     {
@@ -495,7 +224,7 @@ namespace Jili.OldStatSystem
             float agility = _attributes.FirstOrDefault(attr => attr.Name == "Agility")?.Value ?? 0;
             return 1 + 0.5f * agility;
         }
-    }   
+    }
 
     public class Acceleration : EntityStat
     {
@@ -509,7 +238,7 @@ namespace Jili.OldStatSystem
             float dextery = _attributes.FirstOrDefault(attr => attr.Name == "Dextery")?.Value ?? 0;
             return 0.05f * dextery;
         }
-    }   
+    }
 
     public class AttackCD : EntityStat
     {
@@ -529,7 +258,7 @@ namespace Jili.OldStatSystem
             float accuracy = _attributes.FirstOrDefault(attr => attr.Name == "Accuracy")?.Value ?? 0;
             return 5 / 1 + (dextery * 12 / 100 + agility * 6 / 100 + finesse * 3 / 100 + accuracy * 1.5f / 100);
         }
-    }   
+    }
 
     public class Precision : EntityStat
     {
@@ -542,7 +271,7 @@ namespace Jili.OldStatSystem
         {
             return _attributes.FirstOrDefault(attr => attr.Name == "Accuracy")?.Value ?? 0;
         }
-    }   
+    }
 
     public class CriticalDamage : EntityStat
     {
@@ -560,7 +289,7 @@ namespace Jili.OldStatSystem
             float luck = _attributes.FirstOrDefault(attr => attr.Name == "Luck")?.Value ?? 0;
             return 1.0f * 1 + (0.08f * finesse + 0.03f * accuracy + 0.01f * luck);
         }
-    }   
+    }
 
     public class MagicDamage : EntityStat
     {
@@ -574,7 +303,7 @@ namespace Jili.OldStatSystem
             float intelligence = _attributes.FirstOrDefault(attr => attr.Name == "Intelligence")?.Value ?? 0;
             return 10 * intelligence;
         }
-    }   
+    }
 
     public class MagicDefense : EntityStat
     {
@@ -592,7 +321,7 @@ namespace Jili.OldStatSystem
             float intelligence = _attributes.FirstOrDefault(attr => attr.Name == "Intelligence")?.Value ?? 0;
             return 6 * willpower + (2 * spirit + intelligence) / 3;
         }
-    }   
+    }
 
     public class MagicCD : EntityStat
     {
@@ -606,7 +335,7 @@ namespace Jili.OldStatSystem
             float willpower = _attributes.FirstOrDefault(attr => attr.Name == "Willpower")?.Value ?? 0;
             return willpower <= 1 ? 1 : Mathf.Pow(0.99f, willpower);
         }
-    }   
+    }
 
     public class MaxMana : EntityStat
     {
@@ -659,7 +388,7 @@ namespace Jili.OldStatSystem
             float resistance = _attributes.FirstOrDefault(attr => attr.Name == "Resistance")?.Value ?? 0;
             return intelligence * 0.1f + spirit * 0.35f + wisdom * 0.2f + willpower * 0.2f + vigor * 0.05f + constitution * 0.05f + resistance * 0.05f;
         }
-    }   
+    }
 
     public class ManaRegenCD : EntityStat
     {
@@ -686,7 +415,7 @@ namespace Jili.OldStatSystem
             float resistance = _attributes.FirstOrDefault(attr => attr.Name == "Resistance")?.Value ?? 0;
             return 20 - (intelligence * 3 + spirit * 2 + wisdom * 1.75f + willpower * 0.75f + vigor * 0.25f + constitution * 0.15f + resistance * 0.1f / 160);
         }
-    }   
+    }
 
     public class DropRate : EntityStat
     {
@@ -705,7 +434,7 @@ namespace Jili.OldStatSystem
             float presence = _attributes.FirstOrDefault(attr => attr.Name == "Presence")?.Value ?? 0;
             return 1 * 1 + (0.01f * charisma + 0.005f * luck + 0.00125f * presence);
         }
-    }   
+    }
 
     public class SpawnRate : EntityStat
     {
@@ -719,7 +448,7 @@ namespace Jili.OldStatSystem
             float influence = _attributes.FirstOrDefault(attr => attr.Name == "Influence")?.Value ?? 0;
             return 1 * 1 + (0.02f * influence);
         }
-    }   
+    }
 
     public class TreasonRate : EntityStat
     {
@@ -733,7 +462,7 @@ namespace Jili.OldStatSystem
             float leadership = _attributes.FirstOrDefault(attr => attr.Name == "Leadership")?.Value ?? 0;
             return 1 * 1 + (0.01f * leadership);
         }
-    }   
+    }
 
     public class TreasonDuration : EntityStat
     {
@@ -751,7 +480,7 @@ namespace Jili.OldStatSystem
             float charisma = _attributes.FirstOrDefault(attr => attr.Name == "Charisma")?.Value ?? 0;
             return 1 * 1 + (0.01f * leadership + 0.01f * influence + 0.01f * charisma);
         }
-    }   
+    }
 
     public class SummonRate : EntityStat
     {
@@ -767,7 +496,7 @@ namespace Jili.OldStatSystem
             float presence = _attributes.FirstOrDefault(attr => attr.Name == "Presence")?.Value ?? 0;
             return 1 * 1 + (0.02f * leadership + 0.02f * presence);
         }
-    }   
+    }
 
     public class SummonDuration : EntityStat
     {
@@ -783,7 +512,7 @@ namespace Jili.OldStatSystem
             float presence = _attributes.FirstOrDefault(attr => attr.Name == "Presence")?.Value ?? 0;
             return 1 * 1 + (0.02f * leadership + 0.02f * presence);
         }
-    }   
+    }
 
     public class SummonMorale : EntityStat
     {
@@ -799,7 +528,7 @@ namespace Jili.OldStatSystem
             float presence = _attributes.FirstOrDefault(attr => attr.Name == "Presence")?.Value ?? 0;
             return 1 * 1 + (0.02f * leadership + 0.02f * presence);
         }
-    }   
+    }
 
     public class CriticalChance : EntityStat
     {
@@ -813,7 +542,7 @@ namespace Jili.OldStatSystem
             float luck = _attributes.FirstOrDefault(attr => attr.Name == "Luck")?.Value ?? 0;
             return 0.01f + 0.01f * luck;
         }
-    }   
+    }
 
     public class Experience : EntityStat
     {
@@ -826,7 +555,7 @@ namespace Jili.OldStatSystem
         {
             return 0;
         }
-    }   
+    }
 
     public class NextLevelExp : EntityStat
     {
@@ -849,7 +578,7 @@ namespace Jili.OldStatSystem
 
             return nextLevelExp;
         }
-    }   
+    }
 
     public class TotalAttPoints : EntityStat
     {
@@ -867,13 +596,13 @@ namespace Jili.OldStatSystem
 
     public class SpentAttPoints : ISubStat
     {
-        public IStat MainStat { get; private set; } 
+        public IStat MainStat { get; private set; }
         public float CurrentValue { get; set; }
 
         public SpentAttPoints(TotalAttPoints mainStat)
         {
             MainStat = mainStat;
-            CurrentValue = 0; 
+            CurrentValue = 0;
         }
 
         public void IncreaseSpentPoints(int points)
@@ -896,11 +625,11 @@ namespace Jili.OldStatSystem
             // Subscribe to changes in main stat and spent points
             if (MainStat is EntityStat entityStat)
             {
-             //   entityStat.OnValueChanged += Recalculate;
+                //   entityStat.OnValueChanged += Recalculate;
             }
             if (spentAttPoints != null)
             {
-             //   spentAttPoints.OnValueChanged += Recalculate;
+                //   spentAttPoints.OnValueChanged += Recalculate;
             }
 
             CurrentValue = MainStat.CalculateStat() - spentAttPoints.CurrentValue; // Initial calculation
@@ -993,39 +722,18 @@ namespace Jili.OldStatSystem
         public string[] attNames;
         public float[] attValues;
 
-        void Awake()
-        {
-
-        }
-
         void Start()
         {
-
-            spriteRenderer = GetComponent<SpriteRenderer>();
-            originalColor = spriteRenderer.color;
-            darknedColor = originalColor * 0.25f;
             InitializeAttributes();
             InitiateStats();
         }
 
         void Update()
         {
-            CheckHealth();
-            VisualizeDamage();
+
         }
 
-        void VisualizeDamage()
-        {
-            if (gameObject.CompareTag("Enemy"))
-            {
-                float healthPercentage = health / maxHealth;
 
-                // Update opacity
-                Color newColor = Color.Lerp(darknedColor, originalColor, healthPercentage);
-                newColor.a = 1;
-                spriteRenderer.color = newColor;
-            }
-        }
 
         void FixedUpdate()
         {
@@ -1144,33 +852,6 @@ namespace Jili.OldStatSystem
             return acceleration;
         }
 
-        public void Suicide()
-        {
-            health = 0;
-        }
-
-        void CheckHealth()
-        {
-            if (health <= 0)
-            {
-                StartDeathRoutine();
-                Destroy(this.gameObject);
-            }
-        }
-
-        public void TakeDamage(float incomingDamage)
-        {
-            health -= incomingDamage;
-        }
-
-        void StartDeathRoutine()
-        {
-            if (gameObject.CompareTag("Enemy"))
-            {
-                gameObject.GetComponent<EnemyDrop>().CheckDrop();
-            }
-        }
-
         public void GainExperience(float incomingExperience)
         {
             experience += incomingExperience;
@@ -1281,5 +962,5 @@ namespace Jili.OldStatSystem
         }
 
 
-    }   
+    }
 }

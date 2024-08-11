@@ -13,13 +13,13 @@ public class ConsumableUse : MonoBehaviour
     private ConsumableType consumableType;
     private string playerTag = "Player";
     private GameObject player;
-    private EntityStats stats;
+    private Attribute stats;
 
     private void Start()
     {
         consumableType = GetComponent<ConsumableType>();
         player = GameObject.FindGameObjectWithTag(playerTag);
-        stats = player.GetComponent<EntityStats>();
+        stats = player.GetComponent<Attribute>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
