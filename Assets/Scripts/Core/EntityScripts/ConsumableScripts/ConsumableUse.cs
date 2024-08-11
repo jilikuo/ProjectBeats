@@ -13,13 +13,13 @@ public class ConsumableUse : MonoBehaviour
     private ConsumableType consumableType;
     private string playerTag = "Player";
     private GameObject player;
-    private Attribute stats;
+    private Attribute suicidalEntity;
 
     private void Start()
     {
         consumableType = GetComponent<ConsumableType>();
         player = GameObject.FindGameObjectWithTag(playerTag);
-        stats = player.GetComponent<Attribute>();
+        suicidalEntity = player.GetComponent<Attribute>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -81,31 +81,31 @@ public class ConsumableUse : MonoBehaviour
         switch (consumableType.size)
         {
             case ConsumableType.Size.Small:
-                stats.GainExperience(ExpP);
+                suicidalEntity.GainExperience(ExpP);
 
                 Debug.Log("Size: Small");
                 break;
 
             case ConsumableType.Size.Medium:
-                stats.GainExperience(ExpM);
+                suicidalEntity.GainExperience(ExpM);
 
                 Debug.Log("Size: Medium");
                 break;
 
             case ConsumableType.Size.Big:
-                stats.GainExperience(ExpG);
+                suicidalEntity.GainExperience(ExpG);
 
                 Debug.Log("Size: Big");
                 break;
 
             case ConsumableType.Size.Super:
-                stats.GainExperience(ExpS);
+                suicidalEntity.GainExperience(ExpS);
 
                 Debug.Log("Size: Super");
                 break;
 
             case ConsumableType.Size.Legendary:
-                stats.GainExperience(ExpL);
+                suicidalEntity.GainExperience(ExpL);
 
                 Debug.Log("Size: Legendary");
                 break;

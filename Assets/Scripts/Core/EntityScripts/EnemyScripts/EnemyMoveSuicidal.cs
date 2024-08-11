@@ -1,16 +1,15 @@
-/* using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
+using Jili.StatSystem;
 
+[RequireComponent(typeof(CollisionSuicidalEnemy))]
 public class EnemyMoveSuicidal : MonoBehaviour
 {
     private GameObject target;
     private Transform playerPos;
 
-    private Attribute stats;
-    private float speed;
+    private EntityBase stats;
     private Rigidbody2D enemyRb;
+    private float speed;
 
     void Start()
     {
@@ -19,12 +18,12 @@ public class EnemyMoveSuicidal : MonoBehaviour
             target = GameObject.FindGameObjectWithTag("Player");
         }
 
-        stats = GetComponent<Attribute>();
+        stats = GetComponent<EntityBase>();
         enemyRb = GetComponent<Rigidbody2D>();
 
         playerPos = target.transform;
 
-        speed = (stats.CalculateMaxSpeed()) * 80/100;
+        speed = stats.ReadStatValueByType(StatType.MovementSpeed);
     }
 
     void FixedUpdate()
@@ -34,4 +33,3 @@ public class EnemyMoveSuicidal : MonoBehaviour
         enemyRb.velocity = direction * speed;
     }
 }
-*/ 

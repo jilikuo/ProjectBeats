@@ -6,8 +6,12 @@ namespace Jili.StatSystem
 {
     public enum StatType
     {
+        //VolatileStats
+        Health  = 1,
+        Mana    = 2,
+        Stamina = 3,
+        //Physical
         AttackDamage = 1011,
-        Health = 1021,
         Armor = 1031,
         //Mobility
         MovementSpeed = 2011,
@@ -19,10 +23,8 @@ namespace Jili.StatSystem
     {
         protected readonly string Name;        // Nome do stat
         public StatType Type;
-        public float BaseValue;             // Valor base do stat
+        protected float BaseValue;             // Valor base do stat
         private readonly List<Attribute> RelevantAtts;
-
-
 
         public virtual float Value          // Valor Após modificadores do stat
         {
@@ -32,17 +34,33 @@ namespace Jili.StatSystem
                 {
                     BaseValue = StatFormulas.CalculateBaseStatValue(Type, RelevantAtts);
                     lastBaseValue = BaseValue;
+                    lastValue = _value;
                     _value = CalculateFinalValue();
                     isDirty = false;
+
+                    if (isVolatile)
+                    {
+                        if (CurrentValue + (_value - lastValue) < 0)
+                        {
+                            CurrentValue = 1;
+                        }
+                        else
+                        {
+                            CurrentValue += _value - lastValue;
+                        }
+                    }
                 }
                 return _value;
             }
         }
 
 
+        protected bool isVolatile = false;
+        public float CurrentValue;
         protected bool isDirty = true;
         protected float _value;
         protected float lastBaseValue = float.MinValue;
+        protected float lastValue;
 
         protected readonly List<StatModifier> statModifiers;  // Lista de modificadores do stat
         public readonly ReadOnlyCollection<StatModifier> StatModifiers; // Lista de modificadores do stat somente leitura
@@ -64,6 +82,11 @@ namespace Jili.StatSystem
             foreach (var att in RelevantAtts)
             {
                 att.OnValueChanged += BecomeDirty;
+            }
+            if (type == StatType.Health || type == StatType.Mana || type == StatType.Stamina)
+            {
+                isVolatile = true;
+                CurrentValue = BaseValue;
             }
         }
 

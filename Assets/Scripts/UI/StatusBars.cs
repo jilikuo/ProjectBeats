@@ -10,7 +10,7 @@ public class StatusBars : MonoBehaviour
     public Slider mpbar;
     public Slider stbar;
     public Slider expbar;
-    private PlayerIdentity stats;
+    private PlayerIdentity suicidalEntity;
     private TextMeshProUGUI hplabel;
     private TextMeshProUGUI mplabel;
     private TextMeshProUGUI stlabel;
@@ -19,15 +19,15 @@ public class StatusBars : MonoBehaviour
 
     private void Start()
     {
-        stats = GameObject.FindGameObjectWithTag("Player").gameObject.GetComponent<Attribute>();
-        hpbar.maxValue = stats.maxHealth;
-        hpbar.value = stats.health;
-        mpbar.maxValue = stats.maxMana;
-        mpbar.value = stats.mana;
-        stbar.maxValue = stats.maxStamina;
-        stbar.value = stats.stamina;
-        expbar.maxValue = stats.nextLevelExp;
-        expbar.value = stats.experience;
+        suicidalEntity = GameObject.FindGameObjectWithTag("Player").gameObject.GetComponent<Attribute>();
+        hpbar.maxValue = suicidalEntity.maxHealth;
+        hpbar.value = suicidalEntity.health;
+        mpbar.maxValue = suicidalEntity.maxMana;
+        mpbar.value = suicidalEntity.mana;
+        stbar.maxValue = suicidalEntity.maxStamina;
+        stbar.value = suicidalEntity.stamina;
+        expbar.maxValue = suicidalEntity.nextLevelExp;
+        expbar.value = suicidalEntity.experience;
 
         hplabel = hpbar.GetComponentInChildren<TextMeshProUGUI>();
         mplabel = mpbar.GetComponentInChildren<TextMeshProUGUI>();
@@ -37,20 +37,20 @@ public class StatusBars : MonoBehaviour
 
     private void Update()
     {
-        hpbar.maxValue = stats.maxHealth;
-        hpbar.value = stats.health;
+        hpbar.maxValue = suicidalEntity.maxHealth;
+        hpbar.value = suicidalEntity.health;
         hplabel.text = ((Mathf.Ceil(hpbar.value * 10) / 10).ToString() + " HP");
 
-        mpbar.maxValue = stats.maxMana;
-        mpbar.value = stats.mana;
+        mpbar.maxValue = suicidalEntity.maxMana;
+        mpbar.value = suicidalEntity.mana;
         mplabel.text = "Mana";
 
-        stbar.maxValue = stats.maxStamina;
-        stbar.value = stats.stamina;
+        stbar.maxValue = suicidalEntity.maxStamina;
+        stbar.value = suicidalEntity.stamina;
         stlabel.text = "Stamina";
 
-        expbar.maxValue = stats.nextLevelExp;
-        expbar.value = stats.experience;
+        expbar.maxValue = suicidalEntity.nextLevelExp;
+        expbar.value = suicidalEntity.experience;
         explabel.text = ((Mathf.Floor(expbar.value).ToString()) + " / " + (Mathf.Floor(expbar.maxValue).ToString()) + " Experience Points");
 
     }

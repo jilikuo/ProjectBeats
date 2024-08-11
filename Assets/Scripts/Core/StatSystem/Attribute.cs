@@ -10,8 +10,26 @@ namespace Jili.StatSystem
         Strength = 101,
         Constitution = 102,
         Resistance = 103,
+        Vigor = 104,
         //Mobility
-        Agility = 201
+        Agility = 201,
+        Dextery = 202,
+        Finesse = 203,
+        Precision = 204,
+        //Magical
+        Intelligence = 301,
+        Willpower = 302,
+        Wisdom = 303,
+        Spirit = 304,
+        //Social
+        Charisma = 401,
+        Influence = 402,
+        Leadership = 403,
+        Presence = 404,
+        //Special
+        Luck = 501,
+        Level = 502, // prone to changes
+        Gold = 503   // prone to changes
     }
 
     [Serializable]
@@ -19,7 +37,7 @@ namespace Jili.StatSystem
     {
         private readonly string Name;       // Nome do stat
         public AttributeType Type;          // Tipo do stat
-        public float BaseValue;             // Valor base do stat
+        protected float BaseValue;             // Valor base do stat
 
         public event Action OnValueChanged; // Event to notify when the value changes
 

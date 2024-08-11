@@ -8,7 +8,7 @@ namespace Jili.StatSystem
         PercentileCumulative = 300,   // Modificador percentual, prioridade 2 = quer afetar o total; Exemplo + 10% de dano total
     }
 
-    // Classe que define um modificador de stats
+    // Classe que define um modificador de suicidalEntity
     public class AttributeModifier
     {
         public readonly float Value;        // Valor do modificador

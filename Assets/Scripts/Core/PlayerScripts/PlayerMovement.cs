@@ -14,12 +14,12 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovement
     private readonly float        SpeedFactor = 0.6f;
     private readonly float DecelarationFactor = 0.3f;
 
-    public float baseSpeed = 0.5f;
+    public float baseSpeed;
     public float maxSpeed;
 
-    public float playerAcc = 0;
-    public float horizontalSpeed = 0;
-    public float verticalSpeed = 0;
+    public float playerAcc;
+    public float horizontalSpeed;
+    public float verticalSpeed;
 
     private bool movingLeft = false;
     private bool movingRight = false;
@@ -35,8 +35,8 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovement
         playerRb = GetComponent<Rigidbody2D>();
         playerStats = GetComponent<PlayerIdentity>();
 
-        playerAcc = playerStats.Agility.Value / 20;
-        maxSpeed = playerStats.Agility.Value;
+        playerAcc = playerStats.ReadStatValueByType(StatType.Acceleration);
+        maxSpeed = playerStats.ReadStatValueByType(StatType.MovementSpeed);
         baseSpeed = maxSpeed * SpeedFactor;
     }
 

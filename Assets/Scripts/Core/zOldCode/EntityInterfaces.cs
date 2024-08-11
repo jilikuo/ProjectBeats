@@ -7,7 +7,7 @@ namespace Jili.OldStatSystem
         //relevant attributes
         Strength strenght { get; set; }
 
-        //relevant stats
+        //relevant suicidalEntity
         PhysicalDamage physicalDamage { get; set; }
     }
 
@@ -16,7 +16,7 @@ namespace Jili.OldStatSystem
         //relevant attributes
         Constitution constitution { get; set; }
 
-        //relevant stats
+        //relevant suicidalEntity
         MaxHealth maxHealth { get; set; }
         Health health { get; set; }
 
@@ -53,7 +53,7 @@ namespace Jili.OldStatSystem
         //relevant attributes
         Agility agility { get; set; }
 
-        //relevant stats
+        //relevant suicidalEntity
         MaxSpeed maxSpeed { get; set; }
     }
 
@@ -62,7 +62,7 @@ namespace Jili.OldStatSystem
         //relevant attributes
         Dextery dextery { get; set; }
 
-        //relevant stats
+        //relevant suicidalEntity
         Acceleration acceleration { get; set; }
     }
 
@@ -71,7 +71,7 @@ namespace Jili.OldStatSystem
         //relevant attributes
         Level level { get; set; }
 
-        //relevant stats
+        //relevant suicidalEntity
         Experience experience { get; set; }
         NextLevelExp nextLevelExperience { get; set; }
 
