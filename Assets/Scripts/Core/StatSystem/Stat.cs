@@ -15,7 +15,9 @@ namespace Jili.StatSystem
         Armor = 1031,
         //Mobility
         MovementSpeed = 2011,
-        Acceleration = 2012
+        Acceleration = 2012,
+        AttacksPerSecond = 2013,
+        
     }
 
     [Serializable]
@@ -25,6 +27,8 @@ namespace Jili.StatSystem
         public StatType Type;
         protected float BaseValue;             // Valor base do stat
         private readonly List<Attribute> RelevantAtts;
+
+        public event Action OnValueChanged; // Event to notify when the value changes
 
         public virtual float Value          // Valor Após modificadores do stat
         {
@@ -37,6 +41,7 @@ namespace Jili.StatSystem
                     lastValue = _value;
                     _value = CalculateFinalValue();
                     isDirty = false;
+                    OnValueChanged?.Invoke(); // Trigger the event when value changes
 
                     if (isVolatile)
                     {

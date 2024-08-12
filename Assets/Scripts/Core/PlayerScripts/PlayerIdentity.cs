@@ -9,7 +9,7 @@ namespace Jili.StatSystem.EntityTree
 
     public class PlayerIdentity : EntityBase, IPlayer
     {
-        public WeaponIDs baseWeapon;
+        public JinxMinigun baseWeapon;
         public float str;
         public float con;
         public float dex;
@@ -23,6 +23,7 @@ namespace Jili.StatSystem.EntityTree
         public Stat Health;
         public Stat MovementSpeed;
         public Stat Acceleration;
+        public Stat AttacksPerSecond;
 
         private bool healBlock = false; // flag for status conditions that block healing
 
@@ -45,12 +46,14 @@ namespace Jili.StatSystem.EntityTree
             Health = new Stat(StatType.Health, attList);
             MovementSpeed = new Stat(StatType.MovementSpeed, attList);
             Acceleration = new Stat(StatType.Acceleration, attList);
+            AttacksPerSecond = new(StatType.AttacksPerSecond, attList);
 
             // Load Entity Stat List
             statListAdd(AttackDamage);
             statListAdd(Health);
             statListAdd(MovementSpeed);
             statListAdd(Acceleration);
+            statListAdd(AttacksPerSecond);
         }
 
         void Update()

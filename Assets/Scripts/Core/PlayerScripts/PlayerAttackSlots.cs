@@ -15,15 +15,15 @@ namespace Jili.StatSystem.AttackSystem
     [RequireComponent(typeof(PlayerIdentity))]
     public class PlayerAttackSlots : MonoBehaviour
     {
-        protected List<WeaponIDs> weaponIds;
-        public ReadOnlyCollection<WeaponIDs> WeaponIds;
+        protected List<JinxMinigun> weaponIds;
+        public ReadOnlyCollection<JinxMinigun> WeaponIds;
 
         protected PlayerIdentity player;
         protected int maxSlots = 3;
 
         private void Awake()
         {
-            weaponIds = new List<WeaponIDs>();
+            weaponIds = new List<JinxMinigun>();
             WeaponIds = weaponIds.AsReadOnly();
         }
 
@@ -46,7 +46,7 @@ namespace Jili.StatSystem.AttackSystem
                 return true;
         }
 
-        protected virtual bool AddToFreeSlot(WeaponIDs weapon)
+        protected virtual bool AddToFreeSlot(JinxMinigun weapon)
         {
             if (CheckForEmptySlot())
             {
@@ -57,7 +57,7 @@ namespace Jili.StatSystem.AttackSystem
             else return false;
         }
 
-        protected virtual bool StartFirstSlot(WeaponIDs weapon)
+        protected virtual bool StartFirstSlot(JinxMinigun weapon)
         {
             if (weaponIds.Count == 0)
             {
