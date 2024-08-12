@@ -357,6 +357,10 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7270911395783619085, guid: 33d1fed4a774e7045ad7f6bbed762fac, type: 3}
+      propertyPath: baseWeapon
+      value: 101
+      objectReference: {fileID: 0}
+    - target: {fileID: 7270911395783619085, guid: 33d1fed4a774e7045ad7f6bbed762fac, type: 3}
       propertyPath: Health.Type
       value: 1021
       objectReference: {fileID: 0}
