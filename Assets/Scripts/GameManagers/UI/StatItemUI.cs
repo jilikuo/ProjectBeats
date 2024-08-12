@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using Jili.StatSystem.EntityTree;
 
 public class StatItemUI : MonoBehaviour
 {

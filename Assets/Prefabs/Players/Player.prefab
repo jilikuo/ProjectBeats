@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 824790635414374195}
   - component: {fileID: 460704871525767378}
   - component: {fileID: 7566981477020700378}
-  - component: {fileID: 5780503460781239371}
   - component: {fileID: 7247478981441114630}
   - component: {fileID: 8195692806555110770}
   m_Layer: 0
@@ -103,12 +102,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97b6b9212315da24bb8dbd00864eaaae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Strenght:
-    BaseValue: 0
+  attList: []
+  statList: []
+  str: 0
+  con: 0
+  dex: 0
+  agi: 0
+  Strength:
+    Type: 0
   Constitution:
-    BaseValue: 0
+    Type: 0
+  Dextery:
+    Type: 0
   Agility:
-    BaseValue: 0
+    Type: 0
+  AttackDamage:
+    Type: 0
+    CurrentValue: 0
+  Health:
+    Type: 0
+    CurrentValue: 0
+  MovementSpeed:
+    Type: 0
+    CurrentValue: 0
+  Acceleration:
+    Type: 0
+    CurrentValue: 0
 --- !u!114 &824790635414374195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,8 +140,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9fa6b6468f5a5d40bf4033f5b7f987e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInput: {fileID: 460704871525767378}
-  playerMovement: {fileID: 7566981477020700378}
 --- !u!114 &460704871525767378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,28 +169,6 @@ MonoBehaviour:
   playerAcc: 0
   horizontalSpeed: 0
   verticalSpeed: 0
---- !u!114 &5780503460781239371
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1414725975483600876}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98109e7c12f5f4744ab31f6b4c376ba2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 2829091763142108361, guid: 7a14867b178ecd049ba36adf315a1ab6, type: 3}
-  playerPos: {fileID: 3624389812555553734}
-  cooldown: 3
-  currentCD: 0
-  projectileDuration: 10
-  offset: 0.08
-  projectileSpeed: 6
-  range: 4
-  projectiles: 5
-  triggerSpeed: 0.07
 --- !u!50 &7247478981441114630
 Rigidbody2D:
   serializedVersion: 4

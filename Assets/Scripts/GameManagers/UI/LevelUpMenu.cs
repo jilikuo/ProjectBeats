@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Threading.Tasks;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using Jili.StatSystem.EntityTree;
+
 public class LevelUpMenu : MonoBehaviour
 {
     public GameObject levelUpMenu;

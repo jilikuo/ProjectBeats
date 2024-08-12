@@ -4,8 +4,9 @@ using UnityEngine;
 namespace Jili.StatSystem.AttackSystem
 {
 
-    public class PistolShoot : MonoBehaviour
+    public class JinxMinigun : MonoBehaviour
     {
+        public WeaponIDs ID = WeaponIDs.JinxMinigun;
         public GameObject projectilePrefab;
         public Transform shooterPos;
         private Vector3 shootPos;

@@ -1,5 +1,6 @@
 using UnityEngine;
 using Jili.StatSystem;
+using Jili.StatSystem.EntityTree;
 
 public interface IPlayerMovement
 {
