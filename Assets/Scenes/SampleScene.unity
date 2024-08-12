@@ -549,7 +549,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7361491177284412903, guid: 106caa64117f9e24e8e4387be13c324e, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7361491177284412903, guid: 106caa64117f9e24e8e4387be13c324e, type: 3}
       propertyPath: playerPos
@@ -565,7 +565,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7361491177284412903, guid: 106caa64117f9e24e8e4387be13c324e, type: 3}
       propertyPath: spawnInterval
-      value: 5
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 8758813685419186450, guid: 106caa64117f9e24e8e4387be13c324e, type: 3}
       propertyPath: m_Name

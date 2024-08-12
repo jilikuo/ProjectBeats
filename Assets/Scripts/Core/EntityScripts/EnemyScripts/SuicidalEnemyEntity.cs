@@ -1,6 +1,4 @@
 using UnityEngine;
-using Jili.StatSystem;
-using Jili.StatSystem.EntityTree;
 
 namespace Jili.StatSystem.EntityTree
 {
