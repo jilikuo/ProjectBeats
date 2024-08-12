@@ -14,7 +14,7 @@ public class Projectile : MonoBehaviour
     void Start()
     {
         // damage = parent.GetComponent<Attribute>().CalculatePhysicalDamage() * 0.50f;
-        range = parent.GetComponent<PistolShoot>().range;
+        // range = parent.GetComponent<PistolShoot>().range;
         startingPoint = parent.transform.position;
     }
 

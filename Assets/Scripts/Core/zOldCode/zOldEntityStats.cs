@@ -1,4 +1,4 @@
-    using System;
+/*    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
@@ -757,13 +757,13 @@ namespace Jili.OldStatSystem
                     EntityAttribute attribute = (EntityAttribute)field.GetValue(this);
                     if (attribute == null)
                     {
-                        /*attribute = /*new EntityAttribute(); this comment was made because we are currently refactoring the code*/ // Ensure the attribute is not null
+                        //attribute = new EntityAttribute(); //this comment was made because we are currently refactoring the code // Ensure the attribute is not null
                         field.SetValue(this, attribute);
                     }
                     // Capitalize the first letter of the field name
                     string fieldName = field.Name.Substring(0, 1).ToUpper() + field.Name.Substring(1);
                     float initialValue = attribute.Value != 0 ? attribute.Value : 5;
-                    /*attribute.Initialize(fieldName, initialValue); this comment was made because we are currently refactoring the code*/ // Initialize with default value of 5
+                    //attribute.Initialize(fieldName, initialValue); this comment was made because we are currently refactoring the code // Initialize with default value of 5
 
                     // Add to lists
                     namesList.Add(attribute.Name);
@@ -885,14 +885,14 @@ namespace Jili.OldStatSystem
 
             CalculateNextLevelExp();
 
-            /* if (experience > nextLevelExp)
+             if (experience > nextLevelExp)
             {
                 return;
             }
             else if (level.value != 1 || level.value != 0)
             {
                 ShowLevelUpMenu();
-            }*/
+            }
         }
 
         void CalculateNextLevelExp()
@@ -963,4 +963,4 @@ namespace Jili.OldStatSystem
 
 
     }
-}
+}*/

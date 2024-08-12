@@ -1,4 +1,4 @@
-using System;
+/*using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -149,7 +149,7 @@ namespace Jili.OldStatSystem
     }
 
 
-    ///* PHYSICAL ATTRIBUTES *///
+    /// PHYSICAL ATTRIBUTES ///
     public class Strength : EntityAttribute
     {
         public Strength(AttributeCategory category) : base("Strength", 5, category) { }
@@ -171,7 +171,7 @@ namespace Jili.OldStatSystem
     }
 
 
-    ///* COORDINATION (MOBILITY) ATTRIBUTES *///
+    /// COORDINATION (MOBILITY) ATTRIBUTES ///
     public class Agility : EntityAttribute
     {
         public Agility(AttributeCategory category) : base("Agility", 5, category) { }
@@ -193,7 +193,7 @@ namespace Jili.OldStatSystem
     }
 
 
-    ///* MAGICAL ATTRIBUTES *///
+    /// MAGICAL ATTRIBUTES ///
     public class Intelligence : EntityAttribute
     {
         public Intelligence(AttributeCategory category) : base("Intelligence", 5, category) { }
@@ -214,7 +214,7 @@ namespace Jili.OldStatSystem
         public Spirit(AttributeCategory category) : base("Spirit", 5, category) { }
     }
 
-    ///* SOCIAL ATTRIBUTES *///
+    /// SOCIAL ATTRIBUTES ///
     public class Charisma : EntityAttribute
     {
         public Charisma(AttributeCategory category) : base("Charisma", 5, category) { }
@@ -235,7 +235,7 @@ namespace Jili.OldStatSystem
         public Presence(AttributeCategory category) : base("Presence", 5, category) { }
     }
 
-    ///* SPECIAL ATTRIBUTES *///
+    /// SPECIAL ATTRIBUTES ///
     public class Luck : EntityAttribute
     {
         public Luck(AttributeCategory category) : base("Luck", 5, category) { }
@@ -250,4 +250,4 @@ namespace Jili.OldStatSystem
     {
         public Gold(AttributeCategory category) : base("Gold", 0, category) { }
     }
-}
+}*/
