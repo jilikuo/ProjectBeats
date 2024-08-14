@@ -9,7 +9,7 @@ public interface IPlayerMovement
     void MovePlayer();
 }
 
-[RequireComponent(typeof(PlayerInput)), RequireComponent(typeof(PlayerIdentity))]
+[RequireComponent(typeof(PlayerInputRead)), RequireComponent(typeof(PlayerIdentity))]
 public class PlayerMovement : MonoBehaviour, IPlayerMovement
 {
     private readonly float        SpeedFactor = 0.6f;

@@ -1,15 +1,14 @@
-using System;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerInput), typeof(PlayerMovement))]
-public class PlayerController : MonoBehaviour
+[RequireComponent(typeof(PlayerInputRead), typeof(PlayerMovement))]
+public class PlayerControl : MonoBehaviour
 {
-    private PlayerInput playerInput;
+    private PlayerInputRead playerInput;
     private PlayerMovement playerMovement;
 
     private void Start()
     {
-        playerInput = GetComponent<PlayerInput>();
+        playerInput = GetComponent<PlayerInputRead>();
         playerMovement = GetComponent<PlayerMovement>();
     }
 

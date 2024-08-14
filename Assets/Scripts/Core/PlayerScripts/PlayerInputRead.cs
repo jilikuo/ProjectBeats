@@ -5,7 +5,7 @@ public interface IPlayerInput
     Vector3 ReadInput();
 }
 
-public class PlayerInput : MonoBehaviour, IPlayerInput
+public class PlayerInputRead : MonoBehaviour, IPlayerInput
 {
     public Vector3 ReadInput()
     {

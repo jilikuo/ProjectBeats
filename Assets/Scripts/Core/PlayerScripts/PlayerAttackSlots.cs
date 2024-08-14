@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using UnityEngine;
 using Jili.StatSystem.EntityTree;
 
-namespace Jili.StatSystem.AttackSystem
+namespace Jili.StatSystem.AttackSystem.Old
 {
     public enum WeaponIDs
     {
@@ -33,7 +33,17 @@ namespace Jili.StatSystem.AttackSystem
             StartFirstSlot(player.baseWeapon);
         }
 
+        private void FixedUpdate()
+        {
+
+        }
+
         private void LateUpdate()
+        {
+
+        }
+
+        private void ManagePlayerCD()
         {
 
         }
@@ -51,6 +61,7 @@ namespace Jili.StatSystem.AttackSystem
             if (CheckForEmptySlot())
             {
                 weaponIds.Add(weapon);
+
                 return true;
             }
 

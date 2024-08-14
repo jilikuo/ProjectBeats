@@ -9,7 +9,7 @@ namespace Jili.StatSystem.EntityTree
 
     public class PlayerIdentity : EntityBase, IPlayer
     {
-        public JinxMinigun baseWeapon;
+        public JinxMinigun baseWeapon = new JinxMinigun();
         public float str;
         public float con;
         public float dex;
@@ -54,6 +54,8 @@ namespace Jili.StatSystem.EntityTree
             statListAdd(MovementSpeed);
             statListAdd(Acceleration);
             statListAdd(AttacksPerSecond);
+
+            
         }
 
         void Update()

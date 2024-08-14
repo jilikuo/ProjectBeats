@@ -3,13 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Jili.StatSystem.AttackSystem
+namespace Jili.StatSystem.AttackSystem.Old
 {
 
     public class JinxMinigun : MonoBehaviour
     {
-        protected readonly WeaponIDs thisID = WeaponIDs.JinxMinigun;
-        protected readonly GameObject projectilePrefab = GameObject.FindGameObjectWithTag("ProjectileManager").GetComponent<ProjectileManager>().Bullet;
+        public WeaponIDs thisID = WeaponIDs.JinxMinigun;
+        public GameObject projectilePrefab = GameObject.FindGameObjectWithTag("ProjectileManager").GetComponent<ProjectileManager>().Bullet;
         public GameObject player;
         public PlayerIdentity playerStats;
         public Transform playerTransform;
@@ -39,7 +39,7 @@ namespace Jili.StatSystem.AttackSystem
 
         protected bool isDirty = true;
 
-        protected JinxMinigun()
+        public JinxMinigun()
         {
             player = GameObject.FindGameObjectWithTag("Player");
             playerStats = player.GetComponent<PlayerIdentity>();
@@ -55,22 +55,23 @@ namespace Jili.StatSystem.AttackSystem
             _cooldown = 1 / playerStats.AttacksPerSecond.Value;
         }
 
-        void BecomeDirty()
+        private void FixedUpdate()
         {
-            isDirty = true;
-        }
-
-        void FixedUpdate()
-        {
-            if (CoolDownManager())
+            float deltatime = Time.fixedDeltaTime;
+            if (CoolDownManager(deltatime))
             {
                 StartCoroutine(ShootProjectiles());
             }
         }
 
-        bool CoolDownManager()
+        void BecomeDirty()
         {
-            currentCD -= Time.fixedDeltaTime;
+            isDirty = true;
+        }
+
+        public bool CoolDownManager(float deltatime)
+        {
+            currentCD -= deltatime;
             if (currentCD < 0)
             {
                 currentCD = 0;
@@ -84,7 +85,7 @@ namespace Jili.StatSystem.AttackSystem
             return false;
         }
 
-        IEnumerator ShootProjectiles()
+        public IEnumerator ShootProjectiles()
         {
             shootPos = playerTransform.position;
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
