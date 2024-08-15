@@ -1,4 +1,4 @@
-using System;
+/*using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
@@ -30,7 +30,7 @@ namespace Jili.StatSystem.AttackSystem.Old
         private void Start()
         {
             player = GetComponent<PlayerIdentity>();
-            StartFirstSlot(player.baseWeapon);
+            /*StartFirstSlot(player.baseWeapon);
         }
 
         private void FixedUpdate()
@@ -78,4 +78,4 @@ namespace Jili.StatSystem.AttackSystem.Old
             return false;
         }
     }
-}
+}*/

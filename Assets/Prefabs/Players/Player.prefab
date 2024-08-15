@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3624389812555553734}
   - component: {fileID: 7756446749415544078}
   - component: {fileID: 7270911395783619085}
-  - component: {fileID: 8264607049347571085}
   - component: {fileID: 2081258610605957366}
   - component: {fileID: 7774468919650305355}
   - component: {fileID: 7566981477020700378}
@@ -105,7 +104,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attList: []
   statList: []
-  baseWeapon: {fileID: 0}
   str: 0
   con: 0
   dex: 0
@@ -133,18 +131,6 @@ MonoBehaviour:
   AttacksPerSecond:
     Type: 0
     CurrentValue: 0
---- !u!114 &8264607049347571085
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1414725975483600876}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6ce2a8ef2b619e489a8ea4aed6146ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2081258610605957366
 MonoBehaviour:
   m_ObjectHideFlags: 0

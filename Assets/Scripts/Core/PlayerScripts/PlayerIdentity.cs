@@ -1,4 +1,3 @@
-using Jili.StatSystem.AttackSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +8,6 @@ namespace Jili.StatSystem.EntityTree
 
     public class PlayerIdentity : EntityBase, IPlayer
     {
-        public JinxMinigun baseWeapon = new JinxMinigun();
         public float str;
         public float con;
         public float dex;
