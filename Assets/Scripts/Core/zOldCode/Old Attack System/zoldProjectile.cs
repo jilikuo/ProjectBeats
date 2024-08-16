@@ -1,3 +1,4 @@
+/*
 //TODO: refazer essa classe do zero, para utilizar uma nova lógica de projéteis;
 // Porém ainda talvez seja utilizada, deve ser analizado com calma antes de tomar uma decisão final;
 
@@ -69,3 +70,4 @@ public class Projectile : MonoBehaviour
         }
     }
 }
+*/

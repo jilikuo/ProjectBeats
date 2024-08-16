@@ -13,7 +13,13 @@ namespace Jili.StatSystem.AttackSystem
 
     public class JinxMinigun : IShootable
     {
-        protected WeaponTypes Type = WeaponTypes.JinxMinigun;
+        // CONSTANTES DE CONFIGURAÇÃO DA ARMA
+        private readonly int BaseProjectiles        = 3;                            // TRÊS PROJÉTEIS
+        private readonly int BaseProjectileSpeed    = 5;                            // VELOCIDADE BASE DE 5
+        private readonly int TriggerSpeedFactor     = 5;                            // 20% DO COOLDOWN ( X / 5 = 0,2x) A CADA DISPARO
+        private readonly int MaxProjectileDuration  = 5;                            // DURAÇÃO MÁXIMA DE 5 SEGUNDOS
+        private readonly float OffsetValue          = 0.1f;                         // DISPERSÃO DE 0.1 UNIDADES
+        protected readonly WeaponTypes Type         = WeaponTypes.JinxMinigun;      // TIPO DE ARMA
 
         //projectile damage
         private float _damage;
@@ -65,7 +71,6 @@ namespace Jili.StatSystem.AttackSystem
         }
 
         // projectile speed
-        protected float baseProjectileSpeed = 5; // velocidade padrão do projétil
         private float _projectileSpeed;
         protected float ProjectileSpeed
         {
@@ -77,12 +82,11 @@ namespace Jili.StatSystem.AttackSystem
                     DirtyStat.Remove(Player.ProjectileSpeed);
                     ReadDirtiness();
                 }
-                return _projectileSpeed + baseProjectileSpeed;
+                return _projectileSpeed + BaseProjectileSpeed;
             }
         }
 
         // number of projectiles
-        protected float baseProjectileNumber = 3; // número de projéteis padrão da arma
         private float   _projectileNumber;        // número de projéteis do jogador
         protected float ProjectileNumber
         {
@@ -94,7 +98,7 @@ namespace Jili.StatSystem.AttackSystem
                     DirtyStat.Remove(Player.ProjectileNumber);
                     ReadDirtiness();
                 }
-                return _projectileNumber + baseProjectileNumber;
+                return _projectileNumber + BaseProjectiles;
             }
         }
 
@@ -127,7 +131,7 @@ namespace Jili.StatSystem.AttackSystem
             DirtyStat.Add(Player.ProjectileSpeed);
 
             this.CooldownTimer = this.Cooldown;
-            this.TriggerSpeed = (this.Cooldown / 5) / this.ProjectileNumber; // A VELOCIDADE DE GATILHO É 20% DO COOLDOWN DIVIDIDO ENTRE O TOTAL DE PROJÉTEIS A SEREM DISPARADOS
+            this.TriggerSpeed = (this.Cooldown / TriggerSpeedFactor) / this.ProjectileNumber; // A VELOCIDADE DE GATILHO É 20% DO COOLDOWN DIVIDIDO ENTRE O TOTAL DE PROJÉTEIS A SEREM DISPARADOS
             
         }
 
@@ -165,6 +169,18 @@ namespace Jili.StatSystem.AttackSystem
             }
         }
 
+        public float ReturnStatValueByType(StatType type)
+        {
+            switch (type)
+            {
+                case StatType.AttackDamage:
+                    return Damage;
+                case StatType.AttackRange:
+                    return Range;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+        }
 
         public bool TryShoot(float deltaTime)
         {
@@ -175,7 +191,6 @@ namespace Jili.StatSystem.AttackSystem
             if (CooldownTimer <= 0)
             {
                 CooldownTimer = Cooldown; // ZERA O COOLDOWN NOVAMENTE
-                Debug.Log("Projectile Number: " + ProjectileNumber + "being base = " + baseProjectileNumber + "and from player = " + _projectileNumber);
                 Debug.Log("AIMING PROJECTILES");
                 Player.StartCoroutine(AimProjectiles()); // INICIA A CORROTINA DE MIRA
                 return true;
@@ -191,7 +206,7 @@ namespace Jili.StatSystem.AttackSystem
             mousePosition.z = 0f;
             Vector2 direction = (mousePosition - shootPos).normalized;
 
-            //atira na direção calculada, uma vez para cada projétil disponível, considerando o tempo de gatilho (20% do cooldown, dividido entre o total de projéteis)
+            //atira na direção calculada, uma vez para cada projétil disponível, considerando o tempo de gatilho
             for (int i = 0; i < ProjectileNumber; i++)
             {
                 Shoot(direction);
@@ -202,7 +217,7 @@ namespace Jili.StatSystem.AttackSystem
         public void Shoot(Vector2 direction)
         {
             //adiciona um pequeno spread para o disparo
-            float offset = 0.05f;
+            float offset = OffsetValue;
             float offsetX = Random.Range(-offset, offset);
             float offsetY = Random.Range(-offset, offset);
             Vector3 spawnPosition = PlayerTransform.position + new Vector3(offsetX, offsetY, 0);
@@ -210,12 +225,12 @@ namespace Jili.StatSystem.AttackSystem
 
             //instancia e configura o projétil
             GameObject NewProjectile = UnityEngine.Object.Instantiate(Projectile, spawnPosition, Quaternion.identity);
-            Projectile script = NewProjectile.GetComponent<Projectile>();
-            if (script != null)
+            ProjectileBase projectile = NewProjectile.GetComponent<ProjectileBase>();
+            if (projectile != null)
             {
-                script.parent = Player.gameObject;
-                script.range = Range;
-                Collider2D parentCollider = script.parent.GetComponent<Collider2D>();
+                projectile.Parent = Player.gameObject;
+                projectile.source = this;
+                Collider2D parentCollider = projectile.Parent.GetComponent<Collider2D>();
                 Collider2D projectileCollider = NewProjectile.GetComponent<Collider2D>();
                 if (parentCollider != null && projectileCollider != null)
                 {
@@ -228,7 +243,7 @@ namespace Jili.StatSystem.AttackSystem
             rb.velocity = direction.normalized * ProjectileSpeed;
         
             //destrói o projétil após 5 segundos
-            UnityEngine.Object.Destroy(NewProjectile, 5);
+            UnityEngine.Object.Destroy(NewProjectile, MaxProjectileDuration);
         }
     }
 }

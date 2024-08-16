@@ -10,6 +10,8 @@ namespace Jili.StatSystem.AttackSystem
 
         public void ReadDirtiness();
 
+        public float ReturnStatValueByType(StatType type);
+
         public bool TryShoot(float deltatime);
 
         public IEnumerator AimProjectiles();

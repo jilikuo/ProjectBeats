@@ -24,16 +24,13 @@ namespace Jili.StatSystem.AttackSystem
 
         public void FixedUpdate()
         {
-            //TENTA-SE ATIRAR COM TODAS AS ARMAS AO MESMO TEMPO, POR ISSO O PROCESSAMENTO PARALELO.
-            float deltaTime = Time.fixedDeltaTime;
-            Parallel.ForEach(Weapons, weapon =>
+            foreach(IShootable weapon in Weapons)
             {
                 if (weapon != null)
                 {
-                    Debug.Log("Attempting to shoot with weapon.");
-                    weapon.TryShoot(deltaTime);
+                    weapon.TryShoot(Time.fixedDeltaTime);
                 }
-            });
+            };
         }
 
         public void EquipWeapon(IShootable weapon)
