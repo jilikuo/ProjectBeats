@@ -55,7 +55,7 @@ namespace Jili.StatSystem.EntityTree
             statListAdd(Acceleration);
             statListAdd(AttacksPerSecond);
 
-            baseWeapon = new JinxMinigun(5, 5, 5, 5, GameObject.FindGameObjectWithTag("ProjectileManager").GetComponent<ProjectileManager>().Bullet, this.gameObject);
+            baseWeapon = new JinxMinigun(5, 5, 5, 5, 5, GameObject.FindGameObjectWithTag("ProjectileManager").GetComponent<ProjectileManager>().Bullet, this.gameObject);
         }
 
         void Update()

@@ -230,37 +230,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7947ff930baeeec40b3ec193ed28d956, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1084868121
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1084868122}
-  m_Layer: 0
-  m_Name: new player
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1084868122
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1084868121}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.12411082, y: 0.7865299, z: -9.953985}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1156116343
 GameObject:
   m_ObjectHideFlags: 0
@@ -958,4 +927,3 @@ SceneRoots:
   - {fileID: 6280454645080426676}
   - {fileID: 2004769812}
   - {fileID: 7352093011433180225}
-  - {fileID: 1084868122}
