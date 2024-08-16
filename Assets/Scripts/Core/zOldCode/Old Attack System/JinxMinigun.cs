@@ -16,7 +16,7 @@ namespace Jili.StatSystem.AttackSystem.Old
         private Vector3 shootPos;
 
         protected float shootRate = 2;
-        protected float cooldown
+        protected float Cooldown
         {
             get
             {
@@ -33,7 +33,7 @@ namespace Jili.StatSystem.AttackSystem.Old
         public float projectileDuration = 10;
         public float offset = 0.05f;
         public float projectileSpeed = 20f;
-        public float range = 2f;
+        public float Range = 2f;
         public float projectiles = 5;
         public float triggerSpeed;
 
@@ -84,7 +84,7 @@ namespace Jili.StatSystem.AttackSystem.Old
 
             if (currentCD <= 0)
             {
-                currentCD = cooldown;
+                currentCD = Cooldown;
                 return true;
             }
             return false;
@@ -112,22 +112,22 @@ namespace Jili.StatSystem.AttackSystem.Old
             float offsetY = Random.Range(-offset, offset);
             Vector3 spawnPosition = shootPos + new Vector3(offsetX, offsetY, 0);
 
-            GameObject projectile = Instantiate(projectilePrefab, spawnPosition, Quaternion.identity);
-            Projectile script = projectile.GetComponent<Projectile>();
+            GameObject Projectile = Instantiate(projectilePrefab, spawnPosition, Quaternion.identity);
+            Projectile script = Projectile.GetComponent<Projectile>();
             if (script != null)
             {
                 script.parent = gameObject;
                 Collider2D parentCollider = gameObject.GetComponent<Collider2D>();
-                Collider2D projectileCollider = projectile.GetComponent<Collider2D>();
+                Collider2D projectileCollider = Projectile.GetComponent<Collider2D>();
                 if (parentCollider != null && projectileCollider != null)
                 {
                     Physics2D.IgnoreCollision(projectileCollider, parentCollider);
                 }
             }
 
-            Rigidbody2D rb = projectile.GetComponent<Rigidbody2D>();
+            Rigidbody2D rb = Projectile.GetComponent<Rigidbody2D>();
             rb.velocity = direction * projectileSpeed;
-            Destroy(projectile, projectileDuration);
+            Destroy(Projectile, projectileDuration);
         }
     }
 }*/

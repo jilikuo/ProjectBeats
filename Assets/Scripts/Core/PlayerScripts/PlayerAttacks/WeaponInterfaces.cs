@@ -10,16 +10,7 @@ namespace Jili.StatSystem.AttackSystem
 
         void CleanUp();
 
-        public virtual void CallCoolDownManager()
-        {
-            float deltatime = Time.fixedDeltaTime;
-            if (CoolDownManager(deltatime))
-            {
-                AimProjectiles();
-            }
-        }
-
-        public bool CoolDownManager(float deltatime);
+        public bool TryShoot(float deltatime);
 
         public IEnumerator AimProjectiles();
 

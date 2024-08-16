@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Jili.StatSystem.AttackSystem;
 
 
 namespace Jili.StatSystem.EntityTree
@@ -24,6 +25,7 @@ namespace Jili.StatSystem.EntityTree
         public Stat AttacksPerSecond;
 
         private bool healBlock = false; // flag for status conditions that block healing
+        public IShootable baseWeapon;
 
         void Awake()
         {
@@ -53,7 +55,7 @@ namespace Jili.StatSystem.EntityTree
             statListAdd(Acceleration);
             statListAdd(AttacksPerSecond);
 
-            
+            baseWeapon = new JinxMinigun(5, 5, 5, 5, GameObject.FindGameObjectWithTag("ProjectileManager").GetComponent<ProjectileManager>().Bullet, this.gameObject);
         }
 
         void Update()
@@ -98,8 +100,8 @@ namespace Jili.StatSystem.EntityTree
         {
             float regen = 1;
 
-            // TODO: calculate regen cooldown based on attributes and suicidalEntity,
-            // if can regen (cooldown <= 0) then regen.
+            // TODO: calculate regen Cooldown based on attributes and suicidalEntity,
+            // if can regen (Cooldown <= 0) then regen.
             // if can't regen (in other words, healdamage() returns false),
             // then this return false
 

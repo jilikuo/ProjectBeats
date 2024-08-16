@@ -1,3 +1,6 @@
+//TODO: refazer essa classe do zero, para utilizar uma nova lógica de projéteis;
+// Porém ainda talvez seja utilizada, deve ser analizado com calma antes de tomar uma decisão final;
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,18 +12,18 @@ public class Projectile : MonoBehaviour
     public readonly string playerTag = "Player";
     private Vector3 startingPoint; 
     private float damage;
-    private float range;
+    public float range;
 
     void Start()
     {
         // damage = parent.GetComponent<Attribute>().CalculatePhysicalDamage() * 0.50f;
-        // range = parent.GetComponent<PistolShoot>().range;
+        // Range = parent.GetComponent<PistolShoot>().Range;
         startingPoint = parent.transform.position;
     }
 
     void FixedUpdate()
     {
-        VerifyOutOfRange();
+       VerifyOutOfRange();
     }
 
     void VerifyOutOfRange()
@@ -61,7 +64,7 @@ public class Projectile : MonoBehaviour
         if (parent.CompareTag(playerTag))
         {
             // collision.gameObject.GetComponent<Attribute>().TakeDamage(damage);
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
             return;
         }
     }
