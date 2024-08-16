@@ -28,20 +28,20 @@ namespace Jili.StatSystem
         Presence = 404,
         //Special
         Luck = 501,
-        Level = 502, // prone to changes
-        Gold = 503   // prone to changes
+        Level = 502, // TODO: CREATE A SEPARATE LEVEL SYSTEM
+        Gold = 503   // TODO: CREATE A SEPARATE CURRENCY SYSTEM
     }
 
     [Serializable]
     public class Attribute
     {
-        private readonly string Name;       // Nome do stat
-        public AttributeType Type;          // Tipo do stat
-        protected float BaseValue;             // Valor base do stat
+        private readonly string Name;           // Nome do stat
+        public AttributeType Type;              // Tipo do stat
+        protected float BaseValue;              // Valor base do stat
 
-        public event Action OnValueChanged; // Event to notify when the value changes
+        public event Action OnValueChanged;     // Event to notify when the value changes
 
-        public virtual float Value          // Valor Após modificadores do stat
+        public virtual float Value              // Valor Após modificadores do stat
         {
             get
             {
@@ -50,21 +50,21 @@ namespace Jili.StatSystem
                     lastBaseValue = BaseValue;
                     _value = CalculateFinalValue();
                     isDirty = false;
-                    OnValueChanged?.Invoke(); // Trigger the event when value changes
+                    OnValueChanged?.Invoke();   // Trigger the event when value changes
                 }
                 return _value;
             }
         }
 
-        protected bool isDirty = true;    // Flag para saber se o valor final precisa ser recalculado
-        protected float _value;           // registra o valor do cáculo mais recente 
-        protected float lastBaseValue = float.MinValue;    // registra o valor base mais recente
+        protected bool isDirty = true;                                              // Flag para saber se o valor final precisa ser recalculado
+        protected float _value;                                                     // registra o valor do cáculo mais recente 
+        protected float lastBaseValue = float.MinValue;                             // registra o valor base mais recente
 
-        protected readonly List<AttributeModifier> attributeModifiers;  // Lista de modificadores do stat
-        public readonly ReadOnlyCollection<AttributeModifier> AttributeModifiers; // Lista de modificadores do stat somente leitura
+        protected readonly List<AttributeModifier> attributeModifiers;              // Lista de modificadores do stat
+        public readonly ReadOnlyCollection<AttributeModifier> AttributeModifiers;   // Lista de modificadores do stat somente leitura
 
-        public Attribute(AttributeType type) // Construtor que inicializa a lista de modificadores
-        {
+        private Attribute(AttributeType type)                                       // Construtor que inicializa a lista de modificadores;
+        {                                                                           // não deve ser chamado diretamente
             if (Enum.IsDefined(typeof(AttributeType), type))
                 Type = type;
             else
@@ -75,14 +75,14 @@ namespace Jili.StatSystem
             Name = type.ToString();
         }
 
-        public Attribute(AttributeType type, float baseValue) : this(type) // Construtor que inicializa com o valor base especificado
-        {
+        public Attribute(AttributeType type, float baseValue) : this(type)  // Construtor que inicializa com o valor base especificado
+        {                                                                   // Deverá ser usado como o principal?
             BaseValue = baseValue;
         }
 
-        public virtual void AddModifier(AttributeModifier modifier)   // Método para adicionar um modificador à lista
+        public virtual void AddModifier(AttributeModifier modifier)     // Método para adicionar um modificador à lista
         {
-            isDirty = true;                                         // Atualizamos a flag para recalcular o valor final
+            isDirty = true;                                             // Atualizamos a flag para recalcular o valor final
             attributeModifiers.Add(modifier);                           // Adicionamos o modificador à lista
             attributeModifiers.Sort(CompareModifierPriority);           // Ordenamos a lista de modificadores
         }
@@ -98,7 +98,7 @@ namespace Jili.StatSystem
 
         public virtual bool RemoveModifier(AttributeModifier modifier) // Método para remover um modificador da lista
         {
-            if (attributeModifiers.Remove(modifier)) // Se tiver removido, atualizamos a flag para recalcular o valor final
+            if (attributeModifiers.Remove(modifier))    // Se tiver removido, atualizamos a flag para recalcular o valor final
             {
                 isDirty = true; 
                 return true;

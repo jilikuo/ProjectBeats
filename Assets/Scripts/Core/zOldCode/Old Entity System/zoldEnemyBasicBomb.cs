@@ -35,7 +35,7 @@ namespace Jili.OldStatSystem
         public abstract void CheckHealth();
         public void TakeDamage(float incomingDamage)
         {
-            health.CurrentValue -= incomingDamage;
+            health.CurrentVolatileValue -= incomingDamage;
         }
         public abstract void StartDeathRoutine();
     }
@@ -45,7 +45,7 @@ namespace Jili.OldStatSystem
     {
         public override void VisualizeDamage()
         {
-            float healthPercentage = health.CurrentValue / maxHealth.Value;
+            float healthPercentage = health.CurrentVolatileValue / maxHealth.Value;
 
             // Update opacity
             Color newColor = Color.Lerp(darknedColor, originalColor, healthPercentage);
@@ -55,12 +55,12 @@ namespace Jili.OldStatSystem
 
         public override void Suicide()
         {
-            health.CurrentValue = 0;
+            health.CurrentVolatileValue = 0;
         }
 
         public override void CheckHealth()
         {
-            if (health.CurrentValue <= 0)
+            if (health.CurrentVolatileValue <= 0)
             {
                 StartDeathRoutine();
                 Destroy(this.gameObject);

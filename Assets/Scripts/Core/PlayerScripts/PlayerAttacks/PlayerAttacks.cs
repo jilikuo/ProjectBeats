@@ -24,7 +24,7 @@ namespace Jili.StatSystem.AttackSystem
 
         public void FixedUpdate()
         {
-            //TENTA-SE ATIRAR COM TODAS AS ARMAS, POR ISSO O PROCESSAMENTO PARALELO.
+            //TENTA-SE ATIRAR COM TODAS AS ARMAS AO MESMO TEMPO, POR ISSO O PROCESSAMENTO PARALELO.
             float deltaTime = Time.fixedDeltaTime;
             Parallel.ForEach(Weapons, weapon =>
             {

@@ -38,8 +38,8 @@ namespace Jili.StatSystem.EntityTree
 
         public bool TakeDamage(float incomingDamage)
         {
-            Health.CurrentValue -= incomingDamage;
-            if (Health.CurrentValue <= 0)
+            Health.CurrentVolatileValue -= incomingDamage;
+            if (Health.CurrentVolatileValue <= 0)
             {
                 RunDeathRoutine();
                 return true;

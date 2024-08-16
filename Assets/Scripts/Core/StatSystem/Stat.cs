@@ -13,11 +13,17 @@ namespace Jili.StatSystem
         //Physical
         AttackDamage = 1011,
         Armor = 1031,
+
         //Mobility
         MovementSpeed = 2011,
         Acceleration = 2012,
         AttacksPerSecond = 2013,
+        AttackRange = 2041,
         
+        // INDEPENDENT STATS
+        IndependentBase = 9999,
+        ProjectileNumber = 10001,
+        ProjectileSpeed = 10002
     }
 
     [Serializable]
@@ -36,7 +42,15 @@ namespace Jili.StatSystem
             {
                 if (isDirty || BaseValue != lastBaseValue)
                 {
-                    BaseValue = StatFormulas.CalculateBaseStatValue(Type, RelevantAtts);
+                    if (!(((int)Type) >= (int)StatType.IndependentBase))
+                    {
+                        BaseValue = StatFormulas.CalculateBaseStatValue(Type, RelevantAtts);
+                    }
+                    else
+                    {
+                        BaseValue = lastBaseValue; // se o stat for independente, seu valor base não muda
+                    }
+
                     lastBaseValue = BaseValue;
                     lastValue = _value;
                     _value = CalculateFinalValue();
@@ -45,13 +59,13 @@ namespace Jili.StatSystem
 
                     if (isVolatile)
                     {
-                        if (CurrentValue + (_value - lastValue) < 0)
+                        if (CurrentVolatileValue + (_value - lastValue) < 0)
                         {
-                            CurrentValue = 1;
+                            CurrentVolatileValue = 1;
                         }
                         else
                         {
-                            CurrentValue += _value - lastValue;
+                            CurrentVolatileValue += _value - lastValue;
                         }
                     }
                 }
@@ -61,7 +75,7 @@ namespace Jili.StatSystem
 
 
         protected bool isVolatile = false;
-        public float CurrentValue;
+        public float CurrentVolatileValue;
         protected bool isDirty = true;
         protected float _value;
         protected float lastBaseValue = float.MinValue;
@@ -72,27 +86,37 @@ namespace Jili.StatSystem
 
         public Stat(StatType type, List<Attribute> callerAtts) // Construtor que inicializa a lista de modificadores
         {
+            // se o tipo não for definido, lançar uma exceção
             if (Enum.IsDefined(typeof(StatType), type))
                 Type = type;
             else
                 throw new ArgumentOutOfRangeException("O Atributo ID ", type, " Não está definido. Você queria atribuir um valor ao atributo? O construtor precisa de um ID de tipo como primeiro argumento. Verificar 'Attribute.cs'");
 
+            // se o tipo for independente, não há atributos relacionados
+            if (!(((int)Type) >= (int)StatType.IndependentBase))
+            {
+                RelevantAtts = StatFormulas.FilterRelevantAttributes(type, callerAtts);
+                BaseValue = StatFormulas.CalculateBaseStatValue(type, callerAtts);
+                foreach (var att in RelevantAtts)
+                {
+                    att.OnValueChanged += BecomeDirty;
+                }
+                if (type == StatType.Health || type == StatType.Mana || type == StatType.Stamina)
+                {
+                    isVolatile = true;
+                    CurrentVolatileValue = BaseValue;
+                }
+            }
+
+            Name = type.ToString();
             statModifiers = new List<StatModifier>();
             StatModifiers = statModifiers.AsReadOnly();
-            Name = type.ToString();
+        }
 
-            RelevantAtts = StatFormulas.FilterRelevantAttributes(type, callerAtts);
-            BaseValue = StatFormulas.CalculateBaseStatValue(type, callerAtts);
-
-            foreach (var att in RelevantAtts)
-            {
-                att.OnValueChanged += BecomeDirty;
-            }
-            if (type == StatType.Health || type == StatType.Mana || type == StatType.Stamina)
-            {
-                isVolatile = true;
-                CurrentValue = BaseValue;
-            }
+        public Stat(StatType type, float baseValue) : this(type, new List<Attribute>())
+        {
+            BaseValue = baseValue;
+            lastBaseValue = BaseValue;
         }
 
         public virtual void BecomeDirty()

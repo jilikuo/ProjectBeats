@@ -15,7 +15,7 @@ namespace Jili.OldStatSystem
     public interface ISubStat
     {
         IStat MainStat { get; } // Propriedade que referencia o stat principal
-        float CurrentValue { get; set; } // O valor atual do substat, que pode mudar durante o jogo
+        float CurrentVolatileValue { get; set; } // O valor atual do substat, que pode mudar durante o jogo
     }
 
     public abstract class EntityStat : IStat
@@ -104,12 +104,12 @@ namespace Jili.OldStatSystem
     public class Health : ISubStat
     {
         public IStat MainStat { get; private set; } // Referência ao `MaxHealth`
-        public float CurrentValue { get; set; } // Valor atual da saúde
+        public float CurrentVolatileValue { get; set; } // Valor atual da saúde
 
         public Health(IStat mainStat)
         {
             MainStat = mainStat;
-            CurrentValue = MainStat.CalculateStat(); // Inicializa `Health` como `MaxHealth`
+            CurrentVolatileValue = MainStat.CalculateStat(); // Inicializa `Health` como `MaxHealth`
         }
     }
 
@@ -164,12 +164,12 @@ namespace Jili.OldStatSystem
     public class Stamina : ISubStat
     {
         public IStat MainStat { get; private set; }
-        public float CurrentValue { get; set; }
+        public float CurrentVolatileValue { get; set; }
 
         public Stamina(IStat mainStat)
         {
             MainStat = mainStat;
-            CurrentValue = MainStat.CalculateStat();
+            CurrentVolatileValue = MainStat.CalculateStat();
         }
     }
 
@@ -354,12 +354,12 @@ namespace Jili.OldStatSystem
     public class Mana : ISubStat
     {
         public IStat MainStat { get; private set; }
-        public float CurrentValue { get; set; }
+        public float CurrentVolatileValue { get; set; }
 
         public Mana(IStat mainStat)
         {
             MainStat = mainStat;
-            CurrentValue = MainStat.CalculateStat();
+            CurrentVolatileValue = MainStat.CalculateStat();
         }
     }
 
@@ -597,17 +597,17 @@ namespace Jili.OldStatSystem
     public class SpentAttPoints : ISubStat
     {
         public IStat MainStat { get; private set; }
-        public float CurrentValue { get; set; }
+        public float CurrentVolatileValue { get; set; }
 
         public SpentAttPoints(TotalAttPoints mainStat)
         {
             MainStat = mainStat;
-            CurrentValue = 0;
+            CurrentVolatileValue = 0;
         }
 
         public void IncreaseSpentPoints(int points)
         {
-            CurrentValue += points;
+            CurrentVolatileValue += points;
         }
     }
 
@@ -615,7 +615,7 @@ namespace Jili.OldStatSystem
     {
         public IStat MainStat { get; private set; } // This will reference `TotalAttPoints`
         private SpentAttPoints spentAttPoints;
-        public float CurrentValue { get; set; }
+        public float CurrentVolatileValue { get; set; }
 
         public FreeAttPoints(IStat totalAttPoints, SpentAttPoints spentAttPoints)
         {
@@ -632,12 +632,12 @@ namespace Jili.OldStatSystem
                 //   spentAttPoints.OnValueChanged += Recalculate;
             }
 
-            CurrentValue = MainStat.CalculateStat() - spentAttPoints.CurrentValue; // Initial calculation
+            CurrentVolatileValue = MainStat.CalculateStat() - spentAttPoints.CurrentVolatileValue; // Initial calculation
         }
 
         public void Recalculate(float newValue = 0)
         {
-            CurrentValue = MainStat.CalculateStat() - spentAttPoints.CurrentValue;
+            CurrentVolatileValue = MainStat.CalculateStat() - spentAttPoints.CurrentVolatileValue;
         }
     }
 

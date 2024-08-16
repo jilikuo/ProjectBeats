@@ -6,9 +6,9 @@ namespace Jili.StatSystem.AttackSystem
     public interface IShootable
     {
 
-        void BecomeDirty();
+        void BecomeDirty(Stat stat);
 
-        void CleanUp();
+        public void ReadDirtiness();
 
         public bool TryShoot(float deltatime);
 

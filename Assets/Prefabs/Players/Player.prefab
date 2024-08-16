@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3624389812555553734}
   - component: {fileID: 7756446749415544078}
   - component: {fileID: 7270911395783619085}
+  - component: {fileID: 8070031317222772711}
   - component: {fileID: 2081258610605957366}
   - component: {fileID: 7774468919650305355}
   - component: {fileID: 7566981477020700378}
@@ -104,33 +105,45 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attList: []
   statList: []
-  str: 0
-  con: 0
-  dex: 0
-  agi: 0
+  str: 5
+  con: 5
+  dex: 5
+  agi: 5
   Strength:
-    Type: 0
+    Type: 101
   Constitution:
-    Type: 0
+    Type: 102
   Dextery:
-    Type: 0
+    Type: 202
   Agility:
-    Type: 0
+    Type: 201
   AttackDamage:
-    Type: 0
+    Type: 1011
     CurrentValue: 0
   Health:
-    Type: 0
+    Type: 1
     CurrentValue: 0
   MovementSpeed:
-    Type: 0
+    Type: 2011
     CurrentValue: 0
   Acceleration:
-    Type: 0
+    Type: 2012
     CurrentValue: 0
   AttacksPerSecond:
-    Type: 0
+    Type: 2013
     CurrentValue: 0
+--- !u!114 &8070031317222772711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414725975483600876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7947ff930baeeec40b3ec193ed28d956, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2081258610605957366
 MonoBehaviour:
   m_ObjectHideFlags: 0
