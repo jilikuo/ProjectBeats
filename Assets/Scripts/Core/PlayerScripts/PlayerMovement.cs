@@ -22,10 +22,10 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovement
     public float horizontalSpeed;
     public float verticalSpeed;
 
-    private bool movingLeft = false;
-    private bool movingRight = false;
-    private bool movingUp = false;
-    private bool movingDown = false;
+    public bool movingLeft  { get; private set; }
+    public bool movingRight { get; private set; }
+    public bool movingUp    { get; private set; }
+    public bool movingDown  { get; private set; }
 
     private Rigidbody2D playerRb;
     private PlayerIdentity playerStats;

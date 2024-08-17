@@ -1,8 +1,7 @@
-/*using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Jili.StatSystem.EntityTree;
 
 public class StatusBars : MonoBehaviour
 {
@@ -10,49 +9,47 @@ public class StatusBars : MonoBehaviour
     public Slider mpbar;
     public Slider stbar;
     public Slider expbar;
-    private PlayerIdentity suicidalEntity;
+    private PlayerIdentity playerIdentity;
     private TextMeshProUGUI hplabel;
     private TextMeshProUGUI mplabel;
     private TextMeshProUGUI stlabel;
     private TextMeshProUGUI explabel;
 
-
     private void Start()
     {
-        suicidalEntity = GameObject.FindGameObjectWithTag("Player").gameObject.GetComponent<Attribute>();
-        hpbar.maxValue = suicidalEntity.maxHealth;
-        hpbar.value = suicidalEntity.health;
-        mpbar.maxValue = suicidalEntity.maxMana;
-        mpbar.value = suicidalEntity.mana;
-        stbar.maxValue = suicidalEntity.maxStamina;
-        stbar.value = suicidalEntity.stamina;
-        expbar.maxValue = suicidalEntity.nextLevelExp;
-        expbar.value = suicidalEntity.experience;
-
         hplabel = hpbar.GetComponentInChildren<TextMeshProUGUI>();
         mplabel = mpbar.GetComponentInChildren<TextMeshProUGUI>();
         stlabel = stbar.GetComponentInChildren<TextMeshProUGUI>();
         explabel = expbar.GetComponentInChildren<TextMeshProUGUI>();
+
+        playerIdentity = GameObject.FindGameObjectWithTag("Player").gameObject.GetComponent<PlayerIdentity>();
+        hpbar.maxValue = playerIdentity.Health.ReadMaxValue();
+        hpbar.value = playerIdentity.Health.ReadCurrentValue();
+        //mpbar.maxValue = playerEntity.maxMana;
+        //mpbar.value = playerEntity.Mana.Value;
+        //stbar.maxValue = playerEntity.maxStamina;
+        //stbar.value = playerEntity.stamina;
+        //expbar.maxValue = playerEntity.nextLevelExp;
+        //expbar.value = playerEntity.experience;
     }
 
     private void Update()
     {
-        hpbar.maxValue = suicidalEntity.maxHealth;
-        hpbar.value = suicidalEntity.health;
+        hpbar.maxValue = playerIdentity.Health.ReadMaxValue();
+        hpbar.value = playerIdentity.Health.ReadCurrentValue();
         hplabel.text = ((Mathf.Ceil(hpbar.value * 10) / 10).ToString() + " HP");
 
-        mpbar.maxValue = suicidalEntity.maxMana;
-        mpbar.value = suicidalEntity.mana;
+        /*mpbar.maxValue = playerEntity.maxMana;
+        mpbar.value = playerEntity.mana;
         mplabel.text = "Mana";
 
-        stbar.maxValue = suicidalEntity.maxStamina;
-        stbar.value = suicidalEntity.stamina;
+        stbar.maxValue = playerEntity.maxStamina;
+        stbar.value = playerEntity.stamina;
         stlabel.text = "Stamina";
 
-        expbar.maxValue = suicidalEntity.nextLevelExp;
-        expbar.value = suicidalEntity.experience;
-        explabel.text = ((Mathf.Floor(expbar.value).ToString()) + " / " + (Mathf.Floor(expbar.maxValue).ToString()) + " Experience Points");
+        expbar.maxValue = playerEntity.nextLevelExp;
+        expbar.value = playerEntity.experience;
+        explabel.text = ((Mathf.Floor(expbar.value).ToString()) + " / " + (Mathf.Floor(expbar.maxValue).ToString()) + " Experience Points");*/
 
     }
 }
-*/

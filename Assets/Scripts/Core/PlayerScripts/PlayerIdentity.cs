@@ -119,7 +119,7 @@ namespace Jili.StatSystem.EntityTree
         {
             float regen = 1;
 
-            // TODO: calculate regen Cooldown based on attributes and suicidalEntity,
+            // TODO: calculate regen Cooldown based on attributes and player stats,
             // if can regen (Cooldown <= 0) then regen.
             // if can't regen (in other words, healdamage() returns false),
             // then this return false

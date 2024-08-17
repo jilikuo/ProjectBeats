@@ -667,12 +667,12 @@ namespace Jili.OldStatSystem
         [SerializeField] public EntityAttribute leadership;
         [SerializeField] public EntityAttribute presence;
         //special
-        [SerializeField] public EntityAttribute luck; //afeta todos os suicidalEntity, exceto quando explicito
+        [SerializeField] public EntityAttribute luck; //afeta todos os Atributos, exceto quando explicito
         [SerializeField] public EntityAttribute level;
         [SerializeField] public EntityAttribute gold;
 
 
-        //suicidalEntity
+        //playerEntity
         //physical
         [HideInInspector] public float physicalDamage;    // (strenght = 95%) (resistance = 5%)
         [HideInInspector] public float physicalDefense;   // 5 * resistance + (constitution+vigour)/2

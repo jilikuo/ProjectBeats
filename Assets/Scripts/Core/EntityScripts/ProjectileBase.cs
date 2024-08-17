@@ -31,7 +31,7 @@ namespace Jili.StatSystem.EntityTree
         {
             if (Parent == null) 
             {
-                throw new ArgumentNullException("tried to fire a projectile without naming a parent gameobject (we need it in order to calculate the target)");
+                throw new ArgumentNullException("tried to fire a projectile without naming a parent gameobject (we need it in order to calculate the targetTransform)");
             }
             if (source == null) 
             {

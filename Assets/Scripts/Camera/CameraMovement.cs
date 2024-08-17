@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    public Transform target;
+    public Camera thisCamera;
+    private float defaultOrthographicSize;
+    public GameObject target;
+    public PlayerMovement movement;
+    public Transform targetTransform;
     public Transform mainCamera;
+
+    public int MoveRatio = 5; // == 1/10th of fixedDeltaTime
 
     private Vector3 playerPos;
     private Vector3 cameraPos;
@@ -15,20 +21,25 @@ public class CameraMovement : MonoBehaviour
 
     private void Start()
     {
-        if (target == null)
-        {
-            target = GameObject.FindGameObjectWithTag("Player").transform;
-        }
-
-        playerPos = target.transform.position;
-        cameraPos = mainCamera.transform.position;
+        thisCamera = GetComponent<Camera>();
+        defaultOrthographicSize = thisCamera.orthographicSize;
+        target = GameObject.FindGameObjectWithTag("Player");
+        movement = target.GetComponent<PlayerMovement>();
+        targetTransform = target.transform;
+        playerPos = targetTransform.position;
+        cameraPos = mainCamera.position;
         mainCamera.transform.position = new Vector3(playerPos.x, playerPos.y, cameraPos.z);
+    }
+
+    void FixedUpdate()
+    {
+        TryToCenterScreen();
     }
 
     void LateUpdate()
     {
-        playerPos = target.transform.position;
-        cameraPos = mainCamera.transform.position;
+        playerPos = targetTransform.position;
+        cameraPos = mainCamera.position;
 
         float moveX = 0;
         float moveY = 0;
@@ -53,6 +64,33 @@ public class CameraMovement : MonoBehaviour
 
         cameraPos.x += moveX;
         cameraPos.y += moveY;
+        mainCamera.position = cameraPos;
+        float hSpeed = target.GetComponent<PlayerMovement>().horizontalSpeed;
+        float vSpeed = target.GetComponent<PlayerMovement>().verticalSpeed;
+        float maxSpeed = target.GetComponent<PlayerMovement>().maxSpeed;
+        thisCamera.orthographicSize = Mathf.MoveTowards(thisCamera.orthographicSize, defaultOrthographicSize + Mathf.Min(Mathf.Sqrt((hSpeed*hSpeed) + (vSpeed*vSpeed)), maxSpeed), Time.deltaTime / MoveRatio);
+    }
+
+    private void TryToCenterScreen()
+    {
+        playerPos = targetTransform.position;
+        cameraPos = mainCamera.position;
+
+        if (!movement.movingDown && !movement.movingUp)
+        {
+            if (cameraPos.y != playerPos.y)
+            {
+                cameraPos.y = Mathf.MoveTowards(cameraPos.y, playerPos.y, Time.fixedDeltaTime / MoveRatio);
+            }
+        }
+        if (!movement.movingLeft && !movement.movingRight)
+        {
+            if (cameraPos.x != playerPos.x)
+            {
+                cameraPos.x = Mathf.MoveTowards(cameraPos.x, playerPos.x, Time.fixedDeltaTime / MoveRatio);
+            }
+        }
+
         mainCamera.position = cameraPos;
     }
 }

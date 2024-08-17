@@ -59,7 +59,11 @@ namespace Jili.StatSystem
 
                     if (isVolatile)
                     {
-                        if (CurrentVolatileValue + (_value - lastValue) < 0)
+                        if (constructing)
+                        {
+                            //do nothing
+                        }
+                        else if (CurrentVolatileValue + (_value - lastValue) < 0)
                         {
                             CurrentVolatileValue = 1;
                         }
@@ -77,15 +81,17 @@ namespace Jili.StatSystem
         protected bool isVolatile = false;
         public float CurrentVolatileValue;
         protected bool isDirty = true;
+        protected bool constructing;
         protected float _value;
         protected float lastBaseValue = float.MinValue;
         protected float lastValue;
 
-        protected readonly List<StatModifier> statModifiers;  // Lista de modificadores do stat
+        protected readonly List<StatModifier> statModifiers;            // Lista de modificadores do stat
         public readonly ReadOnlyCollection<StatModifier> StatModifiers; // Lista de modificadores do stat somente leitura
 
-        public Stat(StatType type, List<Attribute> callerAtts) // Construtor que inicializa a lista de modificadores
+        public Stat(StatType type, List<Attribute> callerAtts)          // Construtor que inicializa a lista de modificadores
         {
+            constructing = true;
             // se o tipo não for definido, lançar uma exceção
             if (Enum.IsDefined(typeof(StatType), type))
                 Type = type;
@@ -104,13 +110,16 @@ namespace Jili.StatSystem
                 if (type == StatType.Health || type == StatType.Mana || type == StatType.Stamina)
                 {
                     isVolatile = true;
-                    CurrentVolatileValue = BaseValue;
+                    CurrentVolatileValue = ReadMaxValue(); // aqui precisamos ler o valor através do método, para garantir que ele não esteja Dirty ao começar
+                                                           // (o que duplicaria o valor do currentvolatilevalue)
+                                                           // manter atenção - pode causar problemas?
                 }
             }
 
             Name = type.ToString();
             statModifiers = new List<StatModifier>();
             StatModifiers = statModifiers.AsReadOnly();
+            constructing = false;
         }
 
         public Stat(StatType type, float baseValue) : this(type, new List<Attribute>())
@@ -165,6 +174,20 @@ namespace Jili.StatSystem
                 return false;
             });
             return didRemove;
+        }
+
+        public float ReadMaxValue()
+        {
+            return this.Value;
+        }
+
+        public float ReadCurrentValue()
+        {
+            if (!isVolatile)
+            {
+                throw new Exception("This stat is not volatile. You should not try to access its current volatile value.");
+            }
+            return this.CurrentVolatileValue;
         }
 
         protected virtual float CalculateFinalValue()
