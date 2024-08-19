@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Jili.StatSystem.AttackSystem;
+using System.Linq;
 
 
 namespace Jili.StatSystem.EntityTree
@@ -9,23 +10,26 @@ namespace Jili.StatSystem.EntityTree
 
     public class PlayerIdentity : EntityBase, IPlayer
     {
-        public float str;
+        public float str;                       // PHYSICAL
         public float con;
-        public float dex;
+        public float dex;                       // MOBILITY
         public float agi;
         public float fin;
         public float pre;
-        public float extraProjectilesNumber;
+        public float will;                      // MAGICAL
+        public float extraProjectilesNumber;    // INDEPENDENT
         public float extraProjectilesSpeed;
 
-        public Attribute Strength;
+        public Attribute Strength;              // PHYSICAL
         public Attribute Constitution;
-        public Attribute Dextery;
+        public Attribute Dextery;               // MOBILITY
         public Attribute Agility;
         public Attribute Finesse;
         public Attribute Precision;
+        public Attribute Willpower;             // MAGICAL
         public Stat AttackDamage;
         public Stat Health;
+        public Stat Mana;
         public Stat MovementSpeed;
         public Stat Acceleration;
         public Stat AttacksPerSecond;
@@ -45,18 +49,21 @@ namespace Jili.StatSystem.EntityTree
             Agility = new Attribute(AttributeType.Agility, agi);
             Finesse = new Attribute(AttributeType.Finesse, fin);
             Precision = new Attribute(AttributeType.Precision, pre);
+            Willpower = new Attribute(AttributeType.Willpower, will);
 
             // Load Entity Attribute List
             attListAdd(Strength);
             attListAdd(Constitution);
             attListAdd(Dextery);
             attListAdd(Agility);
-            attListAdd(Finesse); 
+            attListAdd(Finesse);
             attListAdd(Precision);
+            attListAdd(Willpower);
 
             // Start Stats
             AttackDamage = new Stat(StatType.AttackDamage, attList);
             Health = new Stat(StatType.Health, attList);
+            Mana = new Stat(StatType.Mana, attList);
             MovementSpeed = new Stat(StatType.MovementSpeed, attList);
             Acceleration = new Stat(StatType.Acceleration, attList);
             AttacksPerSecond = new(StatType.AttacksPerSecond, attList);
@@ -67,6 +74,7 @@ namespace Jili.StatSystem.EntityTree
             // Load Entity Stat List
             statListAdd(AttackDamage);
             statListAdd(Health);
+            statListAdd(Mana);
             statListAdd(MovementSpeed);
             statListAdd(Acceleration);
             statListAdd(AttacksPerSecond);

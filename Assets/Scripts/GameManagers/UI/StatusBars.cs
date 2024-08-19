@@ -3,6 +3,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using Jili.StatSystem.EntityTree;
 
+// This script is responsible for updating the status bars of the UI.
+// It is attached to the UI object that contains the status bars.
+// It uses the PlayerIdentity script to get the player's health and mana.
+// FOR FUTURE CONSIDERATION:
+// Pode ser mais interessante, ao invés de no UPDATE, usar eventos e listeners
+// para atualizar a UI;
+
 public class StatusBars : MonoBehaviour
 {
     public Slider hpbar;
@@ -25,8 +32,8 @@ public class StatusBars : MonoBehaviour
         playerIdentity = GameObject.FindGameObjectWithTag("Player").gameObject.GetComponent<PlayerIdentity>();
         hpbar.maxValue = playerIdentity.Health.ReadMaxValue();
         hpbar.value = playerIdentity.Health.ReadCurrentValue();
-        //mpbar.maxValue = playerEntity.maxMana;
-        //mpbar.value = playerEntity.Mana.Value;
+        mpbar.maxValue = playerIdentity.Mana.ReadMaxValue();
+        mpbar.value = playerIdentity.Mana.ReadCurrentValue();
         //stbar.maxValue = playerEntity.maxStamina;
         //stbar.value = playerEntity.stamina;
         //expbar.maxValue = playerEntity.nextLevelExp;
@@ -39,17 +46,16 @@ public class StatusBars : MonoBehaviour
         hpbar.value = playerIdentity.Health.ReadCurrentValue();
         hplabel.text = ((Mathf.Ceil(hpbar.value * 10) / 10).ToString() + " HP");
 
-        /*mpbar.maxValue = playerEntity.maxMana;
-        mpbar.value = playerEntity.mana;
-        mplabel.text = "Mana";
+        mpbar.maxValue = playerIdentity.Mana.ReadMaxValue();
+        mpbar.value = playerIdentity.Mana.ReadCurrentValue();
+        mplabel.text = ((Mathf.Ceil(mpbar.value * 10) / 10).ToString() + " MP");
 
-        stbar.maxValue = playerEntity.maxStamina;
+        /*stbar.maxValue = playerEntity.maxStamina;
         stbar.value = playerEntity.stamina;
         stlabel.text = "Stamina";
 
         expbar.maxValue = playerEntity.nextLevelExp;
         expbar.value = playerEntity.experience;
         explabel.text = ((Mathf.Floor(expbar.value).ToString()) + " / " + (Mathf.Floor(expbar.maxValue).ToString()) + " Experience Points");*/
-
     }
 }
