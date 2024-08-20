@@ -1,10 +1,11 @@
-/* using TMPro;
+using TMPro;
 using UnityEngine;
+using Jili.StatSystem.LevelSystem;
 
 public class LevelViewer : MonoBehaviour
 {
     public TextMeshProUGUI levelText;
-    public Attribute playerStats;
+    public PlayerLevel levelSystem;
     public string labelName = "LevelLabel";
     public string playerTag = "Player";
     private string text = string.Empty;
@@ -15,17 +16,17 @@ public class LevelViewer : MonoBehaviour
         {
             levelText = GameObject.Find(labelName).gameObject.GetComponent<TextMeshProUGUI>();
         }
-        if (playerStats == null)
+        if (levelSystem == null)
         {
-            playerStats = GameObject.FindGameObjectWithTag(playerTag).gameObject.GetComponent<Attribute>();
+            levelSystem = GameObject.FindGameObjectWithTag(playerTag).gameObject.GetComponent<PlayerLevel>();
         }
-        text = ("Level: " + playerStats.ReadLevel());
+        text = ("Level: " + levelSystem.ReadLevel());
         levelText.text = text;
     }
 
     private void Update()
     {
-        text = ("Level: " + playerStats.ReadLevel());
+        text = ("Level: " + levelSystem.ReadLevel());
         levelText.text = text;
     }
-} */
+}

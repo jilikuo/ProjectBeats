@@ -80,6 +80,11 @@ namespace Jili.StatSystem
             BaseValue = baseValue;
         }
 
+        public string ReadAttName() { return Name; }
+
+        public int ReadBaseValue() { return (int)BaseValue; }
+        public float ReadValue() { return Value; }
+
         public virtual void AddModifier(AttributeModifier modifier)     // Método para adicionar um modificador à lista
         {
             isDirty = true;                                             // Atualizamos a flag para recalcular o valor final

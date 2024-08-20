@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3624389812555553734}
   - component: {fileID: 7756446749415544078}
   - component: {fileID: 7270911395783619085}
+  - component: {fileID: 6789927841608646453}
   - component: {fileID: 8070031317222772711}
   - component: {fileID: 2081258610605957366}
   - component: {fileID: 7774468919650305355}
@@ -109,6 +110,11 @@ MonoBehaviour:
   con: 5
   dex: 5
   agi: 5
+  fin: 5
+  pre: 5
+  will: 5
+  extraProjectilesNumber: 2
+  extraProjectilesSpeed: 5
   Strength:
     Type: 101
   Constitution:
@@ -117,21 +123,52 @@ MonoBehaviour:
     Type: 202
   Agility:
     Type: 201
+  Finesse:
+    Type: 0
+  Precision:
+    Type: 0
+  Willpower:
+    Type: 0
   AttackDamage:
     Type: 1011
-    CurrentValue: 0
+    CurrentVolatileValue: 0
   Health:
     Type: 1
-    CurrentValue: 0
+    CurrentVolatileValue: 0
+  Mana:
+    Type: 0
+    CurrentVolatileValue: 0
   MovementSpeed:
     Type: 2011
-    CurrentValue: 0
+    CurrentVolatileValue: 0
   Acceleration:
     Type: 2012
-    CurrentValue: 0
+    CurrentVolatileValue: 0
   AttacksPerSecond:
     Type: 2013
-    CurrentValue: 0
+    CurrentVolatileValue: 0
+  AttackRange:
+    Type: 2041
+    CurrentVolatileValue: 0
+  ProjectileNumber:
+    Type: 10001
+    CurrentVolatileValue: 0
+  ProjectileSpeed:
+    Type: 10002
+    CurrentVolatileValue: 0
+--- !u!114 &6789927841608646453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414725975483600876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d8cefa005dd2614899126fe35772aa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attributePointsPerLevel: 5
 --- !u!114 &8070031317222772711
 MonoBehaviour:
   m_ObjectHideFlags: 0

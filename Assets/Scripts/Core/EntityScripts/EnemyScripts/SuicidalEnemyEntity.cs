@@ -49,6 +49,7 @@ namespace Jili.StatSystem.EntityTree
 
         public bool RunDeathRoutine()
         {
+            gameObject.GetComponent<EnemyDrop>().StartDropRoutine();
             Destroy(this.gameObject);
             return true;
         }

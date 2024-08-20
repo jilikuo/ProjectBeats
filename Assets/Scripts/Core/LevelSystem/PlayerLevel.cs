@@ -25,7 +25,7 @@
             private float ExperienceToNextLevel { get; set; }
             private float TotalExperience { get; set; }
             private AttributePoints attributePoints;
-
+            
             private class AttributePoints
             {
                 public int Free { get; private set; }
@@ -76,46 +76,54 @@
                 }
             
             }
-
+            
             public void Awake()
             {
                 Level = 1;
-                Experience = 0;
                 ExperienceToNextLevel = 100;
+                Experience = 0;
                 TotalExperience = 0;
                 attributePoints = new AttributePoints(attributePointsPerLevel);   
             }
-
+            
             public void GainExp(float amount)
             {
                 Experience += amount;
             }
-
+            
             private void CheckLevelUp()
             {
-                while (experience >= ExperienceToNextLevel)
+                if (experience > ExperienceToNextLevel)
                 {
-                    LevelUp();
-                    experience -= ExperienceToNextLevel;
+                    while (experience >= ExperienceToNextLevel)
+                    {
+                        experience -= ExperienceToNextLevel;
+                        LevelUp();
+                    }
                 }
             }
-
+            
             public void LevelUp()
             {
                 Level++;
                 RecalculateNextLevelExp();
             }
-
+            
             private void RecalculateNextLevelExp()
             {
-                ExperienceToNextLevel = 100 + 10 * Level + (Mathf.FloorToInt(Level/10) * 100) + MathF.Sqrt(Level) + (MathF.PI + Level);
+                ExperienceToNextLevel = 100 + ((MathF.PI * MathF.PI * MathF.PI) * Level) + (Mathf.FloorToInt(Level / 2) * 22) 
+                + (Mathf.FloorToInt(Level / 3) * 33) + (Mathf.FloorToInt(Level / 5) * 55) + (Mathf.FloorToInt(Level / 7) * 77) 
+                + (Mathf.FloorToInt(Level/ 9) * 99) + (Mathf.FloorToInt(Level / 11) * 1111) + (Mathf.FloorToInt(Level / 13) * 1313) 
+                + (Mathf.FloorToInt(Level / 17) * 1717) + (Mathf.FloorToInt(Level / 19) * 1919) + (Mathf.FloorToInt(Level / 23) * 2323)
+                + (Mathf.FloorToInt(Level / 10) * 250) + (Mathf.FloorToInt(Level / 25) * 1000) + (Mathf.FloorToInt(Level / 50) * 3500)
+                + (Level * Level) + MathF.Sqrt(Level * Level * Level) + MathF.Sqrt(Level);
             }
-
+            
             public int ReadFreeAttPoints()
             {
                 return attributePoints.Free;
             }
-
+            
             public void SpendAttPoints(int amount = 1)
             {
                 if (attributePoints.hasFreePoints())
@@ -130,5 +138,22 @@
                 }
                 return;
             }
+            
+            public int ReadLevel()
+            {
+                return Level;
+            }
+            
+            public int ReadNextLevelExp()
+            {
+                return Mathf.FloorToInt(ExperienceToNextLevel);
+            }
+            
+            public int ReadExperience()
+            {
+                return Mathf.FloorToInt(Experience);
+            }
+            
+            
         }
     }

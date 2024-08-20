@@ -100,8 +100,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee8be44b452a16d43bf709dd74fbcdbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  category: 2
-  size: 2
+  category: 300
+  size: 20
+  FlatAmount: 31
+  PercentageAmount: 0
 --- !u!114 &7685105467064842371
 MonoBehaviour:
   m_ObjectHideFlags: 0

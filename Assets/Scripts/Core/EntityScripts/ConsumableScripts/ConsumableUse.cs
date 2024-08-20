@@ -1,121 +1,121 @@
-/*using System.Collections;
+using Jili.StatSystem.LevelSystem;
+using System;
 using UnityEngine;
 
-
-public class ConsumableUse : MonoBehaviour
+namespace Jili.StatSystem.EntityTree.ConsumableSystem
 {
-    private readonly int ExpP = 8;
-    private readonly int ExpM = 24;
-    private readonly int ExpG = 80;
-    private readonly int ExpS = 264;
-    private readonly int ExpL = 872;
-
-    private ConsumableType consumableType;
-    private string playerTag = "Player";
-    private GameObject player;
-    private Attribute playerStats;
-
-    private void Start()
+    public class ConsumableUse : MonoBehaviour
     {
-        consumableType = GetComponent<ConsumableType>();
-        player = GameObject.FindGameObjectWithTag(playerTag);
-        playerStats = player.GetComponent<Attribute>();
-    }
+        private readonly string playerTag = "Player";
+        private readonly string consumableTag = "Consumable"; 
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject != player)
+        private ConsumableType consumableType;
+
+        private GameObject player;
+        private PlayerIdentity playerIdentity;
+        private PlayerLevel levelSystem;
+
+        private void Start()
         {
-
-            Collider2D notPlayer = collision.gameObject.GetComponent<Collider2D>();
-            Collider2D consumable = gameObject.GetComponent<Collider2D>();
-            Physics2D.IgnoreCollision(notPlayer, consumable);
-            return;
+            consumableType = GetComponent<ConsumableType>();
+            player = GameObject.FindGameObjectWithTag(playerTag);
+            playerIdentity = player.GetComponent<PlayerIdentity>();
+            levelSystem = player.GetComponent<PlayerLevel>();
         }
 
-        switch (consumableType.category)
+        private void OnCollisionEnter2D(Collision2D collision)
         {
-            case ConsumableType.Category.Health:
-                
+            if (collision.gameObject.CompareTag(consumableTag))
+            {
+                return;
+            }
 
-                Debug.Log("Consumed Health");
-                break;
+            if (collision.gameObject != player)
+            {
 
-            case ConsumableType.Category.Mana:
-                
+                Collider2D notPlayer = collision.gameObject.GetComponent<Collider2D>();
+                Collider2D consumable = gameObject.GetComponent<Collider2D>();
+                Physics2D.IgnoreCollision(notPlayer, consumable);
+                return;
+            }
 
-                Debug.Log("Consumed Mana");
-                break;
-
-            case ConsumableType.Category.Exp:
-                ConsumeExpOrb();
-
-                Debug.Log("Consumed Experience");
-                break;
-
-            case ConsumableType.Category.Gold:
+            switch (consumableType.category)
+            {
+                case ConsumableCategory.Health:
 
 
-                Debug.Log("Consumed Gold");
-                break;
+                    Debug.Log("Consumed Health");
+                    break;
 
-            case ConsumableType.Category.Card:
-
-
-                Debug.Log("Consumed Card");
-                break;
-
-            default:
+                case ConsumableCategory.Mana:
 
 
-                Debug.Log("Unknown consumable type");
-                break;
+                    Debug.Log("Consumed Mana");
+                    break;
+
+                case ConsumableCategory.Exp:
+                    ConsumeExpOrb();
+
+                    Debug.Log("Consumed Experience");
+                    break;
+
+                case ConsumableCategory.Gold:
+
+
+                    Debug.Log("Consumed Gold");
+                    break;
+
+                case ConsumableCategory.Card:
+
+
+                    Debug.Log("Consumed Card");
+                    break;
+
+                default:
+
+
+                    throw new ArgumentOutOfRangeException("INVALID CONSUMABLE USE");
+            }
+
+
+            Destroy(gameObject);
         }
 
-       
-        Destroy(gameObject);
-    }
-
-    void ConsumeExpOrb()
-    {
-        switch (consumableType.size)
+        void ConsumeExpOrb()
         {
-            case ConsumableType.Size.Small:
-                playerStats.GainExperience(ExpP);
-
-                Debug.Log("Size: Small");
-                break;
-
-            case ConsumableType.Size.Medium:
-                playerStats.GainExperience(ExpM);
-
-                Debug.Log("Size: Medium");
-                break;
-
-            case ConsumableType.Size.Big:
-                playerStats.GainExperience(ExpG);
-
-                Debug.Log("Size: Big");
-                break;
-
-            case ConsumableType.Size.Super:
-                playerStats.GainExperience(ExpS);
-
-                Debug.Log("Size: Super");
-                break;
-
-            case ConsumableType.Size.Legendary:
-                playerStats.GainExperience(ExpL);
-
-                Debug.Log("Size: Legendary");
-                break;
-
-            default:
 
 
-                Debug.Log("Unknown size");
-                break;
+            switch (consumableType.GetValueType())
+            {
+                case CVType.Flat:
+                    levelSystem.GainExp(consumableType.ReadValue(CVType.Flat));
+                    break;
+
+                case CVType.Percentile:
+                    levelSystem.GainExp(consumableType.ReadValue(CVType.Percentile));
+                    break;
+
+                case CVType.Hybrid:
+
+                    // tenta descobrir se vale mais a pena aumentar a exp em % ou flat antes de consumir, e então consome a melhor opção
+                    float tempRemainingExp;
+                    tempRemainingExp = levelSystem.ReadNextLevelExp() - levelSystem.ReadExperience();
+
+                    if (consumableType.ReadValue(CVType.Flat) > tempRemainingExp)
+                    {
+                        levelSystem.GainExp(consumableType.ReadValue(CVType.Flat));
+                        levelSystem.GainExp(consumableType.ReadValue(CVType.Percentile));
+                        break;
+                    }
+
+                    levelSystem.GainExp(consumableType.ReadValue(CVType.Percentile));
+                    levelSystem.GainExp(consumableType.ReadValue(CVType.Flat));
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException("UNKNOW ISSUE, CVTYPE NOT FOUND");
+            }
         }
+      
     }
 }
-*/

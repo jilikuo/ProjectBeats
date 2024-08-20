@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using Jili.StatSystem;
 using Jili.StatSystem.EntityTree;
 
 public class StatItemUI : MonoBehaviour
@@ -12,13 +13,14 @@ public class StatItemUI : MonoBehaviour
     private int temporaryAdd;
     private LevelUpMenu levelUpMenu;
     private int availablePoints;
-    private PlayerIdentity playerStats;
+    private Attribute attribute;
+
+
 
     private void Start()
     {
         levelUpMenu = GameObject.Find("UI Manager").GetComponent<LevelUpMenu>();
         availablePoints = levelUpMenu.tempAttPoints;
-        playerStats = GameObject.FindWithTag("Player").gameObject.GetComponent<PlayerIdentity>();
     }
 
     private void Update()
@@ -27,17 +29,18 @@ public class StatItemUI : MonoBehaviour
         UpdateValueView();
     }
 
-    public void SetStat(string name, int value)
+    public void SetStat(Attribute att)
     {
+        attribute = att;
         originalColor = statValueText.color;
-        statNameText.text = name;
-        statValue = value;
+        statNameText.text = attribute.ReadAttName();
+        statValue = attribute.ReadBaseValue();
         temporaryAdd = 0;
     }
 
     public void UpdateStatValue()
     {
-        statValue = Mathf.FloorToInt(playerStats.Strength.Value);
+        statValue = attribute.ReadBaseValue();
     }
 
     public void TempIncrease()

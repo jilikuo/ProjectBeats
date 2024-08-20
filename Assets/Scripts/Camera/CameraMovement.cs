@@ -65,10 +65,10 @@ public class CameraMovement : MonoBehaviour
         cameraPos.x += moveX;
         cameraPos.y += moveY;
         mainCamera.position = cameraPos;
-        float hSpeed = target.GetComponent<PlayerMovement>().horizontalSpeed;
-        float vSpeed = target.GetComponent<PlayerMovement>().verticalSpeed;
-        float maxSpeed = target.GetComponent<PlayerMovement>().maxSpeed;
-        thisCamera.orthographicSize = Mathf.MoveTowards(thisCamera.orthographicSize, defaultOrthographicSize + Mathf.Min(Mathf.Sqrt((hSpeed*hSpeed) + (vSpeed*vSpeed)), maxSpeed), Time.deltaTime / MoveRatio);
+     //   float hSpeed = target.GetComponent<PlayerMovement>().horizontalSpeed;
+     //   float vSpeed = target.GetComponent<PlayerMovement>().verticalSpeed;
+      //  float maxSpeed = target.GetComponent<PlayerMovement>().maxSpeed;
+       // thisCamera.orthographicSize = Mathf.MoveTowards(thisCamera.orthographicSize, defaultOrthographicSize + Mathf.Min(Mathf.Sqrt((hSpeed*hSpeed) + (vSpeed*vSpeed)), maxSpeed), Time.deltaTime / MoveRatio);
     }
 
     private void TryToCenterScreen()
@@ -80,14 +80,14 @@ public class CameraMovement : MonoBehaviour
         {
             if (cameraPos.y != playerPos.y)
             {
-                cameraPos.y = Mathf.MoveTowards(cameraPos.y, playerPos.y, Time.fixedDeltaTime / MoveRatio);
+                cameraPos.y = Mathf.MoveTowards(cameraPos.y, playerPos.y, Time.fixedDeltaTime * 5);
             }
         }
         if (!movement.movingLeft && !movement.movingRight)
         {
             if (cameraPos.x != playerPos.x)
             {
-                cameraPos.x = Mathf.MoveTowards(cameraPos.x, playerPos.x, Time.fixedDeltaTime / MoveRatio);
+                cameraPos.x = Mathf.MoveTowards(cameraPos.x, playerPos.x, Time.fixedDeltaTime * 5);
             }
         }
 

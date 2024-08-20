@@ -4,63 +4,89 @@ using UnityEngine;
 
 public class EnemyDrop : MonoBehaviour
 {
-    public float expRateP;
-    public float expRateM;
-    public float expRateG;
-    public float expRateS;
-    public float expRateL;
+    public int totalDropItems = 5;
 
-    public GameObject expOrbP;
-    public GameObject expOrbM;
-    public GameObject expOrbG;
-    public GameObject expOrbS;
-    public GameObject expOrbL;
+    [SerializeField]
+    private GameObject[] drop;
+    [SerializeField]
+    private float[] dropRate;
+    [SerializeField]
+    private float[] dropChance;
+
+    private GameObject[] Drop;   // Objetos que podem dropar
+    private float[] DropRate;    // Quando um objeto dropar, a chance de ser cada um desses objetos
+    private float[] DropChance;  // Chance de dropar um objeto, se dropar, o próximo item da lista é a chance de dropar mais um.
+
     private GameObject dropped;
     private void Start()
     {
+        Drop = new GameObject[totalDropItems];      
+        DropRate = new float[totalDropItems];       
+        DropChance = new float[totalDropItems];
 
+        drop.CopyTo(Drop, 0);
+        dropRate.CopyTo(DropRate, 0);
+        dropChance.CopyTo(DropChance, 0);
     }
 
-    public void CheckDrop()
+    public void StartDropRoutine()
     {
-        if (Random.value <= expRateP)
+        int i;
+        for (i = 0; i < Drop.Length; i++)
         {
-            float rangeX = ((Random.value * 0.10f) - (Random.value * 0.2f));
-            float rangeY = ((Random.value * 0.10f) - (Random.value * 0.2f)); 
-            Vector3 range = new(transform.position.x + rangeX, transform.position.y + rangeY, transform.position.z);
-            dropped = Instantiate(expOrbP, range, Quaternion.identity);
+            if (RollDice(DropChance[i]))
+            {
+                Debug.Log("Rolagem bem-sucedida. Tentando dropar item.");
+                DropOnce();
+            }
+            else
+            {
+                Debug.Log("Rolagem falhou. Interrompendo o drop.");
+                break;
+            }
+        }
+    }
+
+    public void DropOnce()
+    {
+        dropped = ChooseItemToDrop();
+        Instantiate(dropped, transform.position, Quaternion.identity);
+    }
+
+    private bool RollDice(float chance)
+    {
+        float dice = Random.value * 100;
+        if (dice <= chance)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private GameObject ChooseItemToDrop()
+    {
+        float totalWeight = 0;
+
+        // Calcular a soma de todos os pesos
+        for (int i = 0; i < Drop.Length; i++)
+        {
+            totalWeight += DropRate[i];
         }
 
-        if (Random.value <= expRateM)
+        // Sortear um número aleatório entre 0 e a soma dos pesos
+        float randomValue = Random.value * totalWeight;
+
+        // Determinar qual item será selecionado
+        float cumulativeWeight = 0f;
+        for (int i = 0; i < DropRate.Length; i++)
         {
-            float rangeX = ((Random.value * 0.10f) - (Random.value * 0.2f));
-            float rangeY = ((Random.value * 0.10f) - (Random.value * 0.2f));
-            Vector3 range = new(transform.position.x + rangeX, transform.position.y + rangeY, transform.position.z);
-            dropped = Instantiate(expOrbM, range, Quaternion.identity);
+            cumulativeWeight += DropRate[i];
+            if (randomValue <= cumulativeWeight)
+            {
+                return Drop[i];
+            }
         }
 
-        if (Random.value <= expRateG)
-        {
-            float rangeX = ((Random.value * 0.10f) - (Random.value * 0.2f));
-            float rangeY = ((Random.value * 0.10f) - (Random.value * 0.2f));
-            Vector3 range = new(transform.position.x + rangeX, transform.position.y + rangeY, transform.position.z);
-            dropped = Instantiate(expOrbG, range, Quaternion.identity);
-        }
-
-        if (Random.value <= expRateS)
-        {
-            float rangeX = ((Random.value * 0.10f) - (Random.value * 0.2f));
-            float rangeY = ((Random.value * 0.10f) - (Random.value * 0.2f));
-            Vector3 range = new(transform.position.x + rangeX, transform.position.y + rangeY, transform.position.z);
-            dropped = Instantiate(expOrbS, range, Quaternion.identity);
-        }
-
-        if (Random.value <= expRateL)
-        {
-            float rangeX = ((Random.value * 0.10f) - (Random.value * 0.2f));
-            float rangeY = ((Random.value * 0.10f) - (Random.value * 0.2f));
-            Vector3 range = new(transform.position.x + rangeX, transform.position.y + rangeY, transform.position.z);
-            dropped = Instantiate(expOrbL, range, Quaternion.identity);
-        }
+        throw new MissingReferenceException("NÃO FOI POSSÍVEL ENCONTRAR UM ITEM VÁLIDO PARA DROPAR");
     }
 }

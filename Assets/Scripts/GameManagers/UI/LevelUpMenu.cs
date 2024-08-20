@@ -3,73 +3,93 @@ using System.Threading.Tasks;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using Jili.StatSystem.EntityTree;
+using System;
 
 public class LevelUpMenu : MonoBehaviour
 {
+    //constants
+    private readonly string playerTag = "Player";
+    private readonly string lvlUpMenuTag = "LevelUpMenu";
+
+    // ui objects
     public GameObject levelUpMenu;
-    public PlayerIdentity playerStats;
     public GameObject statItemPrefab;
     public Transform contentPanel;
-    private bool isLeveling = false;
+
+    // ui control variables
+    private bool isShowing = false;
+    private List<StatItemUI> statItems = new List<StatItemUI>();
+
+    // player objects
+    public PlayerIdentity playerIdentity;
+
+    // player level up variables
     private int heldAttPoints;
     public int tempAttPoints;
-    private List<StatItemUI> statItems = new List<StatItemUI>();
 
     private void Awake()
     {
-        heldAttPoints = 0;
-        tempAttPoints = 0;
-        if (levelUpMenu != null)
-        {
-            levelUpMenu.SetActive(false);
-        }
+        // procura pelo menu de level up e pelo jogador, aciona o menu de level up caso encontre
         if (levelUpMenu == null)
         {
-            levelUpMenu = GameObject.Find("LevelUpMenu");
+            levelUpMenu = GameObject.Find(lvlUpMenuTag);
+        }
+        if (levelUpMenu != null)
+        {
+            levelUpMenu.GetComponent<Canvas>().enabled = true;
             levelUpMenu.SetActive(false);
         }
+        else
+        {
+            throw new ArgumentNullException("LevelUpMenu not found");
+        }
+
+        if (playerIdentity == null)
+        {
+            playerIdentity = GameObject.FindGameObjectWithTag(playerTag).gameObject.GetComponent<PlayerIdentity>();
+        }
+
+        heldAttPoints = 0;
+        tempAttPoints = 0;
     }
 
     void Start()
     {
-       // PopulateStats();
+        PopulateStats();
     }
 
     private void Update()
     {
         //CheckForAttributePoints();
-        if ((Input.GetKeyDown(KeyCode.L) || Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.I)) && isLeveling == false)
+        if ((Input.GetKeyDown(KeyCode.L) || Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.I)) && isShowing == false)
         {
             ShowLevelUpMenu();
         }
-        else if ((Input.GetKeyDown(KeyCode.L) || Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.I)) && isLeveling == true)
+        else if ((Input.GetKeyDown(KeyCode.L) || Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.I)) && isShowing == true)
         {
             CloseLevelUpMenu();
         }
     }
 
-     /* void CheckForAttributePoints()
-    {
-        if ((heldAttPoints + tempAttPoints) == statsData.freeAttPoints)
-        {
-            return;
-        }
-        if ((heldAttPoints + tempAttPoints) < statsData.freeAttPoints)
-        {
-            tempAttPoints = statsData.freeAttPoints - heldAttPoints;
-        }
-        if ((heldAttPoints + tempAttPoints) > statsData.freeAttPoints)
-        {
-            tempAttPoints = statsData.freeAttPoints - heldAttPoints;
-        }
-    } */
+    /* void CheckForAttributePoints()
+   {
+       if ((heldAttPoints + tempAttPoints) == statsData.freeAttPoints)
+       {
+           return;
+       }
+       if ((heldAttPoints + tempAttPoints) < statsData.freeAttPoints)
+       {
+           tempAttPoints = statsData.freeAttPoints - heldAttPoints;
+       }
+       if ((heldAttPoints + tempAttPoints) > statsData.freeAttPoints)
+       {
+           tempAttPoints = statsData.freeAttPoints - heldAttPoints;
+       }
+   } */
 
     public async void ShowLevelUpMenu()
     {
-        if (isLeveling)
-            return;
-
-        isLeveling = true;
+        isShowing = true;
         levelUpMenu.SetActive(true);
 
         // Pausa o tempo do jogo
@@ -85,7 +105,7 @@ public class LevelUpMenu : MonoBehaviour
     private async Task WaitForLevelUpClose()
     {
         // Aguarda enquanto a janela de level-up está ativa
-        while (isLeveling)
+        while (isShowing)
         {
             await Task.Yield();
         }
@@ -93,7 +113,7 @@ public class LevelUpMenu : MonoBehaviour
 
     public void CloseLevelUpMenu()
     {
-        isLeveling = false;
+        isShowing = false;
         levelUpMenu.SetActive(false);
     }
 
@@ -124,21 +144,16 @@ public class LevelUpMenu : MonoBehaviour
         heldAttPoints -= tempConsume;
     }
 
-    /* void PopulateStats()
+    void PopulateStats()
     {
-        for (int i = 0; i < statsData.attNames.Length; i++)
+        foreach (var att in playerIdentity.attList)
         {
-            if (statsData.attNames[i] == "Level" || statsData.attNames[i] == "Gold")
-            {
-                continue;
-            }
-
             GameObject newItem = Instantiate(statItemPrefab, contentPanel);
             StatItemUI itemUI = newItem.GetComponent<StatItemUI>();
-            itemUI.SetStat(statsData.attNames[i], Mathf.FloorToInt(statsData.attValues[i]));
+            itemUI.SetStat(att);
             statItems.Add(itemUI); // Add the created item to the list
         }
-    } */
+    }
 
     public void TempUseSinglePoint()
     {

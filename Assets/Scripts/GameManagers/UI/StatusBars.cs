@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Jili.StatSystem.EntityTree;
+using Jili.StatSystem.LevelSystem;
 
 // This script is responsible for updating the status bars of the UI.
 // It is attached to the UI object that contains the status bars.
@@ -17,6 +18,7 @@ public class StatusBars : MonoBehaviour
     public Slider stbar;
     public Slider expbar;
     private PlayerIdentity playerIdentity;
+    private PlayerLevel levelSystem;
     private TextMeshProUGUI hplabel;
     private TextMeshProUGUI mplabel;
     private TextMeshProUGUI stlabel;
@@ -30,6 +32,8 @@ public class StatusBars : MonoBehaviour
         explabel = expbar.GetComponentInChildren<TextMeshProUGUI>();
 
         playerIdentity = GameObject.FindGameObjectWithTag("Player").gameObject.GetComponent<PlayerIdentity>();
+        levelSystem = playerIdentity.GetComponent<PlayerLevel>();
+
         hpbar.maxValue = playerIdentity.Health.ReadMaxValue();
         hpbar.value = playerIdentity.Health.ReadCurrentValue();
         mpbar.maxValue = playerIdentity.Mana.ReadMaxValue();
@@ -52,10 +56,10 @@ public class StatusBars : MonoBehaviour
 
         /*stbar.maxValue = playerEntity.maxStamina;
         stbar.value = playerEntity.stamina;
-        stlabel.text = "Stamina";
+        stlabel.text = "Stamina";*/
 
-        expbar.maxValue = playerEntity.nextLevelExp;
-        expbar.value = playerEntity.experience;
-        explabel.text = ((Mathf.Floor(expbar.value).ToString()) + " / " + (Mathf.Floor(expbar.maxValue).ToString()) + " Experience Points");*/
+        expbar.maxValue = levelSystem.ReadNextLevelExp();
+        expbar.value = levelSystem.ReadExperience();
+        explabel.text = (expbar.value.ToString() + " / " + expbar.maxValue.ToString() + " Experience Points");
     }
 }

@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5107029567886073179
 Transform:
   m_ObjectHideFlags: 0
@@ -46,9 +46,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 2148291375696681789, guid: 76c000115db797b4e964e2555d871da5, type: 3}
   playerPos: {fileID: 0}
-  spawnInterval: 5
+  spawnInterval: 15
   radius: 30
   enemyMax: 200
   enemyMin: 0
-  maxPerSpawn: 50
+  maxPerSpawn: 10
   enemyCount: 0

@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 1116367670345601001}
   - component: {fileID: 4122179372653078985}
   - component: {fileID: 7601632679739713316}
+  - component: {fileID: 2335675995143112576}
+  - component: {fileID: 2839216073215322704}
   m_Layer: 0
   m_Name: UI Manager
   m_TagString: Untagged
@@ -62,3 +64,36 @@ MonoBehaviour:
   mpbar: {fileID: 0}
   stbar: {fileID: 0}
   expbar: {fileID: 0}
+--- !u!114 &2335675995143112576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7912026756270081366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e8097a25936c18439aebcc2561159d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelUpMenu: {fileID: 0}
+  statItemPrefab: {fileID: 5431045911343738038, guid: a7b56d2d0e73a534dbc9953967f41332, type: 3}
+  contentPanel: {fileID: 0}
+  playerIdentity: {fileID: 0}
+  tempAttPoints: 0
+--- !u!114 &2839216073215322704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7912026756270081366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84e102dc2b3cf9e4aa0578090114c744, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelText: {fileID: 0}
+  levelSystem: {fileID: 0}
+  labelName: LevelLabel
+  playerTag: Player
