@@ -1,7 +1,6 @@
 using UnityEngine;
 using Jili.StatSystem;
 
-[RequireComponent(typeof(CollisionSuicidalEnemy))]
 public class EnemyMoveSuicidal : MonoBehaviour
 {
     private GameObject target;

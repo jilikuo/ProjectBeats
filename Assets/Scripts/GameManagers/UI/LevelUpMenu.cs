@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using Jili.StatSystem.EntityTree;
-using System;
+using Jili.StatSystem.LevelSystem;
 
 public class LevelUpMenu : MonoBehaviour
 {
@@ -22,6 +22,7 @@ public class LevelUpMenu : MonoBehaviour
 
     // player objects
     public PlayerIdentity playerIdentity;
+    public PlayerLevel LevelSystem { get; private set; }
 
     // player level up variables
     private int heldAttPoints;
@@ -41,16 +42,17 @@ public class LevelUpMenu : MonoBehaviour
         }
         else
         {
-            throw new ArgumentNullException("LevelUpMenu not found");
+            throw new System.ArgumentNullException("LevelUpMenu not found");
         }
 
         if (playerIdentity == null)
         {
             playerIdentity = GameObject.FindGameObjectWithTag(playerTag).gameObject.GetComponent<PlayerIdentity>();
+            LevelSystem = playerIdentity.GetComponent<PlayerLevel>();
         }
 
         heldAttPoints = 0;
-        tempAttPoints = 0;
+        tempAttPoints = LevelSystem.ReadFreeAttPoints();
     }
 
     void Start()
@@ -60,7 +62,7 @@ public class LevelUpMenu : MonoBehaviour
 
     private void Update()
     {
-        //CheckForAttributePoints();
+        CheckForAttributePoints();
         if ((Input.GetKeyDown(KeyCode.L) || Input.GetKeyDown(KeyCode.J) || Input.GetKeyDown(KeyCode.I)) && isShowing == false)
         {
             ShowLevelUpMenu();
@@ -71,21 +73,21 @@ public class LevelUpMenu : MonoBehaviour
         }
     }
 
-    /* void CheckForAttributePoints()
+   void CheckForAttributePoints()
    {
-       if ((heldAttPoints + tempAttPoints) == statsData.freeAttPoints)
+       if ((heldAttPoints + tempAttPoints) == LevelSystem.ReadFreeAttPoints())
        {
            return;
        }
-       if ((heldAttPoints + tempAttPoints) < statsData.freeAttPoints)
+       if ((heldAttPoints + tempAttPoints) < LevelSystem.ReadFreeAttPoints())
        {
-           tempAttPoints = statsData.freeAttPoints - heldAttPoints;
+           tempAttPoints = LevelSystem.ReadFreeAttPoints() - heldAttPoints;
        }
-       if ((heldAttPoints + tempAttPoints) > statsData.freeAttPoints)
+       if ((heldAttPoints + tempAttPoints) > LevelSystem.ReadFreeAttPoints())
        {
-           tempAttPoints = statsData.freeAttPoints - heldAttPoints;
+           tempAttPoints = LevelSystem.ReadFreeAttPoints() - heldAttPoints;
        }
-   } */
+   } 
 
     public async void ShowLevelUpMenu()
     {
@@ -135,10 +137,12 @@ public class LevelUpMenu : MonoBehaviour
         int tempConsume = 0;
         foreach (var statItem in statItems)
         {
-            //statsData.IncreaseAttByName((statItem.statNameText.text), statItem.CheckTempValue());
-            tempConsume += statItem.CheckTempValue();
-            statItem.ResetTempValue();
-            statItem.UpdateValueView();
+            if (statItem.ApplyChanges())
+            {
+                tempConsume += statItem.CheckTempValue();
+                statItem.ResetTempValue();
+                statItem.UpdateValueView();
+            }
         }
 
         heldAttPoints -= tempConsume;

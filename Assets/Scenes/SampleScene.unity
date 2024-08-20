@@ -252,6 +252,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &527000411 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7556154887368997007, guid: 148d55405e44d514891d7a27ab1d4539, type: 3}
+  m_PrefabInstance: {fileID: 7352093011433180225}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &589502972 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7912026756270081366, guid: 3b25b9d438675674e938dbd18fc37ef8, type: 3}
+  m_PrefabInstance: {fileID: 2097108541}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &841153430 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6699665783187600498, guid: 7a8e1fb41607f4f47a405ca3bfcd5b8b, type: 3}
@@ -438,9 +448,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2335675995143112576, guid: 3b25b9d438675674e938dbd18fc37ef8, type: 3}
+      propertyPath: levelUpMenu
+      value: 
+      objectReference: {fileID: 527000411}
+    - target: {fileID: 2335675995143112576, guid: 3b25b9d438675674e938dbd18fc37ef8, type: 3}
       propertyPath: contentPanel
       value: 
       objectReference: {fileID: 1941216410}
+    - target: {fileID: 2335675995143112576, guid: 3b25b9d438675674e938dbd18fc37ef8, type: 3}
+      propertyPath: tempAttPoints
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2335675995143112576, guid: 3b25b9d438675674e938dbd18fc37ef8, type: 3}
       propertyPath: statItemPrefab
       value: 
@@ -970,6 +988,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3932117295426744456, guid: 148d55405e44d514891d7a27ab1d4539, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 589502972}
     - target: {fileID: 7556154887368997007, guid: 148d55405e44d514891d7a27ab1d4539, type: 3}
       propertyPath: m_Name
       value: LevelUpMenu
@@ -980,7 +1002,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8795376087693024701, guid: 148d55405e44d514891d7a27ab1d4539, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

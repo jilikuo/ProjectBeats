@@ -1,7 +1,10 @@
 using UnityEngine;
 using TMPro;
+using System;
 using Jili.StatSystem;
+using Attribute = Jili.StatSystem.Attribute;
 using Jili.StatSystem.EntityTree;
+using Jili.StatSystem.LevelSystem;
 
 public class StatItemUI : MonoBehaviour
 {
@@ -14,12 +17,12 @@ public class StatItemUI : MonoBehaviour
     private LevelUpMenu levelUpMenu;
     private int availablePoints;
     private Attribute attribute;
-
-
+    private PlayerLevel levelSystem;
 
     private void Start()
     {
         levelUpMenu = GameObject.Find("UI Manager").GetComponent<LevelUpMenu>();
+        levelSystem = levelUpMenu.LevelSystem;
         availablePoints = levelUpMenu.tempAttPoints;
     }
 
@@ -51,6 +54,24 @@ public class StatItemUI : MonoBehaviour
             levelUpMenu.TempUseSinglePoint();
         }
         UpdateValueView();
+    }
+
+    public bool ApplyChanges()
+    {
+        AttributeModifier mod = attribute.SetAndReadLevelModifier();
+        if (temporaryAdd > 0)
+        {
+            mod.IncreaseModifier(temporaryAdd);
+            levelSystem.SpendAttPoints(temporaryAdd);
+            return true;
+        }
+        if (temporaryAdd < 0)
+        {
+
+            // PLACEHOLDER FOR REDUCING ARGUMENT LOGIC
+            throw new ArgumentOutOfRangeException("NÃO É POSSÍVEL DIMINUIR UM ATRIBUTO");
+        }
+        return false;
     }
 
     public void TempDecrease()

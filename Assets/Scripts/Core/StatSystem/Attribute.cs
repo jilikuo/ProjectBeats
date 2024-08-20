@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Unity;
+using UnityEngine;
 
 namespace Jili.StatSystem
 {
@@ -81,9 +83,23 @@ namespace Jili.StatSystem
         }
 
         public string ReadAttName() { return Name; }
-
         public int ReadBaseValue() { return (int)BaseValue; }
         public float ReadValue() { return Value; }
+
+        public virtual AttributeModifier SetAndReadLevelModifier()
+        {
+            AttributeModifier modifier = null;
+
+            if (attributeModifiers.Find(modifier => modifier.Source == this) != null)
+            {
+                return modifier;
+            }
+            else
+            {
+                modifier = new AttributeModifier(0, AttributeModType.Flat, 0, this);
+                return modifier;
+            }
+        }
 
         public virtual void AddModifier(AttributeModifier modifier)     // Método para adicionar um modificador à lista
         {

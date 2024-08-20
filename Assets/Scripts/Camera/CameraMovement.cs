@@ -11,7 +11,7 @@ public class CameraMovement : MonoBehaviour
     public Transform targetTransform;
     public Transform mainCamera;
 
-    public int MoveRatio = 5; // == 1/10th of fixedDeltaTime
+    public int MoveRatio = 5; // 10 == 1/10th of fixedDeltaTime
 
     private Vector3 playerPos;
     private Vector3 cameraPos;
@@ -65,9 +65,9 @@ public class CameraMovement : MonoBehaviour
         cameraPos.x += moveX;
         cameraPos.y += moveY;
         mainCamera.position = cameraPos;
-     //   float hSpeed = target.GetComponent<PlayerMovement>().horizontalSpeed;
-     //   float vSpeed = target.GetComponent<PlayerMovement>().verticalSpeed;
-      //  float maxSpeed = target.GetComponent<PlayerMovement>().maxSpeed;
+       // float hSpeed = target.GetComponent<PlayerMovement>().horizontalSpeed;
+       // float vSpeed = target.GetComponent<PlayerMovement>().verticalSpeed;
+       // float maxSpeed = target.GetComponent<PlayerMovement>().maxSpeed;
        // thisCamera.orthographicSize = Mathf.MoveTowards(thisCamera.orthographicSize, defaultOrthographicSize + Mathf.Min(Mathf.Sqrt((hSpeed*hSpeed) + (vSpeed*vSpeed)), maxSpeed), Time.deltaTime / MoveRatio);
     }
 

@@ -11,7 +11,7 @@ namespace Jili.StatSystem
     // Classe que define um modificador de Atributos
     public class AttributeModifier
     {
-        public readonly float Value;        // Valor do modificador
+        public float Value { get; private set; }        // Valor do modificador
         public readonly AttributeModType Type;   // Tipo do modificador
         public readonly int Priority;       // Prioridade do modificador (por padrão é o tipo, mas pode ser alterado no construtor)
         public readonly object Source;      // Fonte do modificador
@@ -30,5 +30,10 @@ namespace Jili.StatSystem
         public AttributeModifier(float value, AttributeModType type, int priority) : this(value, type, priority, null) { }
 
         public AttributeModifier(float value, AttributeModType type, object source) : this(value, type, (int)type, source) { }
+
+        public void IncreaseModifier(float amount)
+        {
+            Value += amount;
+        }
     }
 }

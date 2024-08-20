@@ -64,8 +64,8 @@
                     }
                     else
                     {
-                        Free = perLevelGain;
-                        Total = perLevelGain;
+                        Free += perLevelGain;
+                        Total += perLevelGain;
                     }
                 }
 
@@ -106,6 +106,7 @@
             public void LevelUp()
             {
                 Level++;
+                attributePoints.AddFreePoints();
                 RecalculateNextLevelExp();
             }
             
