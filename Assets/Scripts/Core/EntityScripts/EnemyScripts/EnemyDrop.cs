@@ -36,12 +36,12 @@ public class EnemyDrop : MonoBehaviour
         {
             if (RollDice(DropChance[i]))
             {
-                Debug.Log("Rolagem bem-sucedida. Tentando dropar item.");
+                //Debug.Log("Rolagem bem-sucedida. Tentando dropar item.");
                 DropOnce();
             }
             else
             {
-                Debug.Log("Rolagem falhou. Interrompendo o drop.");
+                //Debug.Log("Rolagem falhou. Interrompendo o drop.");
                 break;
             }
         }

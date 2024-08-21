@@ -56,7 +56,6 @@ namespace Jili.StatSystem.EntityTree.ConsumableSystem
                 case ConsumableCategory.Exp:
                     ConsumeExpOrb();
 
-                    Debug.Log("Consumed Experience");
                     break;
 
                 case ConsumableCategory.Gold:
