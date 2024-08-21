@@ -218,11 +218,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   totalDropItems: 5
   drop:
-  - {fileID: 8692053273733767436, guid: 113386c9278b00a4b97e8abf8196e71e, type: 3}
-  - {fileID: 8692053273733767436, guid: 640b8bac0ffbdc34f9930e9966647bde, type: 3}
+  - {fileID: 8692053273733767436, guid: 0a19b1f5e41937249b89131ed60a177b, type: 3}
+  - {fileID: 8692053273733767436, guid: 0a19b1f5e41937249b89131ed60a177b, type: 3}
+  - {fileID: 8692053273733767436, guid: 07daac066a116b845871ccc79cc43d90, type: 3}
   dropRate:
   - 100
   - 100
+  - 5
   dropChance:
-  - 100
-  - 100
+  - 50
+  - 10
+  - 5
