@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Jili.StatSystem.AttackSystem
 {
-    public class AttackSystem : MonoBehaviour
+    public class PlayerAttacks : MonoBehaviour
     {
         [SerializeField]
         protected IShootable[] Weapons;
