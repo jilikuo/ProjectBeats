@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Threading.Tasks;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using Jili.StatSystem;
 using Jili.StatSystem.EntityTree;
 using Jili.StatSystem.LevelSystem;
 
@@ -48,9 +49,10 @@ public class LevelUpMenu : MonoBehaviour
         if (playerIdentity == null)
         {
             playerIdentity = GameObject.FindGameObjectWithTag(playerTag).gameObject.GetComponent<PlayerIdentity>();
-            LevelSystem = playerIdentity.GetComponent<PlayerLevel>();
+            
         }
 
+        LevelSystem = playerIdentity.GetComponent<PlayerLevel>();
         heldAttPoints = 0;
         tempAttPoints = LevelSystem.ReadFreeAttPoints();
     }
@@ -150,7 +152,7 @@ public class LevelUpMenu : MonoBehaviour
 
     void PopulateStats()
     {
-        foreach (var att in playerIdentity.attList)
+        foreach (Attribute att in playerIdentity.attList)
         {
             GameObject newItem = Instantiate(statItemPrefab, contentPanel);
             StatItemUI itemUI = newItem.GetComponent<StatItemUI>();
