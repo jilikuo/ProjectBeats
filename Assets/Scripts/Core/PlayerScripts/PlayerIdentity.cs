@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Jili.StatSystem.AttackSystem;
 using System.Linq;
+using System;
 
 
 namespace Jili.StatSystem.EntityTree
@@ -39,6 +40,8 @@ namespace Jili.StatSystem.EntityTree
 
         private bool healBlock = false; // flag for status conditions that block healing
         public IShootable baseWeapon;
+
+        public static event Action OnPlayerDeath;
 
         void Awake()
         {
@@ -146,6 +149,11 @@ namespace Jili.StatSystem.EntityTree
         public bool RunDeathRoutine()
         {
             Debug.Log("Player is Dead");
+            this.gameObject.GetComponent<PlayerControl>().enabled = false;
+            this.gameObject.GetComponent<Collider2D>().enabled = false;
+            this.gameObject.GetComponent<PlayerAttacks>().enabled = false;
+            this.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            OnPlayerDeath?.Invoke();
             return true;
         }
 
