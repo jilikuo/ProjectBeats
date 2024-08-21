@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 namespace Jili.StatSystem
 {
@@ -34,7 +36,7 @@ namespace Jili.StatSystem
         protected float BaseValue;             // Valor base do stat
         private readonly List<Attribute> RelevantAtts;
 
-        public event Action OnValueChanged; // Event to notify when the value changes
+        public event Action<Stat> OnValueChanged; // Event to notify when the value changes
 
         public virtual float Value          // Valor Após modificadores do stat
         {
@@ -42,7 +44,8 @@ namespace Jili.StatSystem
             {
                 if (isDirty || BaseValue != lastBaseValue)
                 {
-                    if (!(((int)Type) >= (int)StatType.IndependentBase))
+                    Debug.Log(this.Name + " dirtiness is: " + isDirty + " BaseValue is: " + BaseValue + " lastBaseValue is: " + lastBaseValue);
+                    if (((int)Type) < (int)StatType.IndependentBase)
                     {
                         BaseValue = StatFormulas.CalculateBaseStatValue(Type, RelevantAtts);
                     }
@@ -55,7 +58,7 @@ namespace Jili.StatSystem
                     lastValue = _value;
                     _value = CalculateFinalValue();
                     isDirty = false;
-                    OnValueChanged?.Invoke(); // Trigger the event when value changes
+                    TriggerOnValueChanged(); // Trigger the event when value changes
 
                     if (isVolatile)
                     {
@@ -106,11 +109,12 @@ namespace Jili.StatSystem
                 foreach (var att in RelevantAtts)
                 {
                     att.OnValueChanged += BecomeDirty;
+                    att.ReadValue();
                 }
                 if (type == StatType.Health || type == StatType.Mana || type == StatType.Stamina)
                 {
                     isVolatile = true;
-                    CurrentVolatileValue = ReadMaxValue(); // aqui precisamos ler o valor através do método, para garantir que ele não esteja Dirty ao começar
+                    CurrentVolatileValue = ReadValue(); // aqui precisamos ler o valor através do método, para garantir que ele não esteja Dirty ao começar
                                                            // (o que duplicaria o valor do currentvolatilevalue)
                                                            // manter atenção - pode causar problemas?
                 }
@@ -128,9 +132,19 @@ namespace Jili.StatSystem
             lastBaseValue = BaseValue;
         }
 
+        public virtual void TriggerOnValueChanged()
+        {
+            Debug.Log("Triggering Value Change Event" + this.Name);
+            OnValueChanged?.Invoke(this);
+        }
+
         public virtual void BecomeDirty()
         {
+            Debug.Log("Triggering Dirtiness for " + this.Name);
             isDirty = true;
+            // avisar aos ouvintes que o valor do stat precisa ser recarregado (não deveria ser necessário...
+            // TODO: DESCOBRIR POR QUE O VALOR NÃO ESTÁ SENDO RECARREGADO SÓ DE O STAT ESTAR SUJO)
+            TriggerOnValueChanged();
         }
 
         public virtual void AddModifier(StatModifier modifier)
@@ -176,7 +190,7 @@ namespace Jili.StatSystem
             return didRemove;
         }
 
-        public float ReadMaxValue()
+        public float ReadValue()
         {
             return this.Value;
         }

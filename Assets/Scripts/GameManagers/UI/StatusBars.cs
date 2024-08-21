@@ -34,9 +34,9 @@ public class StatusBars : MonoBehaviour
         playerIdentity = GameObject.FindGameObjectWithTag("Player").gameObject.GetComponent<PlayerIdentity>();
         levelSystem = playerIdentity.GetComponent<PlayerLevel>();
 
-        hpbar.maxValue = playerIdentity.Health.ReadMaxValue();
+        hpbar.maxValue = playerIdentity.Health.ReadValue();
         hpbar.value = playerIdentity.Health.ReadCurrentValue();
-        mpbar.maxValue = playerIdentity.Mana.ReadMaxValue();
+        mpbar.maxValue = playerIdentity.Mana.ReadValue();
         mpbar.value = playerIdentity.Mana.ReadCurrentValue();
         //stbar.maxValue = playerEntity.maxStamina;
         //stbar.value = playerEntity.stamina;
@@ -46,11 +46,11 @@ public class StatusBars : MonoBehaviour
 
     private void Update()
     {
-        hpbar.maxValue = playerIdentity.Health.ReadMaxValue();
+        hpbar.maxValue = playerIdentity.Health.ReadValue();
         hpbar.value = playerIdentity.Health.ReadCurrentValue();
         hplabel.text = ((Mathf.Ceil(hpbar.value * 10) / 10).ToString() + " HP");
 
-        mpbar.maxValue = playerIdentity.Mana.ReadMaxValue();
+        mpbar.maxValue = playerIdentity.Mana.ReadValue();
         mpbar.value = playerIdentity.Mana.ReadCurrentValue();
         mplabel.text = ((Mathf.Ceil(mpbar.value * 10) / 10).ToString() + " MP");
 

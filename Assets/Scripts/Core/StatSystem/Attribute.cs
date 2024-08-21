@@ -51,7 +51,7 @@ namespace Jili.StatSystem
                 {
                     lastBaseValue = BaseValue;
                     _value = CalculateFinalValue();
-                    isDirty = false;
+                    Debug.Log("Triggering ATTRIBUTE Value Change Event for " + this.Name);
                     OnValueChanged?.Invoke();   // Trigger the event when value changes
                 }
                 return _value;
@@ -83,8 +83,20 @@ namespace Jili.StatSystem
         }
 
         public string ReadAttName() { return Name; }
-        public int ReadBaseValue() { return (int)BaseValue; }
-        public float ReadValue() { return Value; }
+        public int ReadBaseValue() 
+        {
+            ReadValue();
+            int temp = (int)BaseValue;
+            if (attributeModifiers.Find(modifier => modifier.Source == this) != null)
+                return temp + (int)attributeModifiers.Find(modifier => modifier.Source == this).Value;
+            else
+                return temp;
+        }
+        public float ReadValue() 
+        {
+            float temp = Value;
+            return temp; 
+        }
 
         public virtual AttributeModifier SetAndReadLevelModifier()
         {
@@ -96,9 +108,18 @@ namespace Jili.StatSystem
             }
             else
             {
-                modifier = new AttributeModifier(0, AttributeModType.Flat, 0, this);
+                modifier = new AttributeModifier(0, AttributeModType.Flat, this);
+                AddModifier(modifier);
+                isDirty = true;
                 return modifier;
             }
+        }
+
+        public virtual void ReloadLevelModifier(AttributeModifier mod)
+        {
+            isDirty = true;
+            RemoveModifier(mod);
+            AddModifier(mod);
         }
 
         public virtual void AddModifier(AttributeModifier modifier)     // Método para adicionar um modificador à lista
@@ -173,6 +194,8 @@ namespace Jili.StatSystem
                         finalValue *= 1 + modifier.Value;
                 }
             }
+
+            isDirty = false;
             return (float)Math.Round(finalValue, 6);                    // retornamos o valor tratado para evitar erros
         }
     }

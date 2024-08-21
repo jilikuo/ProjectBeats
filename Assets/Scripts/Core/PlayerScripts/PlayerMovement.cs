@@ -36,9 +36,28 @@ public class PlayerMovement : MonoBehaviour, IPlayerMovement
         playerRb = GetComponent<Rigidbody2D>();
         playerStats = GetComponent<PlayerIdentity>();
 
+        playerStats.Acceleration.OnValueChanged += ReloadStats;
+        playerStats.MovementSpeed.OnValueChanged += ReloadStats;
+
         playerAcc = playerStats.ReadStatValueByType(StatType.Acceleration);
         maxSpeed = playerStats.ReadStatValueByType(StatType.MovementSpeed);
         baseSpeed = maxSpeed * SpeedFactor;
+
+        
+    }
+
+    void ReloadStats(Stat stat)
+    {
+        if (stat.Type == StatType.MovementSpeed)
+        {
+            maxSpeed = playerStats.ReadStatValueByType(StatType.MovementSpeed);
+            baseSpeed = maxSpeed * SpeedFactor;
+        }
+        else if (stat.Type == StatType.Acceleration)
+        {
+
+            playerAcc = playerStats.ReadStatValueByType(StatType.Acceleration);
+        }
     }
 
     public void HandleDirectionChange(Vector3 input)

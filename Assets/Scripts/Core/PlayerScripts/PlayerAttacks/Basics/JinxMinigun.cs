@@ -28,7 +28,8 @@ namespace Jili.StatSystem.AttackSystem
             get {
                 if (isDirty && DirtyStat.Contains(Player.AttackDamage))
                 {
-                    _damage = Player.AttackDamage.Value;
+                    Debug.Log("LOADING BULLET DAMAGE");
+                    _damage = Player.AttackDamage.ReadValue();
                     DirtyStat.Remove(Player.AttackDamage);
                     ReadDirtiness();
                 }
@@ -44,7 +45,7 @@ namespace Jili.StatSystem.AttackSystem
             {
                 if (isDirty && DirtyStat.Contains(Player.AttacksPerSecond))
                 {
-                    _cooldown = Player.AttacksPerSecond.Value;
+                    _cooldown = Player.AttacksPerSecond.ReadValue();
                     DirtyStat.Remove(Player.AttacksPerSecond);
                     ReadDirtiness();
                 }
@@ -62,7 +63,7 @@ namespace Jili.StatSystem.AttackSystem
             {
                 if (isDirty && DirtyStat.Contains(Player.AttackRange))
                 {
-                    _range = Player.AttackRange.Value;
+                    _range = Player.AttackRange.ReadValue();
                     DirtyStat.Remove(Player.AttackRange);
                     ReadDirtiness();
                 }
@@ -78,7 +79,7 @@ namespace Jili.StatSystem.AttackSystem
             {
                 if (isDirty && DirtyStat.Contains(Player.ProjectileSpeed))
                 {
-                    _projectileSpeed = Player.ProjectileSpeed.Value;
+                    _projectileSpeed = Player.ProjectileSpeed.ReadValue();
                     DirtyStat.Remove(Player.ProjectileSpeed);
                     ReadDirtiness();
                 }
@@ -94,7 +95,7 @@ namespace Jili.StatSystem.AttackSystem
             {
                 if (isDirty && DirtyStat.Contains(Player.ProjectileNumber))
                 {
-                    _projectileNumber = Player.ProjectileNumber.Value;
+                    _projectileNumber = Player.ProjectileNumber.ReadValue();
                     DirtyStat.Remove(Player.ProjectileNumber);
                     ReadDirtiness();
                 }
@@ -117,11 +118,11 @@ namespace Jili.StatSystem.AttackSystem
             this.DirtyStat = new List<Stat>();
 
             // Inicia os ouvintes para alterações em cada stat relevante
-            Player.AttackDamage.OnValueChanged      += () => BecomeDirty(Player.AttackDamage);
-            Player.AttacksPerSecond.OnValueChanged  += () => BecomeDirty(Player.AttacksPerSecond);
-            Player.AttackRange.OnValueChanged       += () => BecomeDirty(Player.AttackRange);
-            Player.ProjectileNumber.OnValueChanged  += () => BecomeDirty(Player.ProjectileNumber);
-            Player.ProjectileSpeed.OnValueChanged   += () => BecomeDirty(Player.ProjectileSpeed);
+            Player.AttackDamage.OnValueChanged      += BecomeDirty;
+            Player.AttacksPerSecond.OnValueChanged  += BecomeDirty;
+            Player.AttackRange.OnValueChanged       += BecomeDirty;
+            Player.ProjectileNumber.OnValueChanged  += BecomeDirty;
+            Player.ProjectileSpeed.OnValueChanged   += BecomeDirty;
 
             // Adiciona os stats à lista de DirtyStat
             DirtyStat.Add(Player.AttackDamage);
@@ -135,25 +136,27 @@ namespace Jili.StatSystem.AttackSystem
             
         }
 
-        //TODO: implementar lógica de recarregar os valores dos status relevantes conforme necessário
+        // TODO: implementar lógica de recarregar os valores dos status relevantes conforme necessário
         // caso o jogador tenha um item que aumente o dano, por exemplo, o dano do projétil deve ser recalculado
         // caso o jogador suba de nível e aumente qualquer um dos status relevantes, as variáveis associadas a esse status
         // devem ser recalculadas
         public void BecomeDirty(Stat stat) 
         {
+            Debug.Log("Sujando..." + stat.Type);
+            isDirty = true;
             if (DirtyStat != null )
             {
                 if (!DirtyStat.Contains(stat))
                 {
+                    Debug.Log("adicionado aa lista de sujeira: " + stat.Type);
                     DirtyStat.Add(stat);
                 }
             }
             else
             {
+                Debug.Log("criando lista de sujeira e adicionando..." + stat.Type);
                 DirtyStat = new List<Stat> { stat };
             }
-
-            isDirty = true;
         }
 
         public void ReadDirtiness()
@@ -171,15 +174,19 @@ namespace Jili.StatSystem.AttackSystem
 
         public float ReturnStatValueByType(StatType type)
         {
+            float value = 0f;
             switch (type)
             {
                 case StatType.AttackDamage:
-                    return Damage;
+                    value = Damage;
+                    break;
                 case StatType.AttackRange:
-                    return Range;
+                    value = Range;
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
+            return value;
         }
 
         public bool TryShoot(float deltaTime)
@@ -191,7 +198,7 @@ namespace Jili.StatSystem.AttackSystem
             if (CooldownTimer <= 0)
             {
                 CooldownTimer = Cooldown; // ZERA O COOLDOWN NOVAMENTE
-                Debug.Log("AIMING PROJECTILES");
+                //Debug.Log("AIMING PROJECTILES");
                 Player.StartCoroutine(AimProjectiles()); // INICIA A CORROTINA DE MIRA
                 return true;
             }

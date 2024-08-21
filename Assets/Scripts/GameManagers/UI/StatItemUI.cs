@@ -17,12 +17,15 @@ public class StatItemUI : MonoBehaviour
     private LevelUpMenu levelUpMenu;
     private int availablePoints;
     private Attribute attribute;
+    private AttributeModifier modifier;
+    private PlayerIdentity playerIdentity;
     private PlayerLevel levelSystem;
 
-    private void Start()
+    private void Awake()
     {
         levelUpMenu = GameObject.Find("UI Manager").GetComponent<LevelUpMenu>();
-        levelSystem = levelUpMenu.LevelSystem;
+        playerIdentity = GameObject.Find("Player").GetComponent<PlayerIdentity>();
+        levelSystem = playerIdentity.GetComponent<PlayerLevel>();
         availablePoints = levelUpMenu.tempAttPoints;
     }
 
@@ -34,7 +37,18 @@ public class StatItemUI : MonoBehaviour
 
     public void SetStat(Attribute att)
     {
+        if (att == null)
+        {
+            throw new ArgumentNullException("Attribute not found");
+        }
+
         attribute = att;
+
+        if (attribute == null)
+        {
+            throw new Exception("Attribute not found in playerIdentity.attList");
+        }
+        modifier = attribute.SetAndReadLevelModifier();
         originalColor = statValueText.color;
         statNameText.text = attribute.ReadAttName();
         statValue = attribute.ReadBaseValue();
@@ -58,10 +72,11 @@ public class StatItemUI : MonoBehaviour
 
     public bool ApplyChanges()
     {
-        AttributeModifier mod = attribute.SetAndReadLevelModifier();
+
         if (temporaryAdd > 0)
         {
-            mod.IncreaseModifier(temporaryAdd);
+            modifier.IncreaseModifier(temporaryAdd);
+            attribute.ReloadLevelModifier(modifier);
             levelSystem.SpendAttPoints(temporaryAdd);
             return true;
         }

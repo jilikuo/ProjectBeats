@@ -179,7 +179,7 @@ namespace Jili.StatSystem
 
                 // Attack Range = 1 + 0.667 *  
                 case StatType.AttackRange:
-                    return 1 + (0.667f * prc);
+                    return 3 + (0.15f * prc);
 
                 default:
                     throw new ArgumentOutOfRangeException("Cannot calculate base stat value for Stat Type " + Type.ToString() +  ", Type FORMULA not found");
