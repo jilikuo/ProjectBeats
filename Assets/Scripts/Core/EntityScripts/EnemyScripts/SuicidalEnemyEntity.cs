@@ -2,6 +2,13 @@ using UnityEngine;
 
 namespace Jili.StatSystem.EntityTree
 {
+    public enum SuicidalEnemyType
+    {
+        Small,
+        Big,
+        Boss
+    }
+
     [RequireComponent(typeof(EnemyMoveSuicidal))]
     public class SuicidalEnemyEntity : EntityBase, IDamageable, IShowDamage
     {
@@ -19,6 +26,8 @@ namespace Jili.StatSystem.EntityTree
 
         private Color originalColor;
         private Color darknedColor;
+
+        public SuicidalEnemyType type;
 
         void Awake()
         {

@@ -1,8 +1,10 @@
+using Jili.StatSystem.EntityTree;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class SpawnEnemy : MonoBehaviour
+public class SpawnSuicidalEnemy : MonoBehaviour
 {
     public GameObject enemyPrefab;
     public Transform playerPos;
@@ -52,9 +54,10 @@ public class SpawnEnemy : MonoBehaviour
             spawned += 1;
         }
     }
-    
-    void CountEnemies()
+
+    private int CountEnemies()
     {
-        enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
+        SuicidalEnemyEntity[] allEnemies = FindObjectsOfType<SuicidalEnemyEntity>();
+        return allEnemies.Count(enemy => enemy.type == SuicidalEnemyType.Small);
     }
 }
