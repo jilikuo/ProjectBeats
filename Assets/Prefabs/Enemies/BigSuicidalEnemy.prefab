@@ -180,6 +180,7 @@ MonoBehaviour:
   str: 10
   con: 25
   dex: 0
+  type: 1
 --- !u!114 &8673199473421475770
 MonoBehaviour:
   m_ObjectHideFlags: 0
