@@ -11,7 +11,7 @@ namespace Jili.StatSystem.EntityTree
         private void Awake()
         {
             tankableHits = 1;
-            strenght = 1;
+            strenght = 0.34f;
         }
 
         protected override void InitializeProjectile()

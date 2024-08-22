@@ -44,4 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 344db07ffe55d344bb4eaba5e321c9ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Bullet: {fileID: 2829091763142108361, guid: 7a14867b178ecd049ba36adf315a1ab6, type: 3}
+  JinxBullet: {fileID: 2829091763142108361, guid: 7a14867b178ecd049ba36adf315a1ab6, type: 3}
+  JinxShotgunBullet: {fileID: 2829091763142108361, guid: 80881525f806ba04c911f1195d631f6e, type: 3}

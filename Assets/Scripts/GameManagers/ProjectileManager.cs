@@ -4,5 +4,6 @@ using UnityEngine;
 
 public class ProjectileManager : MonoBehaviour
 {
-    public GameObject Bullet;
+    public GameObject JinxBullet;
+    public GameObject JinxShotgunBullet;
 }

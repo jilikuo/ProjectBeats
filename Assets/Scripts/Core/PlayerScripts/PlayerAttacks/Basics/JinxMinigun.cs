@@ -16,9 +16,9 @@ namespace Jili.StatSystem.AttackSystem
         // CONSTANTES DE CONFIGURAÇÃO DA ARMA
         private readonly int BaseProjectiles        = 3;                            // TRÊS PROJÉTEIS
         private readonly int BaseProjectileSpeed    = 5;                            // VELOCIDADE BASE DE 5
-        private readonly int TriggerSpeedFactor     = 5;                            // 20% DO COOLDOWN ( X / 5 = 0,2x) A CADA DISPARO
+        private readonly int TriggerSpeedFactor     = 6;                            // DIVIDE PELO COOLDOWN ( X / 6 = 0,166x) A CADA DISPARO
         private readonly int MaxProjectileDuration  = 5;                            // DURAÇÃO MÁXIMA DE 5 SEGUNDOS
-        private readonly float OffsetValue          = 0.1f;                         // DISPERSÃO DE 0.1 UNIDADES
+        private readonly float OffsetValue          = 0.15f;                         // DISPERSÃO DE 0.15 UNIDADES
         protected readonly WeaponTypes Type         = WeaponTypes.JinxMinigun;      // TIPO DE ARMA
 
         //projectile damage
@@ -33,7 +33,7 @@ namespace Jili.StatSystem.AttackSystem
                     DirtyStat.Remove(Player.AttackDamage);
                     ReadDirtiness();
                 }
-                return _damage;
+                return _damage / 2f; // o dano do projétil é 50% do dano do jogador
             }
         }
 
@@ -110,7 +110,7 @@ namespace Jili.StatSystem.AttackSystem
         protected PlayerIdentity Player;
         protected Transform PlayerTransform;
 
-        public JinxMinigun(GameObject projectile, GameObject player)
+        public JinxMinigun(GameObject projectile, PlayerIdentity player)
         {
             this.Projectile = projectile;
             this.Player = player.GetComponent<PlayerIdentity>();
@@ -133,8 +133,9 @@ namespace Jili.StatSystem.AttackSystem
 
             this.CooldownTimer = this.Cooldown;
             this.TriggerSpeed = (this.Cooldown / TriggerSpeedFactor) / this.ProjectileNumber; // A VELOCIDADE DE GATILHO É 20% DO COOLDOWN DIVIDIDO ENTRE O TOTAL DE PROJÉTEIS A SEREM DISPARADOS
-            
         }
+
+        public JinxMinigun(PlayerIdentity player) : this(GameObject.FindGameObjectWithTag("ProjectileManager").GetComponent<ProjectileManager>().JinxBullet, player) { }
 
         // TODO: implementar lógica de recarregar os valores dos status relevantes conforme necessário
         // caso o jogador tenha um item que aumente o dano, por exemplo, o dano do projétil deve ser recalculado

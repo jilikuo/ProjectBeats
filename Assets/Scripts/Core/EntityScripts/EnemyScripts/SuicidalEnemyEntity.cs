@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Jili.StatSystem.EntityTree
 {
     [RequireComponent(typeof(EnemyMoveSuicidal))]
-    public class SuicidalEnemyEntity : EntityBase, IDamageable
+    public class SuicidalEnemyEntity : EntityBase, IDamageable, IShowDamage
     {
         public float str;
         public float con;
@@ -16,6 +16,9 @@ namespace Jili.StatSystem.EntityTree
         private Stat AttackDamage;
         private Stat Health;
         private Stat MovementSpeed;
+
+        private Color originalColor;
+        private Color darknedColor;
 
         void Awake()
         {
@@ -34,17 +37,28 @@ namespace Jili.StatSystem.EntityTree
             statListAdd(AttackDamage);
             statListAdd(Health);
             statListAdd(MovementSpeed);
+
+            originalColor = gameObject.GetComponent<SpriteRenderer>().color;
+            darknedColor = originalColor * 0.65f;
+            darknedColor.a = 1;
         }
 
         public bool TakeDamage(float incomingDamage)
         {
             Health.CurrentVolatileValue -= incomingDamage;
+            UpdateColorBasedOnRemainingHP();
             if (Health.CurrentVolatileValue <= 0)
             {
                 RunDeathRoutine();
                 return true;
             }
             return false;
+        }
+
+        public void UpdateColorBasedOnRemainingHP()
+        {
+            float healthPercentage = Health.CurrentVolatileValue / Health.Value;
+            gameObject.GetComponent<SpriteRenderer>().color = Color.Lerp(darknedColor, originalColor, healthPercentage);
         }
 
         public bool RunDeathRoutine()
