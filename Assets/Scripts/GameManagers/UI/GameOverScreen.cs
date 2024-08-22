@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Jili.StatSystem.EntityTree;
-using UnityEditor.SearchService;
 using UnityEngine.SceneManagement;
 public class GameOverScreen : MonoBehaviour
 {
