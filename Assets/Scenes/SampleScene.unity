@@ -518,7 +518,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2335675995143112576, guid: 3b25b9d438675674e938dbd18fc37ef8, type: 3}
   m_PrefabInstance: {fileID: 1318584135}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1889066881}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e8097a25936c18439aebcc2561159d8, type: 3}
@@ -885,13 +885,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI Manager
       objectReference: {fileID: 0}
+    - target: {fileID: 8001172423779592105, guid: 3b25b9d438675674e938dbd18fc37ef8, type: 3}
+      propertyPath: gameOverMenu
+      value: 
+      objectReference: {fileID: 901446621}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7912026756270081366, guid: 3b25b9d438675674e938dbd18fc37ef8, type: 3}
-      insertIndex: 1
-      addedObject: {fileID: 1889066886}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b25b9d438675674e938dbd18fc37ef8, type: 3}
 --- !u!224 &1569035366 stripped
 RectTransform:
@@ -1165,24 +1166,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1664490138}
   m_CullTransparentMesh: 1
---- !u!1 &1889066881 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7912026756270081366, guid: 3b25b9d438675674e938dbd18fc37ef8, type: 3}
+--- !u!114 &1889066886 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8001172423779592105, guid: 3b25b9d438675674e938dbd18fc37ef8, type: 3}
   m_PrefabInstance: {fileID: 1318584135}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1889066886
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1889066881}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2a5dcad73ea7a1f40bf4265af4e14ba8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameOverMenu: {fileID: 901446621}
 --- !u!1001 &1918537090
 PrefabInstance:
   m_ObjectHideFlags: 0

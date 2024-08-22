@@ -23,6 +23,7 @@ public class GameOverScreen : MonoBehaviour
     public void RestartGame()
     {
         // Carrega a cena novamente
+        PlayerIdentity.OnPlayerDeath -= EndGame;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
