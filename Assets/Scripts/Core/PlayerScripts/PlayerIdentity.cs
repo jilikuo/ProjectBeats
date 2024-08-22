@@ -85,7 +85,7 @@ namespace Jili.StatSystem.EntityTree
             statListAdd(ProjectileNumber);
             statListAdd(ProjectileSpeed);
 
-            baseWeapon = new JinxMinigun(GameObject.FindGameObjectWithTag("ProjectileManager").GetComponent<ProjectileManager>().Bullet, this.gameObject);
+            baseWeapon = new JinxMinigun(this);
         }
 
         void Update()

@@ -6,12 +6,12 @@ using UnityEngine;
 namespace Jili.StatSystem.EntityTree
 {
 
-    public class JinxBullet : ProjectileBase
+    public class JinxShotgunBullet : ProjectileBase
     {
         private void Awake()
         {
             tankableHits = 1;
-            strenght = 0.34f;
+            strenght = 0.5f;
         }
 
         protected override void InitializeProjectile()

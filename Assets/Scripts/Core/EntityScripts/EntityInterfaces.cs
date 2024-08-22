@@ -10,6 +10,11 @@ namespace Jili.StatSystem.EntityTree
         public abstract bool RunDeathRoutine();
     }
 
+    public interface IShowDamage
+    {
+        public abstract void UpdateColorBasedOnRemainingHP();
+    }
+
     public interface IHealable
     {
         public abstract bool HealDamage(float incomingHeal);
@@ -19,7 +24,7 @@ namespace Jili.StatSystem.EntityTree
 
     public interface IProjectile
     {
-        public abstract bool TryStop(int strenght);
+        public abstract bool TryStop(float strenght);
         public abstract void GetStopped();
         public abstract void VerifyRange();
         public abstract void OnCollisionEnter2D(Collision2D collision);

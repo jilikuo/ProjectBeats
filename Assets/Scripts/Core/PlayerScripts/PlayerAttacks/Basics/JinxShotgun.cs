@@ -11,14 +11,12 @@ namespace Jili.StatSystem.AttackSystem
     // PARECE QUE SERIA MAIS PRÁTICO TER UMA CLASSE ESTÁTICA PARA CÁLCULO DE FÓRMULAS, 
     // TALVEZ IMPLEMENTE DESSA FORMA NO FUTURO;
 
-    public class JinxMinigun : IShootable
+    public class JinxShotgun : IShootable
     {
         // CONSTANTES DE CONFIGURAÇÃO DA ARMA
-        private readonly int BaseProjectiles        = 3;                            // TRÊS PROJÉTEIS
-        private readonly int BaseProjectileSpeed    = 5;                            // VELOCIDADE BASE DE 5
-        private readonly int TriggerSpeedFactor     = 6;                            // DIVIDE PELO COOLDOWN ( X / 6 = 0,166x) A CADA DISPARO
+        private readonly int BaseProjectiles        = 2;                            
+        private readonly int BaseProjectileSpeed    = 10;                            // VELOCIDADE BASE DE 5
         private readonly int MaxProjectileDuration  = 5;                            // DURAÇÃO MÁXIMA DE 5 SEGUNDOS
-        private readonly float OffsetValue          = 0.15f;                         // DISPERSÃO DE 0.15 UNIDADES
         protected readonly WeaponTypes Type         = WeaponTypes.JinxMinigun;      // TIPO DE ARMA
 
         //projectile damage
@@ -33,7 +31,7 @@ namespace Jili.StatSystem.AttackSystem
                     DirtyStat.Remove(Player.AttackDamage);
                     ReadDirtiness();
                 }
-                return _damage / 2f; // o dano do projétil é 50% do dano do jogador
+                return _damage * 0.75f; // o dano do projétil é
             }
         }
 
@@ -49,7 +47,7 @@ namespace Jili.StatSystem.AttackSystem
                     DirtyStat.Remove(Player.AttacksPerSecond);
                     ReadDirtiness();
                 }
-                return 1 / _cooldown; // if dex = 0 && finesse = 0, attacks per second = 0.333, para fazer o jogador atacar uma vez a cada 3 segundos
+                return 0.75f / _cooldown; // if dex = 0 && finesse = 0, attacks per second = 0.333, para fazer o jogador atacar uma vez a cada 3 segundos
                                       // a fórmula precisa ser ajustada como 1 / 0.333 ~= 3 segundos (?)
             }
         }
@@ -67,7 +65,23 @@ namespace Jili.StatSystem.AttackSystem
                     DirtyStat.Remove(Player.AttackRange);
                     ReadDirtiness();
                 }
-                return _range;
+                return _range * 1.5f;
+            }
+        }
+        
+        // not working
+        // spread
+        private float _spread;        // dispersão dos projéteis
+        protected float Spread
+        {
+            get
+            {
+                if (isDirty)
+                {
+                    _spread = Player.AttackRange.ReadValue();
+                    ReadDirtiness();
+                }
+                return Mathf.Max(15, 90 - (_spread * 1.5f));
             }
         }
 
@@ -103,17 +117,16 @@ namespace Jili.StatSystem.AttackSystem
             }
         }
 
-        protected float TriggerSpeed { get; set; }
         protected List<Stat> DirtyStat;
         protected Boolean isDirty = true;
         protected GameObject Projectile;
         protected PlayerIdentity Player;
         protected Transform PlayerTransform;
 
-        public JinxMinigun(GameObject projectile, PlayerIdentity player)
+        public JinxShotgun(GameObject projectile, PlayerIdentity player)
         {
             this.Projectile = projectile;
-            this.Player = player.GetComponent<PlayerIdentity>();
+            this.Player = player;
             this.PlayerTransform = player.transform;
             this.DirtyStat = new List<Stat>();
 
@@ -131,31 +144,24 @@ namespace Jili.StatSystem.AttackSystem
             DirtyStat.Add(Player.ProjectileNumber);
             DirtyStat.Add(Player.ProjectileSpeed);
 
-            this.CooldownTimer = this.Cooldown;
-            this.TriggerSpeed = (this.Cooldown / TriggerSpeedFactor) / this.ProjectileNumber; // A VELOCIDADE DE GATILHO É 20% DO COOLDOWN DIVIDIDO ENTRE O TOTAL DE PROJÉTEIS A SEREM DISPARADOS
+            this.CooldownTimer = this.Cooldown;            
         }
 
-        public JinxMinigun(PlayerIdentity player) : this(GameObject.FindGameObjectWithTag("ProjectileManager").GetComponent<ProjectileManager>().JinxBullet, player) { }
+        public JinxShotgun(PlayerIdentity player) : this(GameObject.FindGameObjectWithTag("ProjectileManager").GetComponent<ProjectileManager>().JinxShotgunBullet, player) { }
 
-        // TODO: implementar lógica de recarregar os valores dos status relevantes conforme necessário
-        // caso o jogador tenha um item que aumente o dano, por exemplo, o dano do projétil deve ser recalculado
-        // caso o jogador suba de nível e aumente qualquer um dos status relevantes, as variáveis associadas a esse status
-        // devem ser recalculadas
+
         public void BecomeDirty(Stat stat) 
         {
-            Debug.Log("Sujando..." + stat.Type);
             isDirty = true;
             if (DirtyStat != null )
             {
                 if (!DirtyStat.Contains(stat))
                 {
-                    Debug.Log("adicionado aa lista de sujeira: " + stat.Type);
                     DirtyStat.Add(stat);
                 }
             }
             else
             {
-                Debug.Log("criando lista de sujeira e adicionando..." + stat.Type);
                 DirtyStat = new List<Stat> { stat };
             }
         }
@@ -168,7 +174,6 @@ namespace Jili.StatSystem.AttackSystem
             }
             else
             {
-                Debug.Log("JINX MINIGUN NAO ESTÁ MAIS SUJO");
                 isDirty = false;
             }
         }
@@ -214,21 +219,37 @@ namespace Jili.StatSystem.AttackSystem
             mousePosition.z = 0f;
             Vector2 direction = (mousePosition - shootPos).normalized;
 
-            //atira na direção calculada, uma vez para cada projétil disponível, considerando o tempo de gatilho
+            float angleStep = Spread / ProjectileNumber;
+            float currentAngle = -angleStep * (ProjectileNumber - 1) / 2; // Centraliza os projéteis
+
+            //atira na direção calculada
             for (int i = 0; i < ProjectileNumber; i++)
             {
-                Shoot(direction);
-                yield return new WaitForSeconds(TriggerSpeed);
+                // Calcula a nova direção com base no ângulo de rotação
+                Vector2 rotatedDirection = RotateVector(direction, currentAngle);
+
+                // Atira na direção calculada
+                Shoot(rotatedDirection);
+
+                currentAngle += angleStep;
             }
+
+            yield return null;
+        }
+
+        private Vector2 RotateVector(Vector2 originalVector, float angleDegrees)
+        {
+            float radians = angleDegrees * Mathf.Deg2Rad;
+            float cos = Mathf.Cos(radians);
+            float sin = Mathf.Sin(radians);
+            float x = originalVector.x * cos - originalVector.y * sin;
+            float y = originalVector.x * sin + originalVector.y * cos;
+            return new Vector2(x, y).normalized;
         }
 
         public void Shoot(Vector2 direction)
         {
-            //adiciona um pequeno spread para o disparo
-            float offset = OffsetValue;
-            float offsetX = Random.Range(-offset, offset);
-            float offsetY = Random.Range(-offset, offset);
-            Vector3 spawnPosition = PlayerTransform.position + new Vector3(offsetX, offsetY, 0);
+            Vector3 spawnPosition = PlayerTransform.position;
 
 
             //instancia e configura o projétil
