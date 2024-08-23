@@ -10,6 +10,7 @@ public class StatItemUI : MonoBehaviour
 {
     public TextMeshProUGUI statNameText;
     public TextMeshProUGUI statValueText;
+
     private int statValue;
     private Color originalColor;
     private Color increaseColor = Color.green;
@@ -27,6 +28,19 @@ public class StatItemUI : MonoBehaviour
         playerIdentity = GameObject.Find("Player").GetComponent<PlayerIdentity>();
         levelSystem = playerIdentity.GetComponent<PlayerLevel>();
         availablePoints = levelUpMenu.tempAttPoints;
+    }
+
+    private void Start()
+    {
+        if (statNameText == null)
+        {
+            throw new Exception("O Stat Item não localizou o campo 'statNameText', verifique o prefab");
+        }
+
+        if (statValueText == null)
+        {
+            throw new Exception("O Stat Item não localizou o campo 'statValueText', verifique o prefab");
+        }
     }
 
     private void Update()
