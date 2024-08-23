@@ -227,7 +227,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7756446749415544078, guid: 33d1fed4a774e7045ad7f6bbed762fac, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8195692806555110770, guid: 33d1fed4a774e7045ad7f6bbed762fac, type: 3}
+      propertyPath: m_Size.x
+      value: 1.0488192
+      objectReference: {fileID: 0}
+    - target: {fileID: 8195692806555110770, guid: 33d1fed4a774e7045ad7f6bbed762fac, type: 3}
+      propertyPath: m_Size.y
+      value: 1.6236837
+      objectReference: {fileID: 0}
+    - target: {fileID: 8195692806555110770, guid: 33d1fed4a774e7045ad7f6bbed762fac, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.012205064
+      objectReference: {fileID: 0}
+    - target: {fileID: 8195692806555110770, guid: 33d1fed4a774e7045ad7f6bbed762fac, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.116963185
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -717,6 +733,10 @@ PrefabInstance:
     - target: {fileID: 8471756479870567180, guid: d65f95f47dd029a4d86cc5a4df3d26ed, type: 3}
       propertyPath: m_Name
       value: CardTemplate
+      objectReference: {fileID: 0}
+    - target: {fileID: 8471756479870567180, guid: d65f95f47dd029a4d86cc5a4df3d26ed, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
