@@ -1205,6 +1205,7 @@ GameObject:
   - component: {fileID: 6515668894995899124}
   - component: {fileID: 2190073935162444020}
   - component: {fileID: 4725955490544607486}
+  - component: {fileID: 4777994790223316827}
   m_Layer: 5
   m_Name: CardTemplate
   m_TagString: Untagged
@@ -1301,6 +1302,22 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &4777994790223316827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8471756479870567180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 207d50cad530c24419cc9dd036e4664c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardName: {fileID: 0}
+  cardRarity: {fileID: 0}
+  cardLevel: {fileID: 0}
+  cardFace: {fileID: 0}
 --- !u!1 &8878860457269932932
 GameObject:
   m_ObjectHideFlags: 0
