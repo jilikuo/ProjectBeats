@@ -111,5 +111,5 @@ MonoBehaviour:
   targetTransform: {fileID: 0}
   mainCamera: {fileID: 6472735451279502935}
   MoveRatio: 10
-  horizontalBoundary: 6
-  verticalBoundary: 3
+  horizontalBoundary: 9.5
+  verticalBoundary: 4

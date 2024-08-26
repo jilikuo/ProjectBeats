@@ -124,11 +124,11 @@ MonoBehaviour:
   Agility:
     Type: 201
   Finesse:
-    Type: 0
+    Type: 203
   Precision:
-    Type: 0
+    Type: 204
   Willpower:
-    Type: 0
+    Type: 302
   AttackDamage:
     Type: 1011
     CurrentVolatileValue: 0
@@ -136,7 +136,7 @@ MonoBehaviour:
     Type: 1
     CurrentVolatileValue: 0
   Mana:
-    Type: 0
+    Type: 2
     CurrentVolatileValue: 0
   MovementSpeed:
     Type: 2011
@@ -281,6 +281,6 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 2}
+  m_Offset: {x: -0.012205064, y: 0.116963185}
+  m_Size: {x: 1.0488192, y: 1.6236837}
   m_Direction: 0
