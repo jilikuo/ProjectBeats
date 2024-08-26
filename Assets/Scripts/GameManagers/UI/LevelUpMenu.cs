@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using Jili.StatSystem;
 using Jili.StatSystem.EntityTree;
 using Jili.StatSystem.LevelSystem;
+using TMPro;
 
 public class LevelUpMenu : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class LevelUpMenu : MonoBehaviour
     // ui objects
     public GameObject levelUpMenu;
     public GameObject statItemPrefab;
+    public GameObject attPointBox;
     public Transform contentPanel;
 
     // ui control variables
@@ -36,6 +38,7 @@ public class LevelUpMenu : MonoBehaviour
         {
             levelUpMenu = GameObject.Find(lvlUpMenuTag);
         }
+
         if (levelUpMenu != null)
         {
             levelUpMenu.GetComponent<Canvas>().enabled = true;
@@ -44,6 +47,11 @@ public class LevelUpMenu : MonoBehaviour
         else
         {
             throw new System.ArgumentNullException("LevelUpMenu not found");
+        }
+
+        if (attPointBox == null)
+        {
+            throw new System.Exception("Attribute Point Box not found, try assigning it in the editor");
         }
 
         if (playerIdentity == null)
@@ -55,11 +63,8 @@ public class LevelUpMenu : MonoBehaviour
         LevelSystem = playerIdentity.GetComponent<PlayerLevel>();
         heldAttPoints = 0;
         tempAttPoints = LevelSystem.ReadFreeAttPoints();
-    }
-
-    void Start()
-    {
         PopulateStats();
+        UpdatePointViewDisplay();
     }
 
     private void Update()
@@ -93,6 +98,7 @@ public class LevelUpMenu : MonoBehaviour
 
     public async void ShowLevelUpMenu()
     {
+        UpdatePointViewDisplay();
         isShowing = true;
         levelUpMenu.SetActive(true);
 
@@ -132,6 +138,7 @@ public class LevelUpMenu : MonoBehaviour
         }
 
         heldAttPoints -= tempReset;
+        UpdatePointViewDisplay();
     }
 
     public void ConfirmButton()
@@ -148,6 +155,8 @@ public class LevelUpMenu : MonoBehaviour
         }
 
         heldAttPoints -= tempConsume;
+        UpdatePointViewDisplay();
+        CloseLevelUpMenu();
     }
 
     void PopulateStats()
@@ -165,11 +174,25 @@ public class LevelUpMenu : MonoBehaviour
     {
         tempAttPoints--;
         heldAttPoints++;
+        UpdatePointViewDisplay();
     }
 
     public void TempUndoSinglePoint()
     {
         tempAttPoints++;
         heldAttPoints--;
+        UpdatePointViewDisplay();
+    }
+
+    private void UpdatePointViewDisplay()
+    {
+        if ((tempAttPoints + heldAttPoints) == 0)
+        {
+            attPointBox.GetComponentInChildren<TextMeshProUGUI>().text = ("No Points Available");
+        }
+        else
+        {
+            attPointBox.GetComponentInChildren<TextMeshProUGUI>().text = (tempAttPoints + "/" + (tempAttPoints + heldAttPoints) + "Points");
+        }
     }
 }

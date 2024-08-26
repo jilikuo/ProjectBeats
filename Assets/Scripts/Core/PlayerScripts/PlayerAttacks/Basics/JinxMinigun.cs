@@ -28,7 +28,7 @@ namespace Jili.StatSystem.AttackSystem
             get {
                 if (isDirty && DirtyStat.Contains(Player.AttackDamage))
                 {
-                    Debug.Log("LOADING BULLET DAMAGE");
+                    //Debug.Log("LOADING BULLET DAMAGE");
                     _damage = Player.AttackDamage.ReadValue();
                     DirtyStat.Remove(Player.AttackDamage);
                     ReadDirtiness();
@@ -143,19 +143,19 @@ namespace Jili.StatSystem.AttackSystem
         // devem ser recalculadas
         public void BecomeDirty(Stat stat) 
         {
-            Debug.Log("Sujando..." + stat.Type);
+            //Debug.Log("Sujando..." + stat.Type);
             isDirty = true;
             if (DirtyStat != null )
             {
                 if (!DirtyStat.Contains(stat))
                 {
-                    Debug.Log("adicionado aa lista de sujeira: " + stat.Type);
+                    //Debug.Log("adicionado aa lista de sujeira: " + stat.Type);
                     DirtyStat.Add(stat);
                 }
             }
             else
             {
-                Debug.Log("criando lista de sujeira e adicionando..." + stat.Type);
+                //Debug.Log("criando lista de sujeira e adicionando..." + stat.Type);
                 DirtyStat = new List<Stat> { stat };
             }
         }
@@ -168,7 +168,7 @@ namespace Jili.StatSystem.AttackSystem
             }
             else
             {
-                Debug.Log("JINX MINIGUN NAO ESTÁ MAIS SUJO");
+                //Debug.Log("JINX MINIGUN NAO ESTÁ MAIS SUJO");
                 isDirty = false;
             }
         }

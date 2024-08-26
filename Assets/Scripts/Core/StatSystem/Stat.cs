@@ -44,7 +44,7 @@ namespace Jili.StatSystem
             {
                 if (isDirty || BaseValue != lastBaseValue)
                 {
-                    Debug.Log(this.Name + " dirtiness is: " + isDirty + " BaseValue is: " + BaseValue + " lastBaseValue is: " + lastBaseValue);
+                    //Debug.Log(this.Name + " dirtiness is: " + isDirty + " BaseValue is: " + BaseValue + " lastBaseValue is: " + lastBaseValue);
                     if (((int)Type) < (int)StatType.IndependentBase)
                     {
                         BaseValue = StatFormulas.CalculateBaseStatValue(Type, RelevantAtts);
@@ -134,13 +134,11 @@ namespace Jili.StatSystem
 
         public virtual void TriggerOnValueChanged()
         {
-            Debug.Log("Triggering Value Change Event" + this.Name);
             OnValueChanged?.Invoke(this);
         }
 
         public virtual void BecomeDirty()
         {
-            Debug.Log("Triggering Dirtiness for " + this.Name);
             isDirty = true;
             // avisar aos ouvintes que o valor do stat precisa ser recarregado (não deveria ser necessário...
             // TODO: DESCOBRIR POR QUE O VALOR NÃO ESTÁ SENDO RECARREGADO SÓ DE O STAT ESTAR SUJO)
