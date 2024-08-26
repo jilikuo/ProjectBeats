@@ -51,7 +51,7 @@ namespace Jili.StatSystem
                 {
                     lastBaseValue = BaseValue;
                     _value = CalculateFinalValue();
-                    Debug.Log("Triggering ATTRIBUTE Value Change Event for " + this.Name);
+                    //Debug.Log("Triggering ATTRIBUTE Value Change Event for " + this.Name);
                     OnValueChanged?.Invoke();   // Trigger the event when value changes
                 }
                 return _value;
