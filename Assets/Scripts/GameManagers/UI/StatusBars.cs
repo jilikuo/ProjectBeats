@@ -60,6 +60,14 @@ public class StatusBars : MonoBehaviour
 
         expbar.maxValue = levelSystem.ReadNextLevelExp();
         expbar.value = levelSystem.ReadExperience();
+        if (expbar.value < 1)
+        {
+            expbar.fillRect.gameObject.SetActive(false);
+        }
+        else
+        {
+               expbar.fillRect.gameObject.SetActive(true);
+        }
         explabel.text = (expbar.value.ToString() + " / " + expbar.maxValue.ToString() + " Experience Points");
     }
 }

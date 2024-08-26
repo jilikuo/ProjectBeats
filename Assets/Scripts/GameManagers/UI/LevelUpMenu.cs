@@ -65,6 +65,8 @@ public class LevelUpMenu : MonoBehaviour
         tempAttPoints = LevelSystem.ReadFreeAttPoints();
         PopulateStats();
         UpdatePointViewDisplay();
+
+        LevelSystem.OnLevelUp += ShowLevelUpMenu;
     }
 
     private void Update()
@@ -98,7 +100,9 @@ public class LevelUpMenu : MonoBehaviour
 
     public async void ShowLevelUpMenu()
     {
+        CheckForAttributePoints();
         UpdatePointViewDisplay();
+
         isShowing = true;
         levelUpMenu.SetActive(true);
 
@@ -192,7 +196,12 @@ public class LevelUpMenu : MonoBehaviour
         }
         else
         {
-            attPointBox.GetComponentInChildren<TextMeshProUGUI>().text = (tempAttPoints + "/" + (tempAttPoints + heldAttPoints) + "Points");
+            attPointBox.GetComponentInChildren<TextMeshProUGUI>().text = (tempAttPoints + "/" + (tempAttPoints + heldAttPoints) + " Points");
         }
+    }
+
+    void OnDestroy()
+    {
+        LevelSystem.OnLevelUp -= ShowLevelUpMenu;
     }
 }
