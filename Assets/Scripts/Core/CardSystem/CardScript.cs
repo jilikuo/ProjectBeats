@@ -27,28 +27,7 @@ namespace Jili.StatSystem.CardSystem
             }
 
             cardNameField.text = cardData.cardName;
-            cardRarityField.sprite = GetRaritySprite();
-        }
-
-        private Sprite GetRaritySprite()
-        {
-            switch (cardData.cardRarity)
-            {
-                case CardRarity.Inferior:
-                    return Resources.Load<Sprite>("Assets/Images/Sprites/GUI.png/GUI_1");
-                case CardRarity.Common:
-                    return Resources.Load<Sprite>("Sprites/Rarity/Common");
-                case CardRarity.Rare:
-                    return Resources.Load<Sprite>("Sprites/Rarity/Rare");
-                case CardRarity.Legendary:
-                    return Resources.Load<Sprite>("Sprites/Rarity/Legendary");
-                case CardRarity.Mythic:
-                    return Resources.Load<Sprite>("Sprites/Rarity/Mythic");
-                case CardRarity.Godly:
-                    return Resources.Load<Sprite>("Sprites/Rarity/Godly");
-                default:
-                    return Resources.Load<Sprite>("Sprites/Rarity/Inferior");
-            }
+            cardRarityField.sprite = cardData.RaritySprite;
         }
     }
 }
