@@ -1,3 +1,4 @@
+using Jili.StatSystem.CardSystem;
 using TMPro;
 using UnityEngine;
 
@@ -5,7 +6,7 @@ using UnityEngine;
 public class ScriptableCardData : ScriptableObject
 {
     public string cardName;
-    public int cardRarity;
-    public int cardLevel;
+    public CardRarity cardRarity;
+    public CardLevel cardLevel;
     public Sprite cardFace;
 }

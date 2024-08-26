@@ -12,29 +12,43 @@ namespace Jili.StatSystem.CardSystem
 
         // data display fields
         private TextMeshProUGUI cardNameField;
-        private TextMeshProUGUI cardRarityField;
-        private TextMeshProUGUI cardLevelField;
+        private Transform cardLevelField;
+        private Image cardRarityField;
         private Image cardFaceField;
 
         private void Awake()
         {
-            TextMeshProUGUI[] textBoxes = this.GetComponentsInChildren<TextMeshProUGUI>(true);
-            foreach (var box in textBoxes)
-            {
-                Debug.Log($"Checking TextMeshProUGUI with name: {box.name}");
-                if (box.name == "NameBox")
-                {
-                    cardNameField = box.GetComponent<TextMeshProUGUI>();
-                    break;
-                }
-            }
+            cardNameField = transform.Find("NameBox/NameText")?.GetComponent<TextMeshProUGUI>();
+            cardRarityField = transform.Find("NameBox/RarityMedal")?.GetComponent<Image>();
 
             if (cardNameField == null)
             {
-                throw new System.Exception("NameBox not found, verify prefab/cardNameField finding logic");
+                throw new System.Exception("TextMeshProUGUI component not found on NameText or invalid hierarchy.");
             }
 
             cardNameField.text = cardData.cardName;
+            cardRarityField.sprite = GetRaritySprite();
+        }
+
+        private Sprite GetRaritySprite()
+        {
+            switch (cardData.cardRarity)
+            {
+                case CardRarity.Inferior:
+                    return Resources.Load<Sprite>("Assets/Images/Sprites/GUI.png/GUI_1");
+                case CardRarity.Common:
+                    return Resources.Load<Sprite>("Sprites/Rarity/Common");
+                case CardRarity.Rare:
+                    return Resources.Load<Sprite>("Sprites/Rarity/Rare");
+                case CardRarity.Legendary:
+                    return Resources.Load<Sprite>("Sprites/Rarity/Legendary");
+                case CardRarity.Mythic:
+                    return Resources.Load<Sprite>("Sprites/Rarity/Mythic");
+                case CardRarity.Godly:
+                    return Resources.Load<Sprite>("Sprites/Rarity/Godly");
+                default:
+                    return Resources.Load<Sprite>("Sprites/Rarity/Inferior");
+            }
         }
     }
 }
