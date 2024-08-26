@@ -8,8 +8,10 @@ public class LevelViewer : MonoBehaviour
     public PlayerLevel levelSystem;
     public string labelName = "LevelLabel";
     public string playerTag = "Player";
+    public string levelUpWarning = "LevelUpWarning";
     private string text = string.Empty;
 
+    private Transform levelUpWaningLabel;
     void Start()
     {
         if (levelText == null)
@@ -20,6 +22,8 @@ public class LevelViewer : MonoBehaviour
         {
             levelSystem = GameObject.FindGameObjectWithTag(playerTag).gameObject.GetComponent<PlayerLevel>();
         }
+
+        levelUpWaningLabel = levelText.transform.Find("LevelUpWarning");
         text = ("Level: " + levelSystem.ReadLevel());
         levelText.text = text;
     }
@@ -28,5 +32,13 @@ public class LevelViewer : MonoBehaviour
     {
         text = ("Level: " + levelSystem.ReadLevel());
         levelText.text = text;
+        if (levelSystem.ReadFreeAttPoints() > 0)
+        {
+            levelUpWaningLabel.gameObject.SetActive(true);
+        }
+        else
+        {
+            levelUpWaningLabel.gameObject.SetActive(false);
+        }
     }
 }
