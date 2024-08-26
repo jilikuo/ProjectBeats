@@ -12,9 +12,11 @@ namespace Jili.StatSystem
         Health  = 1,
         Mana    = 2,
         Stamina = 3,
+
         //Physical
         AttackDamage = 1011,
         Armor = 1031,
+        HealthRegen = 1041,
 
         //Mobility
         MovementSpeed = 2011,

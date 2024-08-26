@@ -13,6 +13,7 @@ namespace Jili.StatSystem.CardSystem
     }
     public enum CardLevel
     {
+        Zero,
         One,
         Two,
         Three,
