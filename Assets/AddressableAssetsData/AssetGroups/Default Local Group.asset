@@ -16,7 +16,18 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: e462eebef29ff064ea2c00345870153a
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: d17e779eeaf04a746b4ef4e7bd9ae676
+    m_Address: Assets/Images/JinxShotgun.png
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1eaee135ce037439d925cee5e41ce026
+    m_Address: Assets/Images/Sprites/GUI.png
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI Assets
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 6e67c8c677b11b748b8689d0d7ac8031, type: 2}
   m_SchemaSet:
