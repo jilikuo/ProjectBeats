@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Jinx Shotgun
   cardRarity: 7
-  cardLevel: 0
+  cardLevel: 6
   cardFace: {fileID: 21300000, guid: d17e779eeaf04a746b4ef4e7bd9ae676, type: 3}

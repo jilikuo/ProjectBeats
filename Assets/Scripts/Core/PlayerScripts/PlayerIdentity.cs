@@ -13,6 +13,7 @@ namespace Jili.StatSystem.EntityTree
     {
         public float str;                       // PHYSICAL
         public float con;
+        public float vig;
         public float dex;                       // MOBILITY
         public float agi;
         public float fin;
@@ -23,6 +24,7 @@ namespace Jili.StatSystem.EntityTree
 
         public Attribute Strength;              // PHYSICAL
         public Attribute Constitution;
+        public Attribute Vigor;
         public Attribute Dextery;               // MOBILITY
         public Attribute Agility;
         public Attribute Finesse;
@@ -30,6 +32,7 @@ namespace Jili.StatSystem.EntityTree
         public Attribute Willpower;             // MAGICAL
         public Stat AttackDamage;
         public Stat Health;
+        public Stat HealthRegen;
         public Stat Mana;
         public Stat MovementSpeed;
         public Stat Acceleration;
@@ -38,7 +41,10 @@ namespace Jili.StatSystem.EntityTree
         public Stat ProjectileNumber;
         public Stat ProjectileSpeed;
 
-        private bool healBlock = false; // flag for status conditions that block healing
+        private bool canHeal = true;       // flag for status conditions that block healing
+        private float maxRegenCooldown = 1;   // (1 segundo)
+        private float regenCooldown = 1;
+
         public IShootable baseWeapon;
 
         public static event Action OnPlayerDeath;
@@ -48,6 +54,7 @@ namespace Jili.StatSystem.EntityTree
             // Start Attributes
             Strength = new Attribute(AttributeType.Strength, str);
             Constitution = new Attribute(AttributeType.Constitution, con);
+            Vigor = new Attribute(AttributeType.Vigor, vig);
             Dextery = new Attribute(AttributeType.Dextery, dex);
             Agility = new Attribute(AttributeType.Agility, agi);
             Finesse = new Attribute(AttributeType.Finesse, fin);
@@ -57,6 +64,7 @@ namespace Jili.StatSystem.EntityTree
             // Load Entity Attribute List
             attListAdd(Strength);
             attListAdd(Constitution);
+            attListAdd(Vigor);
             attListAdd(Dextery);
             attListAdd(Agility);
             attListAdd(Finesse);
@@ -66,6 +74,7 @@ namespace Jili.StatSystem.EntityTree
             // Start Stats
             AttackDamage = new Stat(StatType.AttackDamage, attList);
             Health = new Stat(StatType.Health, attList);
+            HealthRegen = new Stat(StatType.HealthRegen, attList); 
             Mana = new Stat(StatType.Mana, attList);
             MovementSpeed = new Stat(StatType.MovementSpeed, attList);
             Acceleration = new Stat(StatType.Acceleration, attList);
@@ -77,6 +86,7 @@ namespace Jili.StatSystem.EntityTree
             // Load Entity Stat List
             statListAdd(AttackDamage);
             statListAdd(Health);
+            statListAdd(HealthRegen);
             statListAdd(Mana);
             statListAdd(MovementSpeed);
             statListAdd(Acceleration);
@@ -90,8 +100,7 @@ namespace Jili.StatSystem.EntityTree
 
         void Update()
         {
-
-            // TODO: Regeneration();
+            TryRegenerate();
         }
 
         public bool TakeDamage(float incomingDamage)
@@ -107,7 +116,7 @@ namespace Jili.StatSystem.EntityTree
 
         public bool HealDamage(float incomingHeal)
         {
-            if (Health.CurrentVolatileValue == Health.Value || healBlock == true)
+            if (Health.CurrentVolatileValue == Health.Value || canHeal == false)
             {
                 return false;
             }
@@ -128,14 +137,7 @@ namespace Jili.StatSystem.EntityTree
 
         public bool Regeneration()
         {
-            float regen = 1;
-
-            // TODO: calculate regen Cooldown based on attributes and player stats,
-            // if can regen (Cooldown <= 0) then regen.
-            // if can't regen (in other words, healdamage() returns false),
-            // then this return false
-
-
+            float regen = HealthRegen.Value;
             if (HealDamage(regen))
             {
                 return true;
@@ -143,6 +145,19 @@ namespace Jili.StatSystem.EntityTree
             else
             {
                 return false;
+            }
+        }
+
+        private void TryRegenerate()
+        {
+            if (regenCooldown <= 0)
+            {
+                regenCooldown = maxRegenCooldown;
+                Regeneration();
+            }
+            else
+            {
+                regenCooldown -= Time.deltaTime;
             }
         }
 

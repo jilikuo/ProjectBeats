@@ -54,19 +54,29 @@ namespace Jili.StatSystem
             {
                 case StatType.AttackDamage:
                     return list.FindAll(Attribute => Attribute.Type == AttributeType.Strength);
+
                 case StatType.Health:
                     return list.FindAll(Attribute => Attribute.Type == AttributeType.Constitution);
+
+                case StatType.HealthRegen:
+                    return list.FindAll(Attribute => Attribute.Type == AttributeType.Vigor);
+
                 case StatType.Armor:
                     return list.FindAll(Attribute => Attribute.Type == AttributeType.Resistance);
+
                 case StatType.Acceleration:
                     return list.FindAll(Attribute => Attribute.Type == AttributeType.Agility);
+
                 case StatType.MovementSpeed:
                     return list.FindAll(Attribute => Attribute.Type == AttributeType.Dextery);
+
                 case StatType.AttacksPerSecond:
                     return list.FindAll(Attribute => (Attribute.Type == AttributeType.Dextery) ||
                                                      (Attribute.Type == AttributeType.Finesse));
+
                 case StatType.AttackRange:
                     return list.FindAll(Attribute => Attribute.Type == AttributeType.Precision);
+
                 case StatType.Mana:
                     return list.FindAll(Attribute => Attribute.Type == AttributeType.Willpower);
 
@@ -157,6 +167,9 @@ namespace Jili.StatSystem
                 // Health = 100 + 25 * Constitution
                 case StatType.Health:
                     return 100 + 25 * con;
+
+                case StatType.HealthRegen:
+                    return 1f + (0.2f * vig);
 
                 case StatType.Mana:
                     return 50 + 5 * will;
