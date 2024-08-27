@@ -15,6 +15,8 @@ namespace Jili.StatSystem.EntityTree.ConsumableSystem
         private PlayerIdentity playerIdentity;
         private PlayerLevel levelSystem;
 
+        public static event Action<int> OpenCardPacket;
+
         private void Start()
         {
             consumableType = GetComponent<ConsumableType>();
@@ -67,7 +69,7 @@ namespace Jili.StatSystem.EntityTree.ConsumableSystem
                 case ConsumableCategory.Card:
 
 
-                    Debug.Log("Consumed Card");
+                    ConsumeCard();
                     break;
 
                 default:
@@ -115,6 +117,11 @@ namespace Jili.StatSystem.EntityTree.ConsumableSystem
                     throw new ArgumentOutOfRangeException("UNKNOW ISSUE, CVTYPE NOT FOUND");
             }
         }
-      
+
+        void ConsumeCard()
+        {
+            OpenCardPacket?.Invoke((int)this.consumableType.ReadValue(CVType.Flat));
+        }
+
     }
 }

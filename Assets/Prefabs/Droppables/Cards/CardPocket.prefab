@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2508421977612538763}
   - component: {fileID: -4972932904241875971}
   - component: {fileID: 4613678747275453210}
+  - component: {fileID: 6001316960843100226}
   m_Layer: 0
   m_Name: CardPocket
   m_TagString: Untagged
@@ -114,3 +115,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f55565faf4c4018458c6821daf213497, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!58 &6001316960843100226
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7407225490256538697}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.0036667418, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.12626593
