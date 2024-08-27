@@ -1,4 +1,5 @@
 using Jili.StatSystem.EntityTree;
+using System;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -43,6 +44,17 @@ namespace Jili.StatSystem.AttackSystem
                     Weapons[i] = weapon;
                     Debug.Log($"Weapon equipped in slot {i}.");
                     break;
+                }
+            }
+        }
+
+        public void IncreaseTierByType(Type type)
+        {
+            foreach (IShootable weapon in Weapons)
+            {
+                if (weapon != null && weapon.ReadClassType() == type)
+                {
+                    weapon.IncreaseTier();
                 }
             }
         }

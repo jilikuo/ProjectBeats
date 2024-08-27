@@ -107,18 +107,42 @@ namespace Jili.StatSystem.EntityTree
 
         public void EquipNewCard(ScriptableCardData cardInfo)
         {
-            equippedCards.Add(cardInfo);
-            Type scriptType = cardInfo.cardObject.GetClass();
-
-            if (typeof(IShootable).IsAssignableFrom(scriptType))
+            // verificamos se o card está na lista e agimos de acordo
+            if (equippedCards.Exists(card => card.cardCategory == cardInfo.cardCategory))
             {
-                IShootable newWeapon = (IShootable)System.Activator.CreateInstance(scriptType);
-                this.gameObject.GetComponent<PlayerAttacks>().EquipWeapon(newWeapon);
+                if (equippedCards.Find(card => card.cardCategory == cardInfo.cardCategory).cardLevel < cardInfo.cardLevel)
+                {
+                    equippedCards.Remove(equippedCards.Find(card => card.cardCategory == cardInfo.cardCategory));
+                    equippedCards.Add(cardInfo);
+
+                    //se o card for uma arma, aumentamos o tier dela
+                    if (((int)cardInfo.cardCategory > 1000) && (int)cardInfo.cardCategory < 2000)
+                    {
+                        Type scriptType = cardInfo.cardObject.GetClass();
+                        this.gameObject.gameObject.GetComponent<PlayerAttacks>().IncreaseTierByType(scriptType);
+                    }
+
+                }
+                else
+                {
+                    throw new System.Exception("Card Level is lower than the one already equipped.");
+                }
             }
+
+            //se o card não estiver na lista, adicionamos o card de acordo com o que ele faz
             else
             {
-                Debug.Log("Card Object is not a weapon, it is " + cardInfo.cardObject.GetType());
+                equippedCards.Add(cardInfo);
+
+                // se o card for uma arma, equipamos a arma
+                if (((int)cardInfo.cardCategory > 1000) && (int)cardInfo.cardCategory < 2000)
+                {
+                    Type scriptType = cardInfo.cardObject.GetClass();
+                    IShootable newWeapon = (IShootable)Activator.CreateInstance(scriptType);
+                    this.gameObject.GetComponent<PlayerAttacks>().EquipWeapon(newWeapon);
+                }
             }
+
         }
 
         public bool TakeDamage(float incomingDamage)
@@ -196,7 +220,7 @@ namespace Jili.StatSystem.EntityTree
             return value;
         }
 
-        private List<ScriptableCardData> ReadEquippedCards()
+        public List<ScriptableCardData> ReadEquippedCards()
         {
             return equippedCards;
         }

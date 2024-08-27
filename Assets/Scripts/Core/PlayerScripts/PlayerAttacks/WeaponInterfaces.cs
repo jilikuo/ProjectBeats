@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -11,6 +12,10 @@ namespace Jili.StatSystem.AttackSystem
         public void ReadDirtiness();
 
         public float ReturnStatValueByType(StatType type);
+        
+        public Type ReadClassType();
+
+        public void IncreaseTier();
 
         public bool TryShoot(float deltatime);
 

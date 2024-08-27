@@ -14,6 +14,7 @@ public class ScriptableCardData : ScriptableObject
     public string cardName;
     public CardRarity cardRarity;
     public CardLevel cardLevel;
+    public CardCategory cardCategory;
     public Sprite cardFace;
     public MonoScript cardObject;
 

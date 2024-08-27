@@ -14,14 +14,16 @@ namespace Jili.StatSystem.AttackSystem
     public class JinxMinigun : IShootable
     {
         // CONSTANTES DE CONFIGURAÇÃO DA ARMA
-        private readonly int BaseProjectiles        = 2;                            // UM PROJÉTIL BASE
-        private readonly int ProjectileMultiplier   = 2;                            // total de projéteis é multiplicado por esse valor
+        private int BaseProjectiles        = 2;                            // UM PROJÉTIL BASE
+        private readonly int ProjectileMultiplier   = 1;                            // total de projéteis é multiplicado por esse valor
         private readonly float MultiProjDmgNerf     = 0.3f;                         // fator de redução de dano por projétil ( x * 0,3)
         private readonly int BaseProjectileSpeed    = 5;                            // VELOCIDADE BASE DE 5
         private readonly int TriggerSpeedFactor     = 6;                            // DIVIDE PELO COOLDOWN ( X / 6 = 0,166x) A CADA DISPARO
         private readonly int MaxProjectileDuration  = 5;                            // DURAÇÃO MÁXIMA DE 5 SEGUNDOS
         private readonly float OffsetValue          = 0.15f;                        // DISPERSÃO DE 0.15 UNIDADES
         protected readonly WeaponTypes Type         = WeaponTypes.JinxMinigun;      // TIPO DE ARMA
+
+        private int Tier = 0;                                                       // NÍVEL DA ARMA
 
         //projectile damage
         private float _damage;
@@ -105,7 +107,14 @@ namespace Jili.StatSystem.AttackSystem
             }
         }
 
-        protected float TriggerSpeed { get; set; }
+        protected float TriggerSpeed
+        {
+            get
+            {
+                return (this.Cooldown / TriggerSpeedFactor) / this.ProjectileNumber;
+            }
+        }
+
         protected List<Stat> DirtyStat;
         protected Boolean isDirty = true;
         protected GameObject Projectile;
@@ -134,7 +143,6 @@ namespace Jili.StatSystem.AttackSystem
             DirtyStat.Add(Player.ProjectileSpeed);
 
             this.CooldownTimer = this.Cooldown;
-            this.TriggerSpeed = (this.Cooldown / TriggerSpeedFactor) / this.ProjectileNumber; // A VELOCIDADE DE GATILHO É 20% DO COOLDOWN DIVIDIDO ENTRE O TOTAL DE PROJÉTEIS A SEREM DISPARADOS
         }
 
         public JinxMinigun(PlayerIdentity player) : this(GameObject.FindGameObjectWithTag("ProjectileManager").GetComponent<ProjectileManager>().JinxBullet, player) { }
@@ -194,6 +202,53 @@ namespace Jili.StatSystem.AttackSystem
             return value;
         }
 
+        public Type ReadClassType()
+        {
+            return this.GetType();
+        }
+
+        public void IncreaseTier()
+        {
+            BecomeDirty(Player.ProjectileNumber);
+            BecomeDirty(Player.AttacksPerSecond);
+            if (Tier == 0)
+            {
+                BaseProjectiles = 2;
+                Tier++;
+                return;
+            }
+            if (Tier == 1)
+            {
+                BaseProjectiles = 3;
+                Tier++;
+                return;
+            }
+            if (Tier == 2)
+            {
+                BaseProjectiles = 4;
+                Tier++;
+                return;
+            }
+            if (Tier == 3)
+            {
+                BaseProjectiles = 6;
+                Tier++;
+                return;
+            }
+            if (Tier == 4)
+            {
+                BaseProjectiles = 9;
+                Tier++;
+                return;
+            }
+            if (Tier == 5)
+            {
+                BaseProjectiles = 20;
+                Tier++;
+                return;
+            }
+        }
+
         public bool TryShoot(float deltaTime)
         {
             //OPERA O COOLDOWN
@@ -212,17 +267,37 @@ namespace Jili.StatSystem.AttackSystem
 
         public IEnumerator AimProjectiles()
         {
-            //calcula onde o mouse está mirando
-            Vector3 shootPos = PlayerTransform.position;
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            mousePosition.z = 0f;
-            Vector2 direction = (mousePosition - shootPos).normalized;
-
-            //atira na direção calculada, uma vez para cada projétil disponível, considerando o tempo de gatilho
-            for (int i = 0; i < ProjectileNumber; i++)
+            if (Tier <= 5)
             {
-                Shoot(direction);
-                yield return new WaitForSeconds(TriggerSpeed);
+                //calcula onde o mouse está mirando
+                Vector3 shootPos = PlayerTransform.position;
+                Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                mousePosition.z = 0f;
+                Vector2 direction = (mousePosition - shootPos).normalized;
+
+                //atira na direção calculada, uma vez para cada projétil disponível, considerando o tempo de gatilho
+                for (int i = 0; i < ProjectileNumber; i++)
+                {
+                    Shoot(direction);
+                    yield return new WaitForSeconds(TriggerSpeed);
+                }
+            }
+
+            else
+            {
+                float specialTriggerSpeed = Cooldown / ProjectileNumber;
+                //calcula onde o mouse está mirando
+                Vector3 shootPos = PlayerTransform.position;
+                Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                mousePosition.z = 0f;
+                Vector2 direction = (mousePosition - shootPos).normalized;
+
+                //atira na direção calculada, uma vez para cada projétil disponível, considerando o tempo de gatilho
+                for (int i = 0; i < ProjectileNumber; i++)
+                {
+                    Shoot(direction);
+                    yield return new WaitForSeconds(specialTriggerSpeed);
+                }
             }
         }
 

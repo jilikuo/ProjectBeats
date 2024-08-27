@@ -197,7 +197,17 @@ namespace Jili.StatSystem.AttackSystem
             return value;
         }
 
-        public bool TryShoot(float deltaTime)
+        public Type ReadClassType()
+        {
+            return this.GetType();
+        }
+
+        public void IncreaseTier()
+        { 
+        
+        }
+
+            public bool TryShoot(float deltaTime)
         {
             //OPERA O COOLDOWN
             CooldownTimer -= deltaTime;
