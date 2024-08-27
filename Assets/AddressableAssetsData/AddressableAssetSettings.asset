@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: e462eebef29ff064ea2c00345870153a
   m_currentHash:
     serializedVersion: 2
-    Hash: ee7d4fc6940ede4357d75e660e03199e
+    Hash: 14ba2b8105a9f753ad336cc9bacbbeba
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -46,6 +46,7 @@ MonoBehaviour:
   m_GroupAssets:
   - {fileID: 11400000, guid: f4dff0405415a9541a0bb1f650493c6f, type: 2}
   - {fileID: 11400000, guid: f44871f4bc94e724f90098f4f767d9de, type: 2}
+  - {fileID: 11400000, guid: b8ade285321d0ce468dbeab05fb60c46, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -86,8 +87,11 @@ MonoBehaviour:
     m_ProfileVersion: 1
   m_LabelTable:
     m_LabelNames:
-    - default
+    - Card Data
+    - Jinx Minigun
+    - Jinx Shotgun
     - UI Assets
+    - default
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 5dff39d4924d3f74d8d8a69cacc5820e, type: 2}

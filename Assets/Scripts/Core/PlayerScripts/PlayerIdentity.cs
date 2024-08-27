@@ -103,6 +103,11 @@ namespace Jili.StatSystem.EntityTree
             TryRegenerate();
         }
 
+        public void EquipNewCard(ScriptableCardData cardinfo)
+        {
+
+        }
+
         public bool TakeDamage(float incomingDamage)
         {
             Health.CurrentVolatileValue -= incomingDamage;

@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 namespace Jili.StatSystem.CardSystem
 {
-
     public class CardScript : MonoBehaviour
     {
         // data entry variables
@@ -23,7 +22,7 @@ namespace Jili.StatSystem.CardSystem
         private Image starFour;
         private Image starFive;
 
-        private void Awake()
+        private void Start()
         {
             cardNameField = transform.Find("NameBox/NameText")?.GetComponent<TextMeshProUGUI>();
             cardRarityField = transform.Find("NameBox/RarityMedal")?.GetComponent<Image>();

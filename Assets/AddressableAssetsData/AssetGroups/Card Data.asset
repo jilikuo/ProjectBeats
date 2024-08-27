@@ -1,0 +1,123 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Card Data
+  m_EditorClassIdentifier: 
+  m_GroupName: Card Data
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 4e46eefcfd8aaac41aca7c630e1f108f
+  m_SerializeEntries:
+  - m_GUID: 041893ce9c6a442469820e26933e5afb
+    m_Address: Assets/Scripts/Core/CardSystem/CardData/Minigun/Minigun.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Jinx Minigun
+    - Card Data
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d08f5ec5229e15c469647de4312340d9
+    m_Address: Assets/Scripts/Core/CardSystem/CardData/Minigun/Minigun 1.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Jinx Minigun
+    - Card Data
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 03cc6f874a5aa8f42bae56085ecf3d75
+    m_Address: Assets/Scripts/Core/CardSystem/CardData/Minigun/Minigun 2.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Jinx Minigun
+    - Card Data
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 323d35a0433fe594085b4c37ce9b21a0
+    m_Address: Assets/Scripts/Core/CardSystem/CardData/Minigun/Minigun 3.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Jinx Minigun
+    - Card Data
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1cd8691d4322c2a4da07e71f643116ab
+    m_Address: Assets/Scripts/Core/CardSystem/CardData/Minigun/Minigun 4.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Jinx Minigun
+    - Card Data
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b03971aa37697884287936a40d217d27
+    m_Address: Assets/Scripts/Core/CardSystem/CardData/Minigun/Minigun 5.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Jinx Minigun
+    - Card Data
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 42870763c393e984e9a734c26b501170
+    m_Address: Assets/Scripts/Core/CardSystem/CardData/Minigun/Minigun 6.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Jinx Minigun
+    - Card Data
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f5a4494703bcd204490c44d79bab3f21
+    m_Address: Assets/Scripts/Core/CardSystem/CardData/Shotgun/Shotgun.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Jinx Shotgun
+    - Card Data
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 828fde9532600c54580eb09d63bcdd0e
+    m_Address: Assets/Scripts/Core/CardSystem/CardData/Shotgun/Shotgun 1.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Jinx Shotgun
+    - Card Data
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 31be0df1f4e4dfb49b4b0de046e78018
+    m_Address: Assets/Scripts/Core/CardSystem/CardData/Shotgun/Shotgun 2.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Jinx Shotgun
+    - Card Data
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a10cc1d27e1c16a4da512e0d38a9a19b
+    m_Address: Assets/Scripts/Core/CardSystem/CardData/Shotgun/Shotgun 3.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Jinx Shotgun
+    - Card Data
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cd57c2792eb16a14cbd23001fc528297
+    m_Address: Assets/Scripts/Core/CardSystem/CardData/Shotgun/Shotgun 4.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Jinx Shotgun
+    - Card Data
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 42ff8e64a776d094580f063a106bf67e
+    m_Address: Assets/Scripts/Core/CardSystem/CardData/Shotgun/Shotgun 5.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Jinx Shotgun
+    - Card Data
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b0ff7ddcd098da54bac4e38c08cb6899
+    m_Address: Assets/Scripts/Core/CardSystem/CardData/Shotgun/Shotgun 6.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Jinx Shotgun
+    - Card Data
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 6e67c8c677b11b748b8689d0d7ac8031, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 99a37bb9f3f781d42bff7240b56e512e, type: 2}
+    - {fileID: 11400000, guid: 8933d6ea04a933e48a6c4762b52dd403, type: 2}
