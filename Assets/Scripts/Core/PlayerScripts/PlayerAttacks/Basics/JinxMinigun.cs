@@ -14,11 +14,13 @@ namespace Jili.StatSystem.AttackSystem
     public class JinxMinigun : IShootable
     {
         // CONSTANTES DE CONFIGURAÇÃO DA ARMA
-        private readonly int BaseProjectiles        = 3;                            // TRÊS PROJÉTEIS
+        private readonly int BaseProjectiles        = 2;                            // UM PROJÉTIL BASE
+        private readonly int ProjectileMultiplier   = 2;                            // total de projéteis é multiplicado por esse valor
+        private readonly float MultiProjDmgNerf     = 0.3f;                         // fator de redução de dano por projétil ( x * 0,3)
         private readonly int BaseProjectileSpeed    = 5;                            // VELOCIDADE BASE DE 5
         private readonly int TriggerSpeedFactor     = 6;                            // DIVIDE PELO COOLDOWN ( X / 6 = 0,166x) A CADA DISPARO
         private readonly int MaxProjectileDuration  = 5;                            // DURAÇÃO MÁXIMA DE 5 SEGUNDOS
-        private readonly float OffsetValue          = 0.15f;                         // DISPERSÃO DE 0.15 UNIDADES
+        private readonly float OffsetValue          = 0.15f;                        // DISPERSÃO DE 0.15 UNIDADES
         protected readonly WeaponTypes Type         = WeaponTypes.JinxMinigun;      // TIPO DE ARMA
 
         //projectile damage
@@ -33,7 +35,7 @@ namespace Jili.StatSystem.AttackSystem
                     DirtyStat.Remove(Player.AttackDamage);
                     ReadDirtiness();
                 }
-                return _damage / 2f; // o dano do projétil é 50% do dano do jogador
+                return (_damage * MultiProjDmgNerf); // o dano do projétil é 50% do dano do jogador
             }
         }
 
@@ -99,7 +101,7 @@ namespace Jili.StatSystem.AttackSystem
                     DirtyStat.Remove(Player.ProjectileNumber);
                     ReadDirtiness();
                 }
-                return _projectileNumber + BaseProjectiles;
+                return (_projectileNumber + BaseProjectiles) * ProjectileMultiplier;
             }
         }
 
