@@ -149,6 +149,8 @@ namespace Jili.StatSystem.AttackSystem
 
         public JinxShotgun(PlayerIdentity player) : this(GameObject.FindGameObjectWithTag("ProjectileManager").GetComponent<ProjectileManager>().JinxShotgunBullet, player) { }
 
+        public JinxShotgun() : this(GameObject.FindGameObjectWithTag("ProjectileManager").GetComponent<ProjectileManager>().JinxShotgunBullet, GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerIdentity>()) { }
+
 
         public void BecomeDirty(Stat stat) 
         {

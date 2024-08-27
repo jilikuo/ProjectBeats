@@ -16,3 +16,4 @@ MonoBehaviour:
   cardRarity: 7
   cardLevel: 6
   cardFace: {fileID: 21300000, guid: d17e779eeaf04a746b4ef4e7bd9ae676, type: 3}
+  cardObject: {fileID: 11500000, guid: 48d0b8b8f11397f468bd17dd123a5f86, type: 3}

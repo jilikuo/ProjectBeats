@@ -35,7 +35,7 @@ namespace Jili.StatSystem.AttackSystem
 
         public void EquipWeapon(IShootable weapon)
         {
-            Debug.Log("Equipping weapon...");
+            Debug.Log("Equipping weapon..." + weapon.GetType());
             for (int i = 0; i < Weapons.Length; i++)
             {
                 if (Weapons[i] == null)

@@ -137,6 +137,8 @@ namespace Jili.StatSystem.AttackSystem
 
         public JinxMinigun(PlayerIdentity player) : this(GameObject.FindGameObjectWithTag("ProjectileManager").GetComponent<ProjectileManager>().JinxBullet, player) { }
 
+        public JinxMinigun() : this(GameObject.FindGameObjectWithTag("ProjectileManager").GetComponent<ProjectileManager>().JinxBullet, GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerIdentity>()) { }
+
         // TODO: implementar lógica de recarregar os valores dos status relevantes conforme necessário
         // caso o jogador tenha um item que aumente o dano, por exemplo, o dano do projétil deve ser recalculado
         // caso o jogador suba de nível e aumente qualquer um dos status relevantes, as variáveis associadas a esse status

@@ -103,9 +103,19 @@ namespace Jili.StatSystem.EntityTree
             TryRegenerate();
         }
 
-        public void EquipNewCard(ScriptableCardData cardinfo)
+        public void EquipNewCard(ScriptableCardData cardInfo)
         {
+            Type scriptType = cardInfo.cardObject.GetClass();
 
+            if (typeof(IShootable).IsAssignableFrom(scriptType))
+            {
+                IShootable newWeapon = (IShootable)System.Activator.CreateInstance(scriptType);
+                this.gameObject.GetComponent<PlayerAttacks>().EquipWeapon(newWeapon);
+            }
+            else
+            {
+                Debug.Log("Card Object is not a weapon, it is " + cardInfo.cardObject.GetType());
+            }
         }
 
         public bool TakeDamage(float incomingDamage)

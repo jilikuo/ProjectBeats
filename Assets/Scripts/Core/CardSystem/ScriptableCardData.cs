@@ -1,5 +1,7 @@
+using Jili.StatSystem.AttackSystem;
 using Jili.StatSystem.CardSystem;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -13,6 +15,7 @@ public class ScriptableCardData : ScriptableObject
     public CardRarity cardRarity;
     public CardLevel cardLevel;
     public Sprite cardFace;
+    public MonoScript cardObject;
 
     public Sprite RaritySprite { get; private set; }
     public Sprite LevelSprite { get; private set;}
