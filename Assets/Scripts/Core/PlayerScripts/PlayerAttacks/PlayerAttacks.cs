@@ -19,7 +19,7 @@ namespace Jili.StatSystem.AttackSystem
         private void Start()
         {
             // equipa a arma base do jogador
-            EquipWeapon(this.gameObject.GetComponent<PlayerIdentity>().baseWeapon);
+            // EquipWeapon(this.gameObject.GetComponent<PlayerIdentity>().baseWeapon); // >> Ler obs @PlayerIdentity sobre baseweapon <<
         }
 
         public void FixedUpdate()

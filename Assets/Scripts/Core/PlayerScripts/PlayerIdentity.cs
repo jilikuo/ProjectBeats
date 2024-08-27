@@ -4,6 +4,7 @@ using UnityEngine;
 using Jili.StatSystem.AttackSystem;
 using System.Linq;
 using System;
+using System.Collections.ObjectModel;
 
 
 namespace Jili.StatSystem.EntityTree
@@ -45,7 +46,8 @@ namespace Jili.StatSystem.EntityTree
         private float maxRegenCooldown = 1;   // (1 segundo)
         private float regenCooldown = 1;
 
-        public IShootable baseWeapon;
+        // public IShootable baseWeapon;
+        private List<ScriptableCardData> equippedCards = new List<ScriptableCardData>();
 
         public static event Action OnPlayerDeath;
 
@@ -95,7 +97,7 @@ namespace Jili.StatSystem.EntityTree
             statListAdd(ProjectileNumber);
             statListAdd(ProjectileSpeed);
 
-            baseWeapon = new JinxMinigun(this);
+            // baseWeapon = new JinxMinigun(this); // TODO EXCHANGE FOR A GROUP OF WEAPONS, PLAYER SHOULD PICK STARTING WEAPON
         }
 
         void Update()
@@ -105,6 +107,7 @@ namespace Jili.StatSystem.EntityTree
 
         public void EquipNewCard(ScriptableCardData cardInfo)
         {
+            equippedCards.Add(cardInfo);
             Type scriptType = cardInfo.cardObject.GetClass();
 
             if (typeof(IShootable).IsAssignableFrom(scriptType))
@@ -191,6 +194,11 @@ namespace Jili.StatSystem.EntityTree
         {
             float value = statList.Find(stat => stat.Type == type).Value;
             return value;
+        }
+
+        private List<ScriptableCardData> ReadEquippedCards()
+        {
+            return equippedCards;
         }
     }
 }

@@ -96,11 +96,31 @@ public class CardScreen : MonoBehaviour
         {
             if (handle.Status == AsyncOperationStatus.Succeeded)
             {
+                // se o drop de card for específico (arma inicial) apenas armas que satisfaçam a classe do jogador podem ser sorteadas.
+
+                // se o drop de card for especial (boss) apenas cards de uma raridade alta podem ser sorteados.
+
+                //se o card de nível zero de cada tag não estiver na lista, somente o de nível zero pode ser sorteado.
+
+                //se há um card da tag específica na lista, somente o card de nível superior ao mais alto dessa tag pode ser sorteado.
+                
+                //se há um card de nível 5 na lista que precisa de uma condição específica para poder chegar ao nível máximo (6), a condição deve ser verificada,
+                // se for atendida, o card pode ser sorteado, se não for o card deve ser ignorado.
+
+                //se há um card de nível máximo da tag específica na lista, a tag deve ser ignorada.
+
+                //se todos os cards de nível máximo de todas as tags estão na lista, a lista só pode ter cards genéricos.
+
+                //dentre os cards que podem ser sorteados, deve-se fazer um rateio entre as raridades.
+
 
                 //código para escolher um card aleatóriamente
                 int totalCardsLoaded = handle.Result.Count;
                 int randomCardIndex = Random.Range(0, totalCardsLoaded);
+
                 tcs.SetResult(handle.Result[randomCardIndex]);
+
+
             }
             else
             {
