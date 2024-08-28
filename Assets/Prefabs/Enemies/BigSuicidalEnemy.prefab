@@ -175,10 +175,13 @@ MonoBehaviour:
   totalDropItems: 5
   drop:
   - {fileID: 8692053273733767436, guid: 07daac066a116b845871ccc79cc43d90, type: 3}
+  - {fileID: 7407225490256538697, guid: 8cbb7125dcee4e644bba5754a00c420e, type: 3}
   dropRate:
-  - 100
+  - 67
+  - 33
   dropChance:
   - 100
+  - 20
 --- !u!60 &8396019522217712736
 PolygonCollider2D:
   m_ObjectHideFlags: 0

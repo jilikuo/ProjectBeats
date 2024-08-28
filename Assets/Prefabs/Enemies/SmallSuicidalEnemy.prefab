@@ -177,14 +177,17 @@ MonoBehaviour:
   - {fileID: 8692053273733767436, guid: 0a19b1f5e41937249b89131ed60a177b, type: 3}
   - {fileID: 8692053273733767436, guid: 0a19b1f5e41937249b89131ed60a177b, type: 3}
   - {fileID: 8692053273733767436, guid: 07daac066a116b845871ccc79cc43d90, type: 3}
+  - {fileID: 7407225490256538697, guid: 8cbb7125dcee4e644bba5754a00c420e, type: 3}
   dropRate:
-  - 100
-  - 100
-  - 5
-  dropChance:
-  - 50
+  - 135
+  - 135
+  - 20
   - 10
-  - 5
+  dropChance:
+  - 40
+  - 8
+  - 4
+  - 1
 --- !u!60 &2808255860297065250
 PolygonCollider2D:
   m_ObjectHideFlags: 0

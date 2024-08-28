@@ -285,23 +285,20 @@ namespace Jili.StatSystem.AttackSystem
 
             else
             {
-                float specialTriggerSpeed = Cooldown / ProjectileNumber;
-                float singleFiringRound = Mathf.Ceil(ProjectileNumber / 5); // divide todos os projéteis em 5 grupos iguais, arredonda pra cima 
-
+                float specialTriggerSpeed = (Cooldown * 0.75f) / ProjectileNumber;
                 //atira na direção calculada, uma vez para cada projétil disponível, considerando o tempo de gatilho
-                for (int i = 0; i < 5; i++)
+                for (int i = 0; i < ProjectileNumber; i++)
                 {
                     //calcula onde o mouse está mirando
                     Vector3 shootPos = PlayerTransform.position;
                     Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     mousePosition.z = 0f;
                     Vector2 direction = (mousePosition - shootPos).normalized;
-
-                   for (int j = 0; j < singleFiringRound; j++)
-                    {
-                        Shoot(direction);
-                        yield return new WaitForSeconds(specialTriggerSpeed);
-                    }
+                    Shoot(direction);
+                    i++;
+                    yield return new WaitForSeconds(specialTriggerSpeed);
+                    Shoot(direction);
+                    yield return new WaitForSeconds(specialTriggerSpeed);
                 }
             }
         }

@@ -8,7 +8,7 @@ public class SpawnSuicidalEnemy : MonoBehaviour
 {
     public GameObject enemyPrefab;
     public Transform playerPos;
-    public float spawnInterval  = 2f;
+    public float spawnInterval;
     public float radius         = 20f;
     public float enemyMax       = 20f;
     public float enemyMin       = 0f;
@@ -22,7 +22,7 @@ public class SpawnSuicidalEnemy : MonoBehaviour
             playerPos = GameObject.FindGameObjectWithTag("Player").gameObject.transform;
         }
 
-        InvokeRepeating("SpawnCircle", 2f, spawnInterval); 
+        InvokeRepeating("SpawnCircle", spawnInterval, spawnInterval); 
     }
 
     void FixedUpdate()
