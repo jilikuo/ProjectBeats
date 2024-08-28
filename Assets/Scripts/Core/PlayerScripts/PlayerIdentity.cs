@@ -113,14 +113,16 @@ namespace Jili.StatSystem.EntityTree
                 if ((equippedCards.Find(card => card.cardCategory == cardInfo.cardCategory).cardLevel < cardInfo.cardLevel) || ((int)cardInfo.cardCategory >= (int)CardSystem.CardCategory.Stat))
                 {
                     // se o card não for genérico, removemos o card antigo e adicionamos o novo
-                    if (!(cardInfo.cardCategory >= CardSystem.CardCategory.Stat))
+                    if ((cardInfo.cardCategory <= CardSystem.CardCategory.Stat))
                     {
                         equippedCards.Remove(equippedCards.Find(card => card.cardCategory == cardInfo.cardCategory));
                         equippedCards.Add(cardInfo);
+                        Debug.Log("Card was replaced, it was not a generic card.");
                     }
                     else
                     {
                         equippedCards.Add(cardInfo);
+                        Debug.Log("Card was added, it was a generic card.");
                     }
 
                     //se o card for uma arma, aumentamos o tier dela
@@ -141,7 +143,8 @@ namespace Jili.StatSystem.EntityTree
                     else if ((int)cardInfo.cardCategory >= 3000)
                     {
                         AttributeModifier mod = new AttributeModifier(cardInfo.value, AttributeModType.Flat, cardInfo);
-                        attList.Find(att => att.Type == cardInfo.attributeType).AddModifier(mod);
+                        Attribute tempAtt = attList.Find(att => att.Type == cardInfo.attributeType);
+                        tempAtt.AddModifier(mod);
                     }
 
                 }

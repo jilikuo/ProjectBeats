@@ -11,7 +11,8 @@ public class StatItemUI : MonoBehaviour
     public TextMeshProUGUI statNameText;
     public TextMeshProUGUI statValueText;
 
-    private int statValue;
+    private int baseStatValue;
+    private int totalStatValue;
     private Color originalColor;
     private Color increaseColor = Color.green;
     private int temporaryAdd;
@@ -65,13 +66,14 @@ public class StatItemUI : MonoBehaviour
         modifier = attribute.SetAndReadLevelModifier();
         originalColor = statValueText.color;
         statNameText.text = attribute.ReadAttName();
-        statValue = attribute.ReadBaseValue();
+        baseStatValue = attribute.ReadBaseValue();
         temporaryAdd = 0;
     }
 
     public void UpdateStatValue()
     {
-        statValue = attribute.ReadBaseValue();
+        baseStatValue = attribute.ReadBaseValue();
+        totalStatValue = (int)attribute.ReadValue();
     }
 
     public void TempIncrease()
@@ -128,17 +130,17 @@ public class StatItemUI : MonoBehaviour
         UpdateStatValue();
         if (temporaryAdd < 0)
         {
-            statValueText.text = (statValue.ToString() + " (" + temporaryAdd + ")");
+            statValueText.text = (totalStatValue  + " (-" + temporaryAdd + ")");
             statValueText.color = Color.red;
         }
         if (temporaryAdd == 0)
         {
-            statValueText.text = statValue.ToString();
+            statValueText.text = totalStatValue.ToString();
             statValueText.color = originalColor;
         }
         if (temporaryAdd >= 1)
         {
-            statValueText.text = (statValue.ToString() + " (+" + temporaryAdd + ")");
+            statValueText.text = (totalStatValue + " (+" + temporaryAdd + ")");
             statValueText.color = increaseColor;
         }
     }
