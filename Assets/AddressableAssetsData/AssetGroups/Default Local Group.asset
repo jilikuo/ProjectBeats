@@ -27,6 +27,74 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 72adaa34c7fa3f74285eedddeb8cd0f6
+    m_Address: Assets/Scripts/Core/CardSystem/CardData/Stats/New Card.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Card Data
+    - Stat Card
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1f8d30eb56d879a41a687eadc750a036
+    m_Address: Assets/Scripts/Core/CardSystem/CardData/Stats/Health + 50.asset
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b3c3b0fdae1e2ba4497ce8452e4cb8b6
+    m_Address: Assets/Scripts/Core/CardSystem/CardData/Attribute/Precision + 1.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Card Data
+    - Attribute Card
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d2b72e6e09d9a47418d9be3878c7992d
+    m_Address: Assets/Scripts/Core/CardSystem/CardData/Attribute/Strength + 1.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Card Data
+    - Attribute Card
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 157739408fcac2346a0358262eeafc74
+    m_Address: Assets/Scripts/Core/CardSystem/CardData/Attribute/Vigor + 1.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Card Data
+    - Attribute Card
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cd9c7e9cd3c922c48972044cde980b51
+    m_Address: Assets/Scripts/Core/CardSystem/CardData/Attribute/Agility + 1.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Card Data
+    - Attribute Card
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8c38853c6191fa7448a7ec6635fef786
+    m_Address: Assets/Scripts/Core/CardSystem/CardData/Attribute/Dextery + 1.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Card Data
+    - Attribute Card
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 51f534f8f76657741b1f3194d6228349
+    m_Address: Assets/Scripts/Core/CardSystem/CardData/Attribute/Finesse + 1.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Card Data
+    - Attribute Card
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3986e24c054115142b3c9f88e17dd981
+    m_Address: Assets/Scripts/Core/CardSystem/CardData/Attribute/Constitution + 1.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Card Data
+    - Attribute Card
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 64a5ab8675f920d4288f85a40c7349a6
+    m_Address: Assets/Scripts/Core/CardSystem/CardData/Attribute/Willpower + 1.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Card Data
+    - Attribute Card
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 6e67c8c677b11b748b8689d0d7ac8031, type: 2}
   m_SchemaSet:

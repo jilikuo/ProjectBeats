@@ -179,29 +179,30 @@ public class CardScreen : MonoBehaviour
             }
         }
 
+        //removemos none por ser só placeholder, stat e atributo por serem genéricos e não possuírem níveis.
+        catList.Remove(CardCategory.None);
+        catList.Remove(CardCategory.Stat);
+        catList.Remove(CardCategory.Attribute);
+
         foreach (var cat in catList)
         {
             if (!playerCards.Exists(card => card.cardCategory == cat))
             {
                 list.RemoveAll(card => (card.cardLevel != CardLevel.Zero) && (card.cardCategory == cat));
             }
+            //TODO: se há um card de nível 5 na lista que precisa de uma condição específica para poder chegar ao nível máximo (6), a condição deve ser verificada
             if (playerCards.Exists(card => card.cardCategory == cat && card.cardLevel < CardLevel.Max))
             {
                 int nextLevel = (int)playerCards.Find(card => card.cardCategory == cat).cardLevel + 1;
                 list.RemoveAll(card => card.cardLevel != (CardLevel)nextLevel && card.cardCategory == cat);
             }
-            if (playerCards.Exists(card => card.cardCategory == cat && card.cardLevel >= CardLevel.Max))
+            if (playerCards.Exists(card => card.cardCategory == cat && card.cardLevel >= CardLevel.Max)) 
             {
                 list.RemoveAll(card => card.cardCategory == cat);
             }
         }
         
-        //se há um card da tag específica na lista, somente o card de nível superior ao mais alto dessa tag pode ser sorteado.
-
-        //se há um card de nível 5 na lista que precisa de uma condição específica para poder chegar ao nível máximo (6), a condição deve ser verificada,
         // se for atendida, o card pode ser sorteado, se não for o card deve ser ignorado.
-
-        //se há um card de nível máximo da tag específica na lista, a tag deve ser ignorada.
 
         //se todos os cards de nível máximo de todas as tags estão na lista, a lista só pode ter cards genéricos.
 

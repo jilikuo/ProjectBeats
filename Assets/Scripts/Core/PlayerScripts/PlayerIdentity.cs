@@ -110,16 +110,38 @@ namespace Jili.StatSystem.EntityTree
             // verificamos se o card está na lista e agimos de acordo
             if (equippedCards.Exists(card => card.cardCategory == cardInfo.cardCategory))
             {
-                if (equippedCards.Find(card => card.cardCategory == cardInfo.cardCategory).cardLevel < cardInfo.cardLevel)
+                if ((equippedCards.Find(card => card.cardCategory == cardInfo.cardCategory).cardLevel < cardInfo.cardLevel) || ((int)cardInfo.cardCategory >= (int)CardSystem.CardCategory.Stat))
                 {
-                    equippedCards.Remove(equippedCards.Find(card => card.cardCategory == cardInfo.cardCategory));
-                    equippedCards.Add(cardInfo);
+                    // se o card não for genérico, removemos o card antigo e adicionamos o novo
+                    if (!(cardInfo.cardCategory >= CardSystem.CardCategory.Stat))
+                    {
+                        equippedCards.Remove(equippedCards.Find(card => card.cardCategory == cardInfo.cardCategory));
+                        equippedCards.Add(cardInfo);
+                    }
+                    else
+                    {
+                        equippedCards.Add(cardInfo);
+                    }
 
                     //se o card for uma arma, aumentamos o tier dela
                     if (((int)cardInfo.cardCategory > 1000) && (int)cardInfo.cardCategory < 2000)
                     {
                         Type scriptType = cardInfo.cardObject.GetClass();
                         this.gameObject.gameObject.GetComponent<PlayerAttacks>().IncreaseTierByType(scriptType);
+                    }
+
+                    //se o card for um stat, adicionamos um modificador de stat ao stat
+                    else if (((int)cardInfo.cardCategory >= 2000) && ((int)cardInfo.cardCategory < 3000))
+                    {
+                        StatModifier mod = new StatModifier(cardInfo.value, StatModType.Flat, cardInfo);
+                        statList.Find(stat => stat.Type == cardInfo.statType).AddModifier(mod);
+                    }
+
+                    //se o card for um atributo, adicionamos um modificador de atributo ao atributo
+                    else if ((int)cardInfo.cardCategory >= 3000)
+                    {
+                        AttributeModifier mod = new AttributeModifier(cardInfo.value, AttributeModType.Flat, cardInfo);
+                        attList.Find(att => att.Type == cardInfo.attributeType).AddModifier(mod);
                     }
 
                 }

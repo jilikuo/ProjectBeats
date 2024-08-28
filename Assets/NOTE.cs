@@ -26,4 +26,11 @@ www.keawstudio.com
 https://shikashipx.itch.io/shikashis-fantasy-icons-pack
 https://itch.io/profile/shikashipx
 https://shikashipx.itch.io/
+---------------------------------------------------------------------------
+###########################################################################
+---------------------------------------------------------------------------
+######################  8 Alien Bug Spider Sprite  ########################
+https://whiteknightstudios.itch.io/8-alien-bug-spider-sprites
+https://itch.io/profile/whiteknightstudios
+https://whiteknightstudios.itch.io/
 */

@@ -8,6 +8,7 @@ namespace Jili.StatSystem
 {
     public enum AttributeType
     {
+        NULL = 0,
         //Physical
         Strength = 101,
         Constitution = 102,

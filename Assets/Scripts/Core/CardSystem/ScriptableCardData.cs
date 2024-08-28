@@ -1,3 +1,4 @@
+using Jili.StatSystem;
 using Jili.StatSystem.AttackSystem;
 using Jili.StatSystem.CardSystem;
 using TMPro;
@@ -15,6 +16,9 @@ public class ScriptableCardData : ScriptableObject
     public CardRarity cardRarity;
     public CardLevel cardLevel;
     public CardCategory cardCategory;
+    public StatType statType;
+    public AttributeType attributeType;
+    public float value;
     public Sprite cardFace;
     public MonoScript cardObject;
 

@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: e462eebef29ff064ea2c00345870153a
   m_currentHash:
     serializedVersion: 2
-    Hash: 14ba2b8105a9f753ad336cc9bacbbeba
+    Hash: af38ab58c0f2b846ce47a8ef272399b5
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -88,6 +88,8 @@ MonoBehaviour:
   m_LabelTable:
     m_LabelNames:
     - Card Data
+    - Attribute Card
+    - Stat Card
     - Jinx Minigun
     - Jinx Shotgun
     - UI Assets

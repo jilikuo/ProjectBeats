@@ -8,6 +8,7 @@ namespace Jili.StatSystem
 {
     public enum StatType
     {
+        NULL = 0,
         //VolatileStats
         Health  = 1,
         Mana    = 2,
