@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Jili.StatSystem;
 using Jili.StatSystem.EntityTree;
 using Jili.StatSystem.LevelSystem;
 
@@ -42,6 +43,9 @@ public class StatusBars : MonoBehaviour
         //stbar.value = playerEntity.stamina;
         //expbar.maxValue = playerEntity.nextLevelExp;
         //expbar.value = playerEntity.experience;
+
+        
+        // playerIdentity.Health.OnValueChanged += ForcedUpdate;
     }
 
     private void Update()
@@ -70,4 +74,30 @@ public class StatusBars : MonoBehaviour
         }
         explabel.text = (expbar.value.ToString() + " / " + expbar.maxValue.ToString() + " Experience Points");
     }
+
+    /*
+     * TODO:
+     * this was used to fix a bug where picking up a card would not refresh the status bar
+     * this should be called instead as a better way to update the status bar in the future:
+     * instead of updating every frame, only update the ui when the stat changes or the player
+     * takes damage.
+    private void ForcedUpdate(Stat stat)
+    {
+        if (stat == playerIdentity.Health)
+        {
+            hpbar.maxValue = playerIdentity.Health.ReadValue();
+            hpbar.value = playerIdentity.Health.ReadCurrentValue();
+            hplabel.text = ((Mathf.Ceil(hpbar.value * 10) / 10).ToString() + " HP");
+        }
+
+        if (stat == playerIdentity.Mana)
+        {
+            mpbar.maxValue = playerIdentity.Mana.ReadValue();
+            mpbar.value = playerIdentity.Mana.ReadCurrentValue();
+            mplabel.text = ((Mathf.Ceil(mpbar.value * 10) / 10).ToString() + " MP");
+        }
+
+        return;
+    }
+    */
 }

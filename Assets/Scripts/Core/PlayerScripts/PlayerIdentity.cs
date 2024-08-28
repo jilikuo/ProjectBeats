@@ -136,7 +136,9 @@ namespace Jili.StatSystem.EntityTree
                     else if (((int)cardInfo.cardCategory >= 2000) && ((int)cardInfo.cardCategory < 3000))
                     {
                         StatModifier mod = new StatModifier(cardInfo.value, StatModType.Flat, cardInfo);
-                        statList.Find(stat => stat.Type == cardInfo.statType).AddModifier(mod);
+                        Stat tempStat = statList.Find(stat => stat.Type == cardInfo.statType);
+                        tempStat.AddModifier(mod);
+                        tempStat.ReadValue();
                     }
 
                     //se o card for um atributo, adicionamos um modificador de atributo ao atributo
@@ -145,6 +147,7 @@ namespace Jili.StatSystem.EntityTree
                         AttributeModifier mod = new AttributeModifier(cardInfo.value, AttributeModType.Flat, cardInfo);
                         Attribute tempAtt = attList.Find(att => att.Type == cardInfo.attributeType);
                         tempAtt.AddModifier(mod);
+                        tempAtt.ReadValue();
                     }
 
                 }

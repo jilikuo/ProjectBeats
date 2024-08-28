@@ -134,8 +134,8 @@ public class CardScreen : MonoBehaviour
         }*/
 
         isShowing = false;
-        playerIdentity.EquipNewCard(currentCard.GetComponent<CardScript>().cardData);
         CardSelectionScreen.gameObject.SetActive(false);
+        playerIdentity.EquipNewCard(currentCard.GetComponent<CardScript>().cardData);
     }
 
     public async void RejectCardButton()
