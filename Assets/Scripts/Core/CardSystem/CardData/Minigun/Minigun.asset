@@ -16,5 +16,8 @@ MonoBehaviour:
   cardRarity: 7
   cardLevel: 0
   cardCategory: 1001
+  weapon: 1
+  statType: 0
+  attributeType: 0
+  value: 0
   cardFace: {fileID: 21300000, guid: 0a1e8b868048ff644ae4e36b4ad2b35c, type: 3}
-  cardObject: {fileID: 11500000, guid: 0debcb0aaed92024883e9a4e3a8b1fbf, type: 3}

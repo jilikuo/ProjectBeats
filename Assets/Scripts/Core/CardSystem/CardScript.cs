@@ -22,24 +22,35 @@ namespace Jili.StatSystem.CardSystem
         private Image starFour;
         private Image starFive;
 
+        private bool ultraSpecificVariableForAnUltraSpecificBugThatNeedsTheFirstCardOfEveryGameToBeUpdatedExactlyOnceToNotBugTheGodDamnRarityMedal = true;
+
         private void Start()
+        {
+            LoadCard();
+        }
+
+        private void Update()
+        {
+            if (ultraSpecificVariableForAnUltraSpecificBugThatNeedsTheFirstCardOfEveryGameToBeUpdatedExactlyOnceToNotBugTheGodDamnRarityMedal)
+            {
+                LoadCard();
+                ultraSpecificVariableForAnUltraSpecificBugThatNeedsTheFirstCardOfEveryGameToBeUpdatedExactlyOnceToNotBugTheGodDamnRarityMedal = true;
+            }
+        }
+
+        private void LoadCard()
         {
             cardNameField = transform.Find("NameBox/NameText")?.GetComponent<TextMeshProUGUI>();
             cardRarityField = transform.Find("NameBox/RarityMedal")?.GetComponent<Image>();
             cardLevelField = transform.Find("LevelBox");
             cardFaceField = transform.Find("Background/WeaponIcon")?.GetComponent<Image>();
 
-            if (cardNameField == null)
-            {
-                throw new System.Exception("TextMeshProUGUI component not found on NameText or invalid hierarchy.");
-            }
-
             cardNameField.text = cardData.cardName;
             cardRarityField.color = cardData.RarityColor;
             cardRarityField.sprite = cardData.RaritySprite;
             cardFaceField.sprite = cardData.cardFace;
             LoadCardLevel();
-        }
+        } 
 
         private void LoadCardLevel()
         {

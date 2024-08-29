@@ -1,6 +1,8 @@
 using Jili.StatSystem;
 using Jili.StatSystem.AttackSystem;
 using Jili.StatSystem.CardSystem;
+using System;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -16,11 +18,12 @@ public class ScriptableCardData : ScriptableObject
     public CardRarity cardRarity;
     public CardLevel cardLevel;
     public CardCategory cardCategory;
+    public PlayerAttacksTypes weapon;
     public StatType statType;
     public AttributeType attributeType;
     public float value;
     public Sprite cardFace;
-    public MonoScript cardObject;
+    public Type cardObject;
 
     public Sprite RaritySprite { get; private set; }
     public Sprite LevelSprite { get; private set;}
@@ -30,6 +33,7 @@ public class ScriptableCardData : ScriptableObject
 
     private void OnEnable()
     {
+        LoadObject();
         // Load the GUI atlas and figure out the rarity sprite
         // also loads the level Star.
         Addressables.LoadAssetAsync<Sprite[]>(guiAtlasAddress).Completed += OnSpriteLoaded;
@@ -141,5 +145,15 @@ public class ScriptableCardData : ScriptableObject
                 LevelColor = new(1f, 1f, 1f, 1f);
                 break;
         }
+    }
+
+    private void LoadObject()
+    {
+        if ((weapon == PlayerAttacksTypes.NULL))
+        {
+            return;
+        }
+        if ((weapon == PlayerAttacksTypes.JinxMinigun)) cardObject = typeof(JinxMinigun);
+        if ((weapon == PlayerAttacksTypes.JinxShotgun)) cardObject = typeof(JinxShotgun);
     }
 }

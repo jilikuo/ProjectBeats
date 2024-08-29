@@ -11,7 +11,7 @@ namespace Jili.StatSystem.AttackSystem
     // PARECE QUE SERIA MAIS PRÁTICO TER UMA CLASSE ESTÁTICA PARA CÁLCULO DE FÓRMULAS, 
     // TALVEZ IMPLEMENTE DESSA FORMA NO FUTURO;
 
-    public class JinxShotgun : IShootable
+    public class JinxShotgun : LootableCard, IShootable
     {
         // CONSTANTES DE CONFIGURAÇÃO DA ARMA
         private readonly int BaseProjectiles        = 2;                            

@@ -24,19 +24,20 @@ public class CardScreen : MonoBehaviour
     private int cardRejectCounter;
 
     private bool isShowing = false;
+    private bool isLoading = false;
 
     private void Awake()
     {
         menuBackground = CardSelectionScreen.transform.Find("Background");
         chanceCounter = CardSelectionScreen.transform.Find("ChanceCounter").GetComponentInChildren<TextMeshProUGUI>();
         playerIdentity = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerIdentity>();
-
         CardSelectionScreen.SetActive(false);
     }
 
     void OnEnable()
     {
         ConsumableUse.OpenCardPacket += HandleOpenCardPacket;
+        _ = CreateCardObject();
     }
 
     private void OnDestroy()
@@ -47,17 +48,15 @@ public class CardScreen : MonoBehaviour
     private async void HandleOpenCardPacket(int amount)
     {
         isShowing = true;
+        isLoading = true;
         maxCardReject = 5;
         cardRejectCounter = 0;
         chanceCounter.text = (maxCardReject + "/" + maxCardReject + " Cards Disponíveis");
 
-        if (currentCard != null)
-        {
-            Destroy(currentCard);
-        }
-
+        Destroy(currentCard);
         await CreateCardObject();
         CardSelectionScreen.SetActive(true);
+
 
         // Pausa o tempo do jogo
         Time.timeScale = 0;
@@ -67,6 +66,15 @@ public class CardScreen : MonoBehaviour
 
         // Retorna o tempo do jogo ao normal
         Time.timeScale = 1;
+    }
+
+    private async Task WaitForCardLoad()
+    {
+        // Aguarda enquanto a janela de level-up está ativa
+        while (isLoading)
+        {
+            await Task.Yield();
+        }
     }
 
     private async Task WaitForCardClose()
@@ -87,6 +95,7 @@ public class CardScreen : MonoBehaviour
         cardScript.cardData = cardData;
 
         currentCard = newCard;
+        isLoading = false;
     }
 
     private async Task<ScriptableCardData> LoadCardData()

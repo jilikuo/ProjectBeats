@@ -33,7 +33,7 @@ public class SpawnBigSuicidalEnemy : MonoBehaviour
         PlayerMovementScript = Player.GetComponent<PlayerMovement>();
         PlayerPos = Player.transform;
 
-        InvokeRepeating("SpawnAtPredictedPos", 3 * SpawnInterval, SpawnInterval);
+        InvokeRepeating("SpawnAtPredictedPos", SpawnInterval, SpawnInterval);
     }
 
     public Vector2 PredictPlayerMovement()

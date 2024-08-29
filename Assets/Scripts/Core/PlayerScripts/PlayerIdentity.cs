@@ -128,8 +128,8 @@ namespace Jili.StatSystem.EntityTree
                     //se o card for uma arma, aumentamos o tier dela
                     if (((int)cardInfo.cardCategory > 1000) && (int)cardInfo.cardCategory < 2000)
                     {
-                        Type scriptType = cardInfo.cardObject.GetClass();
-                        this.gameObject.gameObject.GetComponent<PlayerAttacks>().IncreaseTierByType(scriptType);
+                        Type weaponType = cardInfo.cardObject;
+                        this.gameObject.gameObject.GetComponent<PlayerAttacks>().IncreaseTierByType(weaponType);
                     }
 
                     //se o card for um stat, adicionamos um modificador de stat ao stat
@@ -165,8 +165,8 @@ namespace Jili.StatSystem.EntityTree
                 // se o card for uma arma, equipamos a arma
                 if (((int)cardInfo.cardCategory > 1000) && (int)cardInfo.cardCategory < 2000)
                 {
-                    Type scriptType = cardInfo.cardObject.GetClass();
-                    IShootable newWeapon = (IShootable)Activator.CreateInstance(scriptType);
+                    Type weaponType = cardInfo.cardObject;
+                    IShootable newWeapon = (IShootable)Activator.CreateInstance(weaponType);
                     this.gameObject.GetComponent<PlayerAttacks>().EquipWeapon(newWeapon);
                 }
             }

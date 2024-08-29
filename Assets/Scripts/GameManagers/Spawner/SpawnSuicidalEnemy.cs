@@ -22,7 +22,7 @@ public class SpawnSuicidalEnemy : MonoBehaviour
             playerPos = GameObject.FindGameObjectWithTag("Player").gameObject.transform;
         }
 
-        InvokeRepeating("SpawnCircle", spawnInterval, spawnInterval); 
+        InvokeRepeating("SpawnCircle", 1f, spawnInterval); 
     }
 
     void FixedUpdate()

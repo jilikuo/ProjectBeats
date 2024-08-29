@@ -5,6 +5,13 @@ using UnityEngine;
 
 namespace Jili.StatSystem.AttackSystem
 {
+    public enum PlayerAttacksTypes
+    {
+        NULL,
+        JinxMinigun,
+        JinxShotgun
+    }
+
     public class PlayerAttacks : MonoBehaviour
     {
         [SerializeField]
@@ -81,6 +88,19 @@ namespace Jili.StatSystem.AttackSystem
                 Weapons[i] = null;
                 Debug.Log($"Weapon slot {i} cleared.");
             }
+        }
+    }
+
+    public interface ILootcard
+    {
+        public Type GetClass();
+    }
+
+    public abstract class LootableCard
+    {
+        public virtual Type GetClass()
+        {
+            return this.GetType();
         }
     }
 }
