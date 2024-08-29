@@ -8,7 +8,6 @@ namespace Jili.StatSystem.EntityTree.ConsumableSystem
     {
         private readonly string playerTag = "Player";
         private readonly string consumableTag = "Consumable"; 
-        private readonly string collectionAuraTag = "CollectionAura";
 
         private ConsumableType consumableType;
 
@@ -17,7 +16,8 @@ namespace Jili.StatSystem.EntityTree.ConsumableSystem
         private PlayerLevel levelSystem;
         private Rigidbody2D rb;
 
-        private float acceleration = 0.01f;
+        private float speed = 8f;
+        private float accelerationRate = 1.15f;
         private bool moveTowardsPlayer = false;
 
         public static event Action<int> OpenCardPacket;
@@ -31,25 +31,27 @@ namespace Jili.StatSystem.EntityTree.ConsumableSystem
             rb = GetComponent<Rigidbody2D>();
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
-            if (moveTowardsPlayer)
-            {
-                Vector2 direction = player.transform.position - transform.position;
-                direction.Normalize();
-                rb.velocity = direction * acceleration;
-            }
+            StartMoveToPlayer(moveTowardsPlayer, moveTowardsPlayer);
         }
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        public void StartMoveToPlayer(bool isSetting = true, bool canMove = false)
         {
-            if (collision.gameObject.CompareTag(collectionAuraTag))
+            if (isSetting && !canMove)
             {
-                //TODO: ignorar todas as colisões, exceto com o jogador
-
                 moveTowardsPlayer = true;
             }
+            else if (isSetting && canMove)
+            {
+                Vector2 direction = player.transform.position - rb.transform.position;
+                direction.Normalize();
+                rb.velocity = direction * speed;
+                speed += (speed * Time.fixedDeltaTime) * accelerationRate;
+                Mathf.Clamp(speed, 0, (1000 * playerIdentity.MovementSpeed.ReadValue())); // a velocidade máxima aumenta conforme a velocidade máxima do jogador também aumenta
+            }
         }
+
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
