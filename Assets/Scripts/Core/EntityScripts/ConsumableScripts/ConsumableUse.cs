@@ -8,12 +8,17 @@ namespace Jili.StatSystem.EntityTree.ConsumableSystem
     {
         private readonly string playerTag = "Player";
         private readonly string consumableTag = "Consumable"; 
+        private readonly string collectionAuraTag = "CollectionAura";
 
         private ConsumableType consumableType;
 
         private GameObject player;
         private PlayerIdentity playerIdentity;
         private PlayerLevel levelSystem;
+        private Rigidbody2D rb;
+
+        private float acceleration = 0.01f;
+        private bool moveTowardsPlayer = false;
 
         public static event Action<int> OpenCardPacket;
 
@@ -23,6 +28,27 @@ namespace Jili.StatSystem.EntityTree.ConsumableSystem
             player = GameObject.FindGameObjectWithTag(playerTag);
             playerIdentity = player.GetComponent<PlayerIdentity>();
             levelSystem = player.GetComponent<PlayerLevel>();
+            rb = GetComponent<Rigidbody2D>();
+        }
+
+        private void Update()
+        {
+            if (moveTowardsPlayer)
+            {
+                Vector2 direction = player.transform.position - transform.position;
+                direction.Normalize();
+                rb.velocity = direction * acceleration;
+            }
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.gameObject.CompareTag(collectionAuraTag))
+            {
+                //TODO: ignorar todas as colisões, exceto com o jogador
+
+                moveTowardsPlayer = true;
+            }
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
