@@ -8,6 +8,7 @@ namespace Jili.StatSystem.EntityTree.ConsumableSystem
         Gold = 400,
         Card = 500,
     }
+
     public enum ConsumableSize
     {
         Pequeno = 10,
