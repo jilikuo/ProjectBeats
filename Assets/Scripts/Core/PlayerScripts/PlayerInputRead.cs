@@ -1,11 +1,6 @@
 using UnityEngine;
 
-public interface IPlayerInput
-{
-    Vector3 ReadInput();
-}
-
-public class PlayerInputRead : MonoBehaviour, IPlayerInput
+public class PlayerInputRead : MonoBehaviour
 {
     public Vector3 ReadInput()
     {

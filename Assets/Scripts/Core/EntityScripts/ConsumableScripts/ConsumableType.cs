@@ -11,7 +11,6 @@ namespace Jili.StatSystem.EntityTree.ConsumableSystem
         public ConsumableSize size; // keeping for debug reasons only
         public float FlatAmount;
         public float PercentageAmount; 
-            
 
         private CVType ValueType; // ConsumableValueType
 

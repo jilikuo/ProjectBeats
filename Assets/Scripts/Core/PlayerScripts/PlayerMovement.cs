@@ -2,15 +2,8 @@ using UnityEngine;
 using Jili.StatSystem;
 using Jili.StatSystem.EntityTree;
 
-public interface IPlayerMovement
-{
-    void HandleDirectionChange(Vector3 input);
-    void AcceleratePlayer();
-    void MovePlayer();
-}
-
 [RequireComponent(typeof(PlayerInputRead)), RequireComponent(typeof(PlayerIdentity))]
-public class PlayerMovement : MonoBehaviour, IPlayerMovement
+public class PlayerMovement : MonoBehaviour
 {
     private readonly float        SpeedFactor = 0.6f;
     private readonly float DecelarationFactor = 0.3f;
