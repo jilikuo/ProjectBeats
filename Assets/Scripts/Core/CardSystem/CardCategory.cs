@@ -3,7 +3,7 @@ namespace Jili.StatSystem.CardSystem
     public enum CardCategory
     {
         None = 0,
-        // Weapons 
+        Weapons = 1000,
         Minigun = 1001,
         Shotgun = 1002,
 

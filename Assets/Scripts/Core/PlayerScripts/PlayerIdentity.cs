@@ -1,11 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Jili.StatSystem.AttackSystem;
-using System.Linq;
 using System;
+using System.Linq;
+using System.Collections;
 using System.Collections.ObjectModel;
-
+using System.Collections.Generic;
+using Jili.StatSystem.CardSystem;
+using Jili.StatSystem.AttackSystem;
 
 namespace Jili.StatSystem.EntityTree
 {
@@ -31,6 +31,7 @@ namespace Jili.StatSystem.EntityTree
         public Attribute Finesse;
         public Attribute Precision;
         public Attribute Willpower;             // MAGICAL
+
         public Stat AttackDamage;
         public Stat Health;
         public Stat HealthRegen;
@@ -107,10 +108,11 @@ namespace Jili.StatSystem.EntityTree
 
         public void EquipNewCard(ScriptableCardData cardInfo)
         {
-            // verificamos se o card está na lista e agimos de acordo
+            // verificamos se o card está na lista, iniciando o algoritmo para equipá-lo de acordo com seu tipo.
             if (equippedCards.Exists(card => card.cardCategory == cardInfo.cardCategory))
             {
-                if ((equippedCards.Find(card => card.cardCategory == cardInfo.cardCategory).cardLevel < cardInfo.cardLevel) || ((int)cardInfo.cardCategory >= (int)CardSystem.CardCategory.Stat))
+                // se o card não for de stat ou atributo e seu nível for inferior que o card já equipado, aconteceu algum bug, devemos lançar uma mensagem de erro
+                if ((equippedCards.Find(card => card.cardCategory == cardInfo.cardCategory).cardLevel < cardInfo.cardLevel) || (cardInfo.cardCategory >= CardSystem.CardCategory.Stat))
                 {
                     // se o card não for genérico, removemos o card antigo e adicionamos o novo
                     if ((cardInfo.cardCategory <= CardSystem.CardCategory.Stat))
@@ -125,8 +127,8 @@ namespace Jili.StatSystem.EntityTree
                         Debug.Log("Card was added, it was a generic card.");
                     }
 
-                    //se o card for uma arma, aumentamos o tier dela
-                    if (((int)cardInfo.cardCategory > 1000) && (int)cardInfo.cardCategory < 2000)
+                    //se o card for uma arma, aumentamos o tier dela, afinal ela já estava equipada
+                    if ((cardInfo.cardCategory > CardCategory.Weapons) && cardInfo.cardCategory < CardCategory.Stat)
                     {
                         Type weaponType = cardInfo.cardObject;
                         this.gameObject.gameObject.GetComponent<PlayerAttacks>().IncreaseTierByType(weaponType);
@@ -149,7 +151,6 @@ namespace Jili.StatSystem.EntityTree
                         tempAtt.AddModifier(mod);
                         tempAtt.ReadValue();
                     }
-
                 }
                 else
                 {
@@ -237,7 +238,7 @@ namespace Jili.StatSystem.EntityTree
             this.gameObject.GetComponent<PlayerControl>().enabled = false;
             this.gameObject.GetComponent<Collider2D>().enabled = false;
             this.gameObject.GetComponent<PlayerAttacks>().enabled = false;
-            this.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            this.transform.Find("PlayerVisualBody").gameObject.SetActive(false);
             OnPlayerDeath?.Invoke();
             return true;
         }
