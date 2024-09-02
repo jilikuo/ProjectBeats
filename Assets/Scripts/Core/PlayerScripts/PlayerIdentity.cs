@@ -135,7 +135,7 @@ namespace Jili.StatSystem.EntityTree
                     }
 
                     //se o card for um stat, adicionamos um modificador de stat ao stat
-                    else if (((int)cardInfo.cardCategory >= 2000) && ((int)cardInfo.cardCategory < 3000))
+                    else if ((cardInfo.cardCategory >= CardCategory.Stat) && (cardInfo.cardCategory < CardCategory.Attribute))
                     {
                         StatModifier mod = new StatModifier(cardInfo.value, StatModType.Flat, cardInfo);
                         Stat tempStat = statList.Find(stat => stat.Type == cardInfo.statType);
@@ -144,7 +144,7 @@ namespace Jili.StatSystem.EntityTree
                     }
 
                     //se o card for um atributo, adicionamos um modificador de atributo ao atributo
-                    else if ((int)cardInfo.cardCategory >= 3000)
+                    else if (cardInfo.cardCategory >= CardCategory.Attribute)
                     {
                         AttributeModifier mod = new AttributeModifier(cardInfo.value, AttributeModType.Flat, cardInfo);
                         Attribute tempAtt = attList.Find(att => att.Type == cardInfo.attributeType);
@@ -164,14 +164,15 @@ namespace Jili.StatSystem.EntityTree
                 equippedCards.Add(cardInfo);
 
                 // se o card for uma arma, equipamos a arma
-                if (((int)cardInfo.cardCategory > 1000) && (int)cardInfo.cardCategory < 2000)
+                if ((cardInfo.cardCategory > CardCategory.Weapons) && (cardInfo.cardCategory < CardCategory.Stat))
                 {
                     Type weaponType = cardInfo.cardObject;
                     IShootable newWeapon = (IShootable)Activator.CreateInstance(weaponType);
                     this.gameObject.GetComponent<PlayerAttacks>().EquipWeapon(newWeapon);
                 }
-            }
 
+                //aparentemente o primeiro card de stat de cada tipo não faz nada ainda
+            }
         }
 
         public bool TakeDamage(float incomingDamage)
