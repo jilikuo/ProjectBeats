@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Entities;
+using Unity.Mathematics;
 
 public struct EnemyComponents : IComponentData
 {
@@ -10,3 +11,4 @@ public struct EnemyComponents : IComponentData
     public float health;
 
 }
+
