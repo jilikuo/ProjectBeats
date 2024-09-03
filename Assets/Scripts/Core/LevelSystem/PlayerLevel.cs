@@ -43,7 +43,7 @@ namespace Jili.StatSystem.LevelSystem
                 Total = 0;
             }
 
-            public bool hasFreePoints()
+            public bool HasFreePoints()
             {
                 bool test = Free > 0;
                 if ((test == false) && (Spent != Total))
@@ -79,7 +79,6 @@ namespace Jili.StatSystem.LevelSystem
 
         }
 
-
         public void Awake()
         {
             Level = 1;
@@ -92,12 +91,13 @@ namespace Jili.StatSystem.LevelSystem
         public void GainExp(float amount)
         {
             Experience += amount;
+            TotalExperience += amount;
         }
 
         private void CheckLevelUp()
         {
             bool leveledup = false;
-            if (experience > ExperienceToNextLevel)
+            if (experience >= ExperienceToNextLevel)
             {
                 while (experience >= ExperienceToNextLevel)
                 {
@@ -129,6 +129,11 @@ namespace Jili.StatSystem.LevelSystem
             + (Level * Level) + MathF.Sqrt(Level * Level * Level) + MathF.Sqrt(Level);
         }
 
+        public float ReadTotalExperience()
+        {
+            return TotalExperience;
+        }
+
         public int ReadFreeAttPoints()
         {
             return attributePoints.Free;
@@ -136,10 +141,10 @@ namespace Jili.StatSystem.LevelSystem
 
         public void SpendAttPoints(int amount = 1)
         {
-            if (attributePoints.hasFreePoints())
+            if (attributePoints.HasFreePoints())
             {
                 int i = 0;
-                while ((i < amount) && (attributePoints.hasFreePoints()))
+                while ((i < amount) && (attributePoints.HasFreePoints()))
                 {
                     attributePoints.SpendFreePoints();
                     i++;
@@ -163,7 +168,6 @@ namespace Jili.StatSystem.LevelSystem
         {
             return Mathf.FloorToInt(Experience);
         }
-
 
     }
 }
