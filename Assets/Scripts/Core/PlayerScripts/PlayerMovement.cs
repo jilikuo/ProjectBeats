@@ -124,6 +124,6 @@ public class PlayerMovement : MonoBehaviour
         {
             velocity = velocity.normalized * maxSpeed;
         }
-        playerRb.velocity = velocity;
+        playerRb.linearVelocity = velocity;
     }
 }

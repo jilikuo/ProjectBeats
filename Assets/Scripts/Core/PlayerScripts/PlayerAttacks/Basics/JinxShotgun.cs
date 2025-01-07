@@ -7,16 +7,16 @@ using Random = UnityEngine.Random;
 
 namespace Jili.StatSystem.AttackSystem
 {
-    // APLICAR FÓRMULAS ESPECIFICAS DE ARMAS NO RETURN DE CADA ARMA É UMA BOA IDEIA? 
-    // PARECE QUE SERIA MAIS PRÁTICO TER UMA CLASSE ESTÁTICA PARA CÁLCULO DE FÓRMULAS, 
+    // APLICAR Fï¿½RMULAS ESPECIFICAS DE ARMAS NO RETURN DE CADA ARMA ï¿½ UMA BOA IDEIA? 
+    // PARECE QUE SERIA MAIS PRï¿½TICO TER UMA CLASSE ESTï¿½TICA PARA Cï¿½LCULO DE Fï¿½RMULAS, 
     // TALVEZ IMPLEMENTE DESSA FORMA NO FUTURO;
 
     public class JinxShotgun : LootableCard, IShootable
     {
-        // CONSTANTES DE CONFIGURAÇÃO DA ARMA
+        // CONSTANTES DE CONFIGURAï¿½ï¿½O DA ARMA
         private readonly int BaseProjectiles        = 2;                            
         private readonly int BaseProjectileSpeed    = 10;                            // VELOCIDADE BASE DE 5
-        private readonly int MaxProjectileDuration  = 5;                            // DURAÇÃO MÁXIMA DE 5 SEGUNDOS
+        private readonly int MaxProjectileDuration  = 5;                            // DURAï¿½ï¿½O Mï¿½XIMA DE 5 SEGUNDOS
         protected readonly WeaponTypes Type         = WeaponTypes.JinxMinigun;      // TIPO DE ARMA
 
         //projectile damage
@@ -31,7 +31,7 @@ namespace Jili.StatSystem.AttackSystem
                     DirtyStat.Remove(Player.AttackDamage);
                     ReadDirtiness();
                 }
-                return _damage * 0.75f; // o dano do projétil é
+                return _damage * 0.75f; // o dano do projï¿½til ï¿½
             }
         }
 
@@ -48,7 +48,7 @@ namespace Jili.StatSystem.AttackSystem
                     ReadDirtiness();
                 }
                 return 0.75f / _cooldown; // if dex = 0 && finesse = 0, attacks per second = 0.333, para fazer o jogador atacar uma vez a cada 3 segundos
-                                      // a fórmula precisa ser ajustada como 1 / 0.333 ~= 3 segundos (?)
+                                      // a fï¿½rmula precisa ser ajustada como 1 / 0.333 ~= 3 segundos (?)
             }
         }
         protected float CooldownTimer;
@@ -71,7 +71,7 @@ namespace Jili.StatSystem.AttackSystem
         
         // not working
         // spread
-        private float _spread;        // dispersão dos projéteis
+        private float _spread;        // dispersï¿½o dos projï¿½teis
         protected float Spread
         {
             get
@@ -102,7 +102,7 @@ namespace Jili.StatSystem.AttackSystem
         }
 
         // number of projectiles
-        private float   _projectileNumber;        // número de projéteis do jogador
+        private float   _projectileNumber;        // nï¿½mero de projï¿½teis do jogador
         protected float ProjectileNumber
         {
             get
@@ -130,14 +130,14 @@ namespace Jili.StatSystem.AttackSystem
             this.PlayerTransform = player.transform;
             this.DirtyStat = new List<Stat>();
 
-            // Inicia os ouvintes para alterações em cada stat relevante
+            // Inicia os ouvintes para alteraï¿½ï¿½es em cada stat relevante
             Player.AttackDamage.OnValueChanged      += BecomeDirty;
             Player.AttacksPerSecond.OnValueChanged  += BecomeDirty;
             Player.AttackRange.OnValueChanged       += BecomeDirty;
             Player.ProjectileNumber.OnValueChanged  += BecomeDirty;
             Player.ProjectileSpeed.OnValueChanged   += BecomeDirty;
 
-            // Adiciona os stats à lista de DirtyStat
+            // Adiciona os stats ï¿½ lista de DirtyStat
             DirtyStat.Add(Player.AttackDamage);
             DirtyStat.Add(Player.AttacksPerSecond);
             DirtyStat.Add(Player.AttackRange);
@@ -225,22 +225,22 @@ namespace Jili.StatSystem.AttackSystem
 
         public IEnumerator AimProjectiles()
         {
-            //calcula onde o mouse está mirando
+            //calcula onde o mouse estï¿½ mirando
             Vector3 shootPos = PlayerTransform.position;
             Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePosition.z = 0f;
             Vector2 direction = (mousePosition - shootPos).normalized;
 
             float angleStep = Spread / ProjectileNumber;
-            float currentAngle = -angleStep * (ProjectileNumber - 1) / 2; // Centraliza os projéteis
+            float currentAngle = -angleStep * (ProjectileNumber - 1) / 2; // Centraliza os projï¿½teis
 
-            //atira na direção calculada
+            //atira na direï¿½ï¿½o calculada
             for (int i = 0; i < ProjectileNumber; i++)
             {
-                // Calcula a nova direção com base no ângulo de rotação
+                // Calcula a nova direï¿½ï¿½o com base no ï¿½ngulo de rotaï¿½ï¿½o
                 Vector2 rotatedDirection = RotateVector(direction, currentAngle);
 
-                // Atira na direção calculada
+                // Atira na direï¿½ï¿½o calculada
                 Shoot(rotatedDirection);
 
                 currentAngle += angleStep;
@@ -264,7 +264,7 @@ namespace Jili.StatSystem.AttackSystem
             Vector3 spawnPosition = PlayerTransform.position;
 
 
-            //instancia e configura o projétil
+            //instancia e configura o projï¿½til
             GameObject NewProjectile = UnityEngine.Object.Instantiate(Projectile, spawnPosition, Quaternion.identity);
             ProjectileBase projectile = NewProjectile.GetComponent<ProjectileBase>();
             if (projectile != null)
@@ -279,11 +279,11 @@ namespace Jili.StatSystem.AttackSystem
                 }
             }
 
-            //aplica a velocidade ao projétil   
+            //aplica a velocidade ao projï¿½til   
             Rigidbody2D rb = NewProjectile.GetComponent<Rigidbody2D>();
-            rb.velocity = direction.normalized * ProjectileSpeed;
+            rb.linearVelocity = direction.normalized * ProjectileSpeed;
         
-            //destrói o projétil após 5 segundos
+            //destrï¿½i o projï¿½til apï¿½s 5 segundos
             UnityEngine.Object.Destroy(NewProjectile, MaxProjectileDuration);
         }
     }

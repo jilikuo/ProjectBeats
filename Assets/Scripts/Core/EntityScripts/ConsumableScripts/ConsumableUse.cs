@@ -46,9 +46,9 @@ namespace Jili.StatSystem.EntityTree.ConsumableSystem
             {
                 Vector2 direction = player.transform.position - rb.transform.position;
                 direction.Normalize();
-                rb.velocity = direction * speed;
+                rb.linearVelocity = direction * speed;
                 speed += (speed * Time.fixedDeltaTime) * accelerationRate;
-                Mathf.Clamp(speed, 0, (1000 * playerIdentity.MovementSpeed.ReadValue())); // a velocidade máxima aumenta conforme a velocidade máxima do jogador também aumenta
+                Mathf.Clamp(speed, 0, (1000 * playerIdentity.MovementSpeed.ReadValue())); // a velocidade mï¿½xima aumenta conforme a velocidade mï¿½xima do jogador tambï¿½m aumenta
             }
         }
 
@@ -126,7 +126,7 @@ namespace Jili.StatSystem.EntityTree.ConsumableSystem
 
                 case CVType.Hybrid:
 
-                    // tenta descobrir se vale mais a pena aumentar a exp em % ou flat antes de consumir, e então consome a melhor opção
+                    // tenta descobrir se vale mais a pena aumentar a exp em % ou flat antes de consumir, e entï¿½o consome a melhor opï¿½ï¿½o
                     float tempRemainingExp;
                     tempRemainingExp = levelSystem.ReadNextLevelExp() - levelSystem.ReadExperience();
 
