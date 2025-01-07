@@ -33,7 +33,7 @@ namespace Jili.StatSystem
      * | Presence:        ,                   |
      * | ======== SPECIAL STATS ============= |
      * | Luck:            Critical Chance,    |
-     * | Level:           Experience,         |
+     * | level:           Experience,         |
      * | Gold:            Currency,           |
      * | ==================================== |
      * | ======== IDEPENDENT STATS ========== |    // Stats independentes não possuem atributos relacionados, e são calculados de forma direta.

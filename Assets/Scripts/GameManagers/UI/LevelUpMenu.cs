@@ -62,7 +62,7 @@ public class LevelUpMenu : MonoBehaviour
 
         LevelSystem = playerIdentity.GetComponent<PlayerLevel>();
         heldAttPoints = 0;
-        tempAttPoints = LevelSystem.ReadFreeAttPoints();
+        tempAttPoints = LevelSystem.GetFreeAttPoints();
         PopulateStats();
         UpdatePointViewDisplay();
 
@@ -84,17 +84,17 @@ public class LevelUpMenu : MonoBehaviour
 
    void CheckForAttributePoints()
    {
-       if ((heldAttPoints + tempAttPoints) == LevelSystem.ReadFreeAttPoints())
+       if ((heldAttPoints + tempAttPoints) == LevelSystem.GetFreeAttPoints())
        {
            return;
        }
-       if ((heldAttPoints + tempAttPoints) < LevelSystem.ReadFreeAttPoints())
+       if ((heldAttPoints + tempAttPoints) < LevelSystem.GetFreeAttPoints())
        {
-           tempAttPoints = LevelSystem.ReadFreeAttPoints() - heldAttPoints;
+           tempAttPoints = LevelSystem.GetFreeAttPoints() - heldAttPoints;
        }
-       if ((heldAttPoints + tempAttPoints) > LevelSystem.ReadFreeAttPoints())
+       if ((heldAttPoints + tempAttPoints) > LevelSystem.GetFreeAttPoints())
        {
-           tempAttPoints = LevelSystem.ReadFreeAttPoints() - heldAttPoints;
+           tempAttPoints = LevelSystem.GetFreeAttPoints() - heldAttPoints;
        }
    } 
 

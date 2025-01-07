@@ -62,8 +62,8 @@ public class StatusBars : MonoBehaviour
         stbar.value = playerEntity.stamina;
         stlabel.text = "Stamina";*/
 
-        expbar.maxValue = levelSystem.ReadNextLevelExp();
-        expbar.value = levelSystem.ReadExperience();
+        expbar.maxValue = levelSystem.GetNextLevelExp();
+        expbar.value = levelSystem.GetExperience();
         if (expbar.value < 1)
         {
             expbar.fillRect.gameObject.SetActive(false);

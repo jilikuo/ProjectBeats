@@ -4,166 +4,109 @@ using UnityEngine;
 
 namespace Jili.StatSystem.LevelSystem
 {
+    [Serializable]
+    public struct AttributePoints
+    {
+        public int free;
+        public int spent;
+        public int total;
+
+        public AttributePoints(int startingValue = 0)
+        {
+            free = startingValue;
+            spent = 0;
+            total = startingValue;
+        }
+    }
+
     public class PlayerLevel : MonoBehaviour
     {
-
-        public int attributePointsPerLevel = 5;
-        private int Level { get; set; }
-        private float experience;
-        private float Experience
-        {
-            get
-            {
-                CheckLevelUp();
-                return experience;
-            }
-            set
-            {
-                experience = value;
-                CheckLevelUp();
-            }
-        }
-        private float ExperienceToNextLevel { get; set; }
-        private float TotalExperience { get; set; }
-        private AttributePoints attributePoints;
-
         public Action OnLevelUp;
-        private class AttributePoints
+
+        [SerializeField] private int attributePointsPerLevel = 5;
+        [SerializeField] private int level = 1;
+        [SerializeField] private float experience = 0;
+        [SerializeField] private float totalExp = 0; // I could consider not using that.
+        [SerializeField] private float nextLevelExp = 100;
+        [SerializeField] private AttributePoints attributePoints = new();
+
+        public void AddExp(float amount)
         {
-            public int Free { get; private set; }
-            private int Spent { get; set; }
-            private int Total { get; set; }
-
-            private readonly int perLevelGain;
-            public AttributePoints(int perLevel)
-            {
-                perLevelGain = perLevel;
-                Free = 0;
-                Spent = 0;
-                Total = 0;
-            }
-
-            public bool hasFreePoints()
-            {
-                bool test = Free > 0;
-                if ((test == false) && (Spent != Total))
-                {
-                    throw new System.Exception("ERROR OCURRED, ATTRIBUTES POINTS DID NOT CONSUME CORRECTLY, " +
-                                               "SPENT POINTS = " + Spent + " WHEN IT SHOULD HAVE BEEN = " + Total);
-                }
-
-                return test;
-            }
-
-            public void AddFreePoints(int points = 0)
-            {
-                if (points > 0)
-                {
-                    Console.WriteLine("CAUTION: You are adding Attribute Points Manually, if this was not supposed to happen, " +
-                                      "you probably should remove the value from AddFreePoints() Method.");
-                    Free = points;
-                    Total = points;
-                }
-                else
-                {
-                    Free += perLevelGain;
-                    Total += perLevelGain;
-                }
-            }
-
-            public void SpendFreePoints()
-            {
-                Free--;
-                Spent++;
-            }
-
+            experience += amount;
+            CheckLevelUp();
         }
-
-
-        public void Awake()
-        {
-            Level = 1;
-            ExperienceToNextLevel = 100;
-            Experience = 0;
-            TotalExperience = 0;
-            attributePoints = new AttributePoints(attributePointsPerLevel);
-        }
-
-        public void GainExp(float amount)
-        {
-            Experience += amount;
-        }
-
+        
         private void CheckLevelUp()
         {
-            bool leveledup = false;
-            if (experience > ExperienceToNextLevel)
+            bool hasLeveled = false;
+            if (experience > nextLevelExp)
             {
-                while (experience >= ExperienceToNextLevel)
+                while (experience >= nextLevelExp)
                 {
-                    experience -= ExperienceToNextLevel;
+                    experience -= nextLevelExp;
                     LevelUp();
-                    leveledup = true;
+                    hasLeveled = true;
                 }
             }
-            if (leveledup)
+            if (hasLeveled)
             {
                 OnLevelUp?.Invoke();
             }
         }
 
-        public void LevelUp()
+        private void LevelUp()
         {
-            Level++;
-            attributePoints.AddFreePoints();
-            RecalculateNextLevelExp();
+            ++level;
+            AddFreeAttPoints(attributePointsPerLevel);
+            UpdateNextLevelExp();
         }
 
-        private void RecalculateNextLevelExp()
+        // TODO: Create a readable formula.
+        private void UpdateNextLevelExp()
         {
-            ExperienceToNextLevel = 100 + ((MathF.PI * MathF.PI * MathF.PI) * Level) + (Mathf.FloorToInt(Level / 2) * 22)
-            + (Mathf.FloorToInt(Level / 3) * 33) + (Mathf.FloorToInt(Level / 5) * 55) + (Mathf.FloorToInt(Level / 7) * 77)
-            + (Mathf.FloorToInt(Level / 9) * 99) + (Mathf.FloorToInt(Level / 11) * 1111) + (Mathf.FloorToInt(Level / 13) * 1313)
-            + (Mathf.FloorToInt(Level / 17) * 1717) + (Mathf.FloorToInt(Level / 19) * 1919) + (Mathf.FloorToInt(Level / 23) * 2323)
-            + (Mathf.FloorToInt(Level / 10) * 250) + (Mathf.FloorToInt(Level / 25) * 1000) + (Mathf.FloorToInt(Level / 50) * 3500)
-            + (Level * Level) + MathF.Sqrt(Level * Level * Level) + MathF.Sqrt(Level);
+            nextLevelExp = 100 + ((MathF.PI * MathF.PI * MathF.PI) * level) + (Mathf.FloorToInt(level / 2) * 22)
+            + (Mathf.FloorToInt(level / 3) * 33) + (Mathf.FloorToInt(level / 5) * 55) + (Mathf.FloorToInt(level / 7) * 77)
+            + (Mathf.FloorToInt(level / 9) * 99) + (Mathf.FloorToInt(level / 11) * 1111) + (Mathf.FloorToInt(level / 13) * 1313)
+            + (Mathf.FloorToInt(level / 17) * 1717) + (Mathf.FloorToInt(level / 19) * 1919) + (Mathf.FloorToInt(level / 23) * 2323)
+            + (Mathf.FloorToInt(level / 10) * 250) + (Mathf.FloorToInt(level / 25) * 1000) + (Mathf.FloorToInt(level / 50) * 3500)
+            + (level * level) + MathF.Sqrt(level * level * level) + MathF.Sqrt(level);
         }
 
-        public int ReadFreeAttPoints()
+        public void AddFreeAttPoints(int value)
         {
-            return attributePoints.Free;
+            attributePoints.free += value;
+            attributePoints.total += value;
         }
 
-        public void SpendAttPoints(int amount = 1)
+        public void SpendAttPoints(int value)
         {
-            if (attributePoints.hasFreePoints())
-            {
-                int i = 0;
-                while ((i < amount) && (attributePoints.hasFreePoints()))
-                {
-                    attributePoints.SpendFreePoints();
-                    i++;
-                }
-                return;
-            }
-            return;
+            attributePoints.free -= value;
+            attributePoints.spent += value;
         }
 
-        public int ReadLevel()
+        public int GetFreeAttPoints()
         {
-            return Level;
+            return attributePoints.free;
         }
 
-        public int ReadNextLevelExp()
+        public int GetLevel()
         {
-            return Mathf.FloorToInt(ExperienceToNextLevel);
+            return level;
         }
 
-        public int ReadExperience()
+        public int GetNextLevelExp()
         {
-            return Mathf.FloorToInt(Experience);
+            return Mathf.FloorToInt(nextLevelExp);
         }
 
+        public int GetExperience()
+        {
+            return Mathf.FloorToInt(experience);
+        }
 
+        public bool HasFreeAttributePoints()
+        {
+            return attributePoints.free > 0;
+        }
     }
 }

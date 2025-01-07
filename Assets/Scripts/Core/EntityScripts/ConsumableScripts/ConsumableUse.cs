@@ -117,28 +117,28 @@ namespace Jili.StatSystem.EntityTree.ConsumableSystem
             switch (consumableType.GetValueType())
             {
                 case CVType.Flat:
-                    levelSystem.GainExp(consumableType.ReadValue(CVType.Flat));
+                    levelSystem.AddExp(consumableType.ReadValue(CVType.Flat));
                     break;
 
                 case CVType.Percentile:
-                    levelSystem.GainExp(consumableType.ReadValue(CVType.Percentile));
+                    levelSystem.AddExp(consumableType.ReadValue(CVType.Percentile));
                     break;
 
                 case CVType.Hybrid:
 
                     // tenta descobrir se vale mais a pena aumentar a exp em % ou flat antes de consumir, e ent�o consome a melhor op��o
                     float tempRemainingExp;
-                    tempRemainingExp = levelSystem.ReadNextLevelExp() - levelSystem.ReadExperience();
+                    tempRemainingExp = levelSystem.GetNextLevelExp() - levelSystem.GetExperience();
 
                     if (consumableType.ReadValue(CVType.Flat) > tempRemainingExp)
                     {
-                        levelSystem.GainExp(consumableType.ReadValue(CVType.Flat));
-                        levelSystem.GainExp(consumableType.ReadValue(CVType.Percentile));
+                        levelSystem.AddExp(consumableType.ReadValue(CVType.Flat));
+                        levelSystem.AddExp(consumableType.ReadValue(CVType.Percentile));
                         break;
                     }
 
-                    levelSystem.GainExp(consumableType.ReadValue(CVType.Percentile));
-                    levelSystem.GainExp(consumableType.ReadValue(CVType.Flat));
+                    levelSystem.AddExp(consumableType.ReadValue(CVType.Percentile));
+                    levelSystem.AddExp(consumableType.ReadValue(CVType.Flat));
                     break;
 
                 default:

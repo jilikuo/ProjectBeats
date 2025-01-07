@@ -24,15 +24,15 @@ public class LevelViewer : MonoBehaviour
         }
 
         levelUpWaningLabel = levelText.transform.Find("LevelUpWarning");
-        text = ("Level: " + levelSystem.ReadLevel());
+        text = ("Level: " + levelSystem.GetLevel());
         levelText.text = text;
     }
 
     private void Update()
     {
-        text = ("Level: " + levelSystem.ReadLevel());
+        text = ("Level: " + levelSystem.GetLevel());
         levelText.text = text;
-        if (levelSystem.ReadFreeAttPoints() > 0)
+        if (levelSystem.GetFreeAttPoints() > 0)
         {
             levelUpWaningLabel.gameObject.SetActive(true);
         }
