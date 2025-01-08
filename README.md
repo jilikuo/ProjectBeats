@@ -11,3 +11,7 @@ depois estudar os tipos de licensa e selecionar a licensa adequada.
 
 Quem quiser ajuda ou entender do que o projeto se trata, pode me encontrar no discord com o usuário "ignem" ou
 em minhas redes sociais, disponíveis e atualizadas no rodapé do site www.jvsantos.com.br
+
+-- Iniciei em 06/01/25 um processo de refatoração dessa base de códigos. --
+Devido ao potencial de monetização desse jogo, decidi mover o código para um repositório privado. Interessados em contribuir,
+podem me enviar um e-mail em contato@jvsantos.com.br, use o assunto "Project Beats"
